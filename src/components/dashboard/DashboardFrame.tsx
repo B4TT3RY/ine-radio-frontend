@@ -56,7 +56,13 @@ export default function DashboardFrame({ children, title, subTitle, currentUrl }
                     <div className='flex shrink-0'>
                       <Link href='/'>
                         <a className='relative h-8 w-24'>
-                          <Image className='object-contain' src={logoPicture} alt='아이네 라디오 로고' layout='fill' />
+                          <Image
+                            loader={({ src }) => src}
+                            className='object-contain'
+                            src={logoPicture}
+                            alt='아이네 라디오 로고'
+                            layout='fill'
+                          />
                         </a>
                       </Link>
                     </div>
