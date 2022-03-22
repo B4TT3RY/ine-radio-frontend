@@ -91,15 +91,25 @@ const createSection = ({
     return <SectionCard type='warning' title='지금은 사연을 받고 있지 않아요' subTitle='다음에 다시 도전해주세요!' />
   }
 
+  if (storyInfoError && storyInfoError.body.error != 'STORY_NOT_FOUND') {
+    return <SectionCard type='error' title='사연을 불러오는 도중 문제가 생겼어요.' subTitle='다음에 다시 시도해주세요.' />
+  }
+
   if (!storyInfo) {
     return <SectionCard type='loading' title='사연 정보를 불러오고 있어요.' subTitle='잠시만 기다려주세요...' />
   }
 
-  if (authError?.code == 401) {
+  if (authError && authError.code == 401) {
     return (
       <SectionCard type='warning' title='사연을 보내려면 로그인을 해야해요'>
         <LoginButton />
       </SectionCard>
+    )
+  }
+
+  if (authError && authError.code != 401) {
+    return (
+      <SectionCard type='error' title='계정을 불러오는 도중 문제가 생겼어요.' subTitle='다음에 다시 시도해주세요.' />
     )
   }
 
