@@ -88,7 +88,6 @@ export default function DashboardFrame({ children, title, subTitle, currentUrl }
                           layout='fill'
                           objectFit='cover'
                           className='object-contain rounded-full'
-                          unoptimized
                         />
                       </div>
 
@@ -135,7 +134,6 @@ export default function DashboardFrame({ children, title, subTitle, currentUrl }
                           loader={loader}
                           src={auth.profileImage}
                           alt='프로필'
-                          unoptimized
                         />
                       </div>
                       <div className='ml-3'>
