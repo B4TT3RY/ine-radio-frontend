@@ -49,7 +49,7 @@ export default function Index() {
           {auth && !authError && <LogoutButton />}
         </div>
         <header className='flex justify-center select-none'>
-          <Image loader={({ src }) => src} src={logoPicture} alt='아이네 라디오 로고' draggable={false} />
+          <Image loader={({ src }) => src} src={logoPicture} alt='아이네 라디오 로고' draggable={false} unoptimized />
         </header>
         <section className='grid place-items-center gap-2 w-10/12 md:w-8/12 xl:w-6/12 rounded-2xl p-4 bg-white shadow-lg dark:bg-slate-800'>
           {sectionElement}
