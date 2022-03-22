@@ -33,7 +33,7 @@ export default function Index() {
     return <Error statusCode={storyInfoError.code} />
   }
 
-  const sectionElement = createSection(storyInfo)
+  const sectionElement = createSection({ auth, authError, storyInfo, storyInfoError })
 
   return (
     <>
@@ -60,7 +60,17 @@ export default function Index() {
   )
 }
 
-const createSection = (storyInfo?: StoryInfoResponse) => {
+const createSection = ({
+  auth,
+  authError,
+  storyInfo,
+  storyInfoError,
+}: {
+  auth?: AuthResponse
+  authError?: FetcherError
+  storyInfo?: StoryInfoResponse
+  storyInfoError?: FetcherError
+}) => {
   // if (actionData?.success) {
   //   return (
   //     <SectionCard title={storyInfo?.title} subTitle={storyInfo?.subTitle}>
@@ -77,21 +87,21 @@ const createSection = (storyInfo?: StoryInfoResponse) => {
   //   )
   // }
 
-  // if (!storyInfo) {
-  //   return <SectionCard type='warning' title='지금은 사연을 받고 있지 않아요' subTitle='다음에 다시 도전해주세요!' />
-  // }
+  if (storyInfoError && storyInfoError.body.error == 'STORY_NOT_FOUND') {
+    return <SectionCard type='warning' title='지금은 사연을 받고 있지 않아요' subTitle='다음에 다시 도전해주세요!' />
+  }
 
   if (!storyInfo) {
     return <SectionCard type='loading' title='사연 정보를 불러오고 있어요.' subTitle='잠시만 기다려주세요...' />
   }
 
-  // if (!userId) {
-  //   return (
-  //     <SectionCard type='warning' title='사연을 보내려면 로그인을 해야해요'>
-  //       <LoginButton />
-  //     </SectionCard>
-  //   )
-  // }
+  if (authError?.code == 401) {
+    return (
+      <SectionCard type='warning' title='사연을 보내려면 로그인을 해야해요'>
+        <LoginButton />
+      </SectionCard>
+    )
+  }
 
   // if (followErrorMessage) {
   //   return (
