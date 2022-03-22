@@ -49,7 +49,7 @@ export default function Index() {
           {auth && !authError && <LogoutButton />}
         </div>
         <header className='flex justify-center select-none'>
-          <Image src={logoPicture} alt='아이네 라디오 로고' draggable={false} />
+          <Image loader={({ src }) => src} src={logoPicture} alt='아이네 라디오 로고' draggable={false} />
         </header>
         <section className='grid place-items-center select-none gap-2 w-10/12 md:w-8/12 xl:w-6/12 rounded-2xl p-4 bg-white shadow-lg dark:bg-slate-800'>
           {sectionElement}
@@ -83,7 +83,7 @@ const createSection = (storyInfo?: StoryInfoResponse) => {
 
   if (!storyInfo) {
     return <SectionCard type='loading' title='사연 정보를 불러오고 있어요.' subTitle='잠시만 기다려주세요...' />
-  }  
+  }
 
   // if (!userId) {
   //   return (
