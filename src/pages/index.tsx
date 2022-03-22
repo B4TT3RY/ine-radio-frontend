@@ -51,7 +51,7 @@ export default function Index() {
         <header className='flex justify-center select-none'>
           <Image loader={({ src }) => src} src={logoPicture} alt='아이네 라디오 로고' draggable={false} />
         </header>
-        <section className='grid place-items-center select-none gap-2 w-10/12 md:w-8/12 xl:w-6/12 rounded-2xl p-4 bg-white shadow-lg dark:bg-slate-800'>
+        <section className='grid place-items-center gap-2 w-10/12 md:w-8/12 xl:w-6/12 rounded-2xl p-4 bg-white shadow-lg dark:bg-slate-800'>
           {sectionElement}
         </section>
       </div>
@@ -92,7 +92,9 @@ const createSection = ({
   }
 
   if (storyInfoError && storyInfoError.body.error != 'STORY_NOT_FOUND') {
-    return <SectionCard type='error' title='사연을 불러오는 도중 문제가 생겼어요.' subTitle='다음에 다시 시도해주세요.' />
+    return (
+      <SectionCard type='error' title='사연을 불러오는 도중 문제가 생겼어요.' subTitle='다음에 다시 시도해주세요.' />
+    )
   }
 
   if (!storyInfo) {
