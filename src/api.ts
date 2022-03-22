@@ -17,6 +17,7 @@ export interface StoryInfoResponse {
   followDiff: number
   followDiffUnit: string
   maxSubmitCount: number
+  currentSubmitCount: number
 }
 
 // /storyinfo/new
