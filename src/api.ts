@@ -25,6 +25,12 @@ export interface StoryInfoNewResponse {
   id: string
 }
 
+// /storyinfo/:id
+export interface StoryInfoIdResponse {
+  storyinfo: any
+  stories: any[]
+}
+
 export enum Role {
   ADMIN,
   STREAMER,
