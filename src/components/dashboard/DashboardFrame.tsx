@@ -27,7 +27,9 @@ const loader = ({ src }: ImageLoaderProps) => {
 }
 
 export default function DashboardFrame({ children, title, subTitle, currentUrl }: Props) {
-  const { data: auth, error: authError } = useSWR<AuthResponse, FetcherError>('/auth', apiFetcher)
+  const { data: auth, error: authError } = useSWR<AuthResponse, FetcherError>('/auth', apiFetcher, {
+    revalidateOnFocus: false,
+  })
 
   useEffect(() => {
     document.querySelector('html')?.classList.remove('bg-purple-200', 'dark:bg-slate-900')
