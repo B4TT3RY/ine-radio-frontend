@@ -1,10 +1,31 @@
+import Error from 'next/error'
 import Head from 'next/head'
+import useSWR from 'swr'
+import { apiFetcher, FetcherError, StoryInfoListResponse } from '../../../api'
 import DashboardFrame from '../../../components/dashboard/DashboardFrame'
+import StoryInfo from '../../../components/dashboard/StoryInfo'
+import { Loader } from '../../../components/Loader'
 import useAuth from '../../../hooks/useAuth'
 
 export default function DashboardStoryIndex() {
   const [auth, authError] = useAuth()
-  
+
+  const { data: storyInfoList, error: storyInfoListError } = useSWR<StoryInfoListResponse[], FetcherError>(
+    '/storyinfo/list',
+    apiFetcher,
+    {
+      refreshInterval: 30000,
+    }
+  )
+
+  if (storyInfoListError) {
+    return <Error statusCode={storyInfoListError.code} />
+  }
+
+  if (!storyInfoList) {
+    return <Loader show={true} />
+  }
+
   return (
     <>
       <Head>
@@ -17,7 +38,9 @@ export default function DashboardStoryIndex() {
         title='사연 관리'
         subTitle='녹색 테두리가 현재 활성화 된 사연이에요.'
       >
-        <h1>a</h1>
+        {storyInfoList.map((storyInfo) => (
+          <StoryInfo key={storyInfo.id} storyInfo={storyInfo} />
+        ))}
       </DashboardFrame>
     </>
   )
