@@ -25,20 +25,6 @@ export interface StoryInfoNewResponse {
   id: string
 }
 
-// {
-//   "id": "05b889f5-ce38-44ea-8b8f-bbb45697cdc6",
-//   "title": "API 서버 테스트",
-//   "sub_title": "새로운 API 서버를 테스트하는 사연입니다.",
-//   "char_count": 40,
-//   "only_followers": true,
-//   "only_subscribers": false,
-//   "activation": true,
-//   "follow_diff": 0,
-//   "follow_diff_unit": "시간",
-//   "created_at": "2022-03-20T14:44:43.578896+00:00",
-//   "max_submit_count": 1
-// }
-
 // /storyinfo/list
 export interface StoryInfoListResponse {
   id: string
