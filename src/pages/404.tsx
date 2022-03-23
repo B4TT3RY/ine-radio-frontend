@@ -8,7 +8,7 @@ export default function Custom404() {
   return (
     <>
       <Head>
-        <title>401 | 아이네의 깃털 라디오</title>
+        <title>404 | 아이네의 깃털 라디오</title>
         <meta name='theme-color' content='#E9D5FF' media='(prefers-color-scheme: light)' />
         <meta name='theme-color' content='#0F172A' media='(prefers-color-scheme: dark)' />
       </Head>
