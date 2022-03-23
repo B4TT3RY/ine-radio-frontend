@@ -16,6 +16,8 @@ const navigation = [
 ]
 
 interface Props {
+  auth?: AuthResponse
+  authError?: FetcherError
   title?: string
   subTitle?: string
   currentUrl: string
@@ -26,11 +28,7 @@ const loader = ({ src }: ImageLoaderProps) => {
   return src
 }
 
-export default function DashboardFrame({ children, title, subTitle, currentUrl }: Props) {
-  const { data: auth, error: authError } = useSWR<AuthResponse, FetcherError>('/auth', apiFetcher, {
-    revalidateOnFocus: false,
-  })
-
+export default function DashboardFrame({ children, auth, authError, title, subTitle, currentUrl }: Props) {
   useEffect(() => {
     document.querySelector('html')?.classList.remove('bg-purple-200', 'dark:bg-slate-900')
     document.querySelector('html')?.classList.add('bg-gray-200')
@@ -40,9 +38,9 @@ export default function DashboardFrame({ children, title, subTitle, currentUrl }
     return <Error statusCode={authError.code} />
   }
   if (!auth) {
-    return <Loader show={!auth} />
+    return <Loader show={true} />
   }
-  if (auth.role === Role.USER) {
+  if (auth.role == Role.USER) {
     return <Error statusCode={401} />
   }
 
