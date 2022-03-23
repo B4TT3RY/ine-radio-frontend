@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { useEffect } from 'react'
 import useSWR from 'swr'
 import { apiFetcher, FetcherError, StoryInfoResponse } from '../../api'
 import DashboardFrame from '../../components/dashboard/DashboardFrame'
