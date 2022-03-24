@@ -1,16 +1,13 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { XIcon, MenuIcon } from '@heroicons/react/outline'
 import Image, { ImageLoaderProps } from 'next/image'
-import { apiFetcher, AuthResponse, FetcherError, Role } from '../../api'
+import { AuthResponse, FetcherError, Role } from '../../api'
 import Link from 'next/link'
-import useSWR, { Fetcher } from 'swr'
 import logoPicture from '../../assets/img/logo.png'
 import Error from 'next/error'
-import { Loader } from '../Loader'
 import { useEffect } from 'react'
 
 const navigation = [
-  { name: '대시보드', href: '/dashboard' },
   { name: '사연 관리', href: '/dashboard/story' },
   { name: '권한 관리', href: '/dashboard/permission' },
 ]
@@ -44,8 +41,8 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
 
   return (
     <>
-      <div className='min-h-full'>
-        <Disclosure as='nav' className='bg-gray-800 fixed w-screen'>
+      <div className='flex flex-col h-screen-safe'>
+        <Disclosure as='nav' className='bg-gray-800 z-10'>
           {({ open }) => (
             <>
               <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -167,14 +164,14 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
             </>
           )}
         </Disclosure>
-        <header className='pt-16 bg-white shadow'>
+        <header className='bg-white shadow z-10'>
           <div className='max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8'>
             <h1 className='text-3xl font-bold text-gray-900'>{title}</h1>
             {subTitle && <span className='text-base font-medium text-gray-800'>{subTitle}</span>}
           </div>
         </header>
-        <main>
-          <div className='max-w-7xl mx-auto px-2 py-6 sm:px-6 lg:px-8 flex flex-1 flex-col gap-3 overflow-auto'>
+        <main className='flex-1 overflow-auto'>
+          <div className='max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex flex-1 flex-col gap-3'>
             {children}
           </div>
         </main>
