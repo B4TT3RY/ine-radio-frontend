@@ -62,6 +62,7 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                             src={logoPicture}
                             alt='아이네 라디오 로고'
                             layout='fill'
+                            unoptimized
                           />
                         </a>
                       </Link>
@@ -94,6 +95,7 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                           layout='fill'
                           objectFit='cover'
                           className='object-contain rounded-full'
+                          unoptimized
                         />
                       </div>
 
@@ -140,6 +142,7 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                           loader={loader}
                           src={auth.profileImage}
                           alt='프로필'
+                          unoptimized
                         />
                       </div>
                       <div className='ml-3'>
