@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { apiFetcher, FetcherError, StoryInfoIdResponse } from '../../../api'
 import DashboardFrame from '../../../components/dashboard/DashboardFrame'
-import { Loader } from '../../../components/Loader'
 import useAuth from '../../../hooks/useAuth'
 
 export default function DashboardStoryById() {
@@ -24,12 +23,6 @@ export default function DashboardStoryById() {
   if (storyInfoIdError) {
     return <Error statusCode={storyInfoIdError.code} />
   }
-
-  // if (!storyInfoId) {
-  //   return <Loader className='bg-gray-200' />
-  // }
-
-  // const { storyinfo, stories } = storyInfoId
 
   return (
     <>
