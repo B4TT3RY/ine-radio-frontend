@@ -1,7 +1,10 @@
+import { HeartIcon } from '@heroicons/react/solid'
 import dayjs from 'dayjs'
 import Error from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import React from 'react'
+import { TableVirtuoso } from 'react-virtuoso'
 import useSWR from 'swr'
 import { apiFetcher, FetcherError, StoryInfoIdResponse } from '../../../api'
 import DashboardFrame from '../../../components/dashboard/DashboardFrame'
@@ -36,7 +39,61 @@ export default function DashboardStoryById() {
         title={storyInfoId?.storyinfo.title}
         subTitle={`${dayjs(storyInfoId?.storyinfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')} 생성`}
       >
-        <h1>a</h1>
+        <TableVirtuoso
+          style={{ height: undefined }}
+          className='h-[80vh] shadow'
+          // data={regex ? stories.filter((s) => regex.test(s.content)) : stories}
+          data={storyInfoId?.stories}
+          components={{
+            Table: (props) => <table {...props} className='table-fixed w-full divide-y divide-gray-300' />,
+            TableHead: (props) => <thead {...props} className='bg-gray-50' />,
+            TableBody: React.forwardRef((props, ref) => (
+              <tbody {...props} ref={ref as any} className='bg-white divide-y divide-gray-300' />
+            )),
+            TableRow: (props) => <tr {...props} className='hover:bg-gray-100' style={{ wordBreak: 'keep-all' }} />,
+          }}
+          fixedHeaderContent={() => (
+            <tr>
+              <th className='text-left px-4 py-2'>사연</th>
+              <th className='py-2 w-24 sm:w-36'>접수일자</th>
+              <th className='py-2 w-20'>숨기기</th>
+            </tr>
+          )}
+          itemContent={(_, story) => (
+            <>
+              <td className='flex items-center gap-2 px-4 py-4 font-medium break-all'>
+                <HeartIcon
+                  className={`flex-none h-6 w-6 cursor-pointer hover:text-red-300 ${
+                    story.favorite ? 'text-red-500' : 'text-gray-300 '
+                  }`}
+                  onClick={() => {
+                    // TODO: 사연 좋아요 구현
+                  }}
+                />
+                {story.content}
+              </td>
+              <td className='py-4 font-medium text-center select-none'>
+                {dayjs(story.createdAt).format('YYYY-MM-DD HH:mm')}
+              </td>
+              <td
+                className='py-4 text-red-500 font-medium text-center cursor-pointer select-none'
+                onClick={() => {
+                  const answer = confirm(
+                    `"${
+                      story.content.length > 5 ? `${story.content.substring(0, 5)}...` : story.content
+                    }" 사연을 숨기시겠어요?\n한번 숨기면 다시 볼 수 없어요.`
+                  )
+                  if (!answer) {
+                    return
+                  }
+                  // TODO: 사연 숨기기 구현
+                }}
+              >
+                숨기기
+              </td>
+            </>
+          )}
+        />
       </DashboardFrame>
     </>
   )

@@ -34,13 +34,19 @@ export default function DashboardStoryIndex() {
         title='사연 관리'
         subTitle='녹색 테두리가 현재 활성화 된 사연이에요.'
       >
-        {storyInfoList ? (
-          storyInfoList.map((storyInfo) => <StoryInfo key={storyInfo.id} storyInfo={storyInfo} />)
-        ) : (
-          <div className='flex items-center justify-center'>
-            <LoadingSpinner className='w-12 h-12' />
-          </div>
-        )}
+        <ul className='space-y-3'>
+          {storyInfoList ? (
+            storyInfoList.map((storyInfo) => (
+              <li key={storyInfo.id}>
+                <StoryInfo storyInfo={storyInfo} />
+              </li>
+            ))
+          ) : (
+            <div className='flex items-center justify-center'>
+              <LoadingSpinner className='w-12 h-12' />
+            </div>
+          )}
+        </ul>
       </DashboardFrame>
     </>
   )
