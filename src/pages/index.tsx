@@ -15,6 +15,7 @@ import { useEffect } from 'react'
 export default function Index() {
   const { data: auth, error: authError } = useSWR<AuthResponse, FetcherError>('/auth', apiFetcher, {
     revalidateOnFocus: false,
+    revalidateOnMount: true,
   })
   const { data: storyInfo, error: storyInfoError } = useSWR<StoryInfoResponse, FetcherError>('/storyinfo', apiFetcher, {
     refreshInterval: 30000,
@@ -44,7 +45,7 @@ export default function Index() {
       </Head>
       <div className='flex flex-col items-center justify-center gap-6 w-screen h-screen max-h-ios'>
         <div className='flex gap-4 absolute top-2 right-2'>
-          {!auth && authError && <LoginButton />}
+          {authError && authError.code == 401 && <LoginButton />}
           {auth && !authError && auth.role !== Role.STAFF && <DashboardButton />}
           {auth && !authError && <LogoutButton />}
         </div>
@@ -106,12 +107,6 @@ const createSection = ({
       <SectionCard type='warning' title='사연을 보내려면 로그인을 해야해요'>
         <LoginButton />
       </SectionCard>
-    )
-  }
-
-  if (authError && authError.code != 401) {
-    return (
-      <SectionCard type='error' title='계정을 불러오는 도중 문제가 생겼어요.' subTitle='다음에 다시 시도해주세요.' />
     )
   }
 
