@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import Error from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -26,7 +27,7 @@ export default function DashboardStoryById() {
   }
 
   if (!storyInfoId) {
-    return <Loader show={true} />
+    return <Loader className='bg-gray-200' />
   }
 
   const { storyinfo, stories } = storyInfoId
@@ -41,7 +42,7 @@ export default function DashboardStoryById() {
         authError={authError}
         currentUrl='/dashboard/story'
         title={storyinfo.title}
-        subTitle={storyinfo.subTitle ?? '설명 없음'}
+        subTitle={`${dayjs(storyinfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')} 생성`}
       >
         <h1>a</h1>
       </DashboardFrame>

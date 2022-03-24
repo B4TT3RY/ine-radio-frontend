@@ -38,7 +38,7 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
     return <Error statusCode={authError.code} />
   }
   if (!auth) {
-    return <Loader show={true} />
+    return <Loader className='bg-gray-200' />
   }
   if (auth.role == Role.USER) {
     return <Error statusCode={401} />

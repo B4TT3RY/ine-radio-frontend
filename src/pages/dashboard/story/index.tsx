@@ -23,7 +23,7 @@ export default function DashboardStoryIndex() {
   }
 
   if (!storyInfoList) {
-    return <Loader show={true} />
+    return <Loader className='bg-gray-200' />
   }
 
   return (
