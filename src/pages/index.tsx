@@ -52,7 +52,7 @@ export default function Index() {
         <header className='flex justify-center select-none'>
           <Image loader={({ src }) => src} src={logoPicture} alt='아이네 라디오 로고' draggable={false} unoptimized />
         </header>
-        <section className='grid place-items-center gap-2 w-10/12 md:w-8/12 xl:w-6/12 rounded-2xl p-4 bg-white shadow-lg dark:bg-slate-800'>
+        <section className='flex flex-col items-center justify-center gap-2 w-10/12 md:w-8/12 xl:w-6/12 rounded-2xl p-4 bg-white shadow-lg dark:bg-slate-800'>
           {sectionElement}
         </section>
       </div>
@@ -110,18 +110,18 @@ const createSection = ({
     )
   }
 
-  if (storyInfo.currentSubmitCount >= storyInfo.maxSubmitCount) {
-    return (
-      <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
-        <SectionCard type='error' title={`사연은 ${storyInfo.maxSubmitCount}개까지만 보낼 수 있어요.`} />
-      </SectionCard>
-    )
-  }
+  // if (storyInfo.currentSubmitCount >= storyInfo.maxSubmitCount) {
+  //   return (
+  //     <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
+  //       <SectionCard type='error' title={`사연은 ${storyInfo.maxSubmitCount}개까지만 보낼 수 있어요.`} />
+  //     </SectionCard>
+  //   )
+  // }
 
   return (
     <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
       <StoryForm
-        storyId={storyInfo.id}
+        storyInfoId={storyInfo.id}
         characterCount={storyInfo.charCount}
         onlyFollowers={storyInfo.onlyFollowers}
         onlySubscribers={storyInfo.onlySubscribers}
