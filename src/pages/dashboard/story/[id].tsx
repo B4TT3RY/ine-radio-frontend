@@ -27,7 +27,7 @@ export default function DashboardStoryById() {
   return (
     <>
       <Head>
-        <title>{storyInfoId?.storyinfo.title ?? '로딩중'} | 아이네의 깃털 라디오</title>
+        <title>{storyInfoId?.storyinfo.title ?? '로딩 중'} | 아이네의 깃털 라디오</title>
       </Head>
       <DashboardFrame
         auth={auth}
