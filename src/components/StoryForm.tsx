@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from 'formik'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, KeyboardEvent, useState } from 'react'
 import Badge from './Badge'
 
 interface Props {
@@ -41,7 +41,7 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
           actions.setSubmitting(false)
         }}
       >
-        {({ isSubmitting, values }) => (
+        {({ isSubmitting, values, submitForm }) => (
           <Form className='w-full'>
             <fieldset disabled={isSubmitting} className='w-full gap-2 flex flex-wrap items-center justify-between'>
               <Field
@@ -50,6 +50,12 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
                 placeholder='사연을 작성해주세요'
                 rows={3}
                 autoFocus={true}
+                onKeyPress={(e: KeyboardEvent<HTMLTextAreaElement>) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault()
+                    submitForm()
+                  }
+                }}
                 className='resize-none w-full text-base p-3 transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-2xl dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400'
               />
               <div className='flex items-center gap-2 select-none'>
@@ -58,7 +64,11 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
                 {onlySubscribers && <Badge type='onlySubscribers' />}
               </div>
               <div className='flex items-center gap-2 select-none'>
-                <span className={`${values.content.length > characterCount ? 'text-rose-600' : 'text-black dark:text-white'}`}>
+                <span
+                  className={`${
+                    values.content.length > characterCount ? 'text-rose-600' : 'text-black dark:text-white'
+                  }`}
+                >
                   {values.content.length}/{characterCount}자
                 </span>
                 <button
