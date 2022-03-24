@@ -4,7 +4,7 @@ import useSWR from 'swr'
 import { apiFetcher, FetcherError, StoryInfoListResponse } from '../../../api'
 import DashboardFrame from '../../../components/dashboard/DashboardFrame'
 import StoryInfo from '../../../components/dashboard/StoryInfo'
-import { Loader } from '../../../components/Loader'
+import LoadingSpinner from '../../../components/LoadingSpinner'
 import useAuth from '../../../hooks/useAuth'
 
 export default function DashboardStoryIndex() {
@@ -22,10 +22,6 @@ export default function DashboardStoryIndex() {
     return <Error statusCode={storyInfoListError.code} />
   }
 
-  if (!storyInfoList) {
-    return <Loader className='bg-gray-200' />
-  }
-
   return (
     <>
       <Head>
@@ -38,9 +34,13 @@ export default function DashboardStoryIndex() {
         title='사연 관리'
         subTitle='녹색 테두리가 현재 활성화 된 사연이에요.'
       >
-        {storyInfoList.map((storyInfo) => (
-          <StoryInfo key={storyInfo.id} storyInfo={storyInfo} />
-        ))}
+        {storyInfoList ? (
+          storyInfoList.map((storyInfo) => <StoryInfo key={storyInfo.id} storyInfo={storyInfo} />)
+        ) : (
+          <div className='flex items-center justify-center'>
+            <LoadingSpinner className='w-12 h-12' />
+          </div>
+        )}
       </DashboardFrame>
     </>
   )

@@ -18,7 +18,7 @@ export default function DashboardIndex() {
       </Head>
       <DashboardFrame auth={auth} authError={authError} currentUrl='/dashboard' title='대시보드'>
         {!storyInfo && storyInfoError && <StoryInfoCard title='현재 활성화 된 사연' variable='오류가 발생했습니다.' />}
-        {!storyInfo && !storyInfoError && <StoryInfoCard title='현재 활성화 된 사연' variable='로딩중...' />}
+        {!storyInfo && !storyInfoError && <StoryInfoCard title='현재 활성화 된 사연' />}
         {storyInfo && !storyInfoError && <StoryInfoCard title='현재 활성화 된 사연' variable={storyInfo.title} />}
       </DashboardFrame>
     </>

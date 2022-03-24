@@ -37,10 +37,8 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
   if (authError) {
     return <Error statusCode={authError.code} />
   }
-  if (!auth) {
-    return <Loader className='bg-gray-200' />
-  }
-  if (auth.role == Role.USER) {
+
+  if (auth?.role == Role.USER) {
     return <Error statusCode={401} />
   }
 
@@ -85,23 +83,34 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                       </div>
                     </div>
                   </div>
-                  <div className='hidden md:block'>
+                  <div className={`hidden md:block${auth ? '' : ' animate-pulse'}`}>
                     <div className='ml-4 flex items-center md:ml-6'>
-                      <div className='relative h-8 w-8'>
-                        <Image
-                          loader={loader}
-                          src={auth.profileImage}
-                          alt='프로필'
-                          layout='fill'
-                          objectFit='cover'
-                          className='object-contain rounded-full'
-                          unoptimized
-                        />
+                      <div className='relative h-8 w-8 bg-slate-700 rounded-full'>
+                        {auth && (
+                          <Image
+                            loader={loader}
+                            src={auth.profileImage}
+                            alt='프로필'
+                            layout='fill'
+                            objectFit='cover'
+                            className='object-contain rounded-full'
+                            unoptimized
+                          />
+                        )}
                       </div>
 
                       <div className='ml-2 flex flex-col'>
-                        <span className='text-base font-medium leading-none text-white'>{auth.displayName}</span>
-                        <span className='text-sm font-medium leading-none text-gray-400'>{auth.login}</span>
+                        {auth ? (
+                          <>
+                            <span className='text-base font-medium leading-none text-white'>{auth.displayName}</span>
+                            <span className='text-sm font-medium leading-none text-gray-400'>{auth.login}</span>
+                          </>
+                        ) : (
+                          <div className='flex flex-col gap-2'>
+                            <span className='h-2 w-24 rounded bg-slate-700'></span>
+                            <span className='h-2 w-20 rounded bg-slate-700'></span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -137,17 +146,19 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                   <div className='pt-4 pb-3 border-t border-gray-700'>
                     <div className='flex items-center px-5'>
                       <div className='flex-shrink-0'>
-                        <Image
-                          className='h-10 w-10 rounded-full'
-                          loader={loader}
-                          src={auth.profileImage}
-                          alt='프로필'
-                          unoptimized
-                        />
+                        {auth && (
+                          <Image
+                            className='h-10 w-10 rounded-full'
+                            loader={loader}
+                            src={auth.profileImage}
+                            alt='프로필'
+                            unoptimized
+                          />
+                        )}
                       </div>
                       <div className='ml-3'>
-                        <div className='text-base font-medium leading-none text-white'>{auth.displayName}</div>
-                        <div className='text-sm font-medium leading-none text-gray-400'>{auth.login}</div>
+                        <div className='text-base font-medium leading-none text-white'>{auth?.displayName}</div>
+                        <div className='text-sm font-medium leading-none text-gray-400'>{auth?.login}</div>
                       </div>
                     </div>
                   </div>

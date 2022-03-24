@@ -14,35 +14,34 @@ export default function DashboardStoryById() {
   const router = useRouter()
   const { id } = router.query
 
-  const { data: storyInfoId, error: storyInfoIdError } = useSWR<StoryInfoIdResponse, FetcherError>(
-    `/storyinfo/${id}`,
-    apiFetcher,
-    {
-      refreshInterval: 30000,
-    }
-  )
+  const {
+    data: storyInfoId,
+    error: storyInfoIdError,
+  } = useSWR<StoryInfoIdResponse, FetcherError>(`/storyinfo/${id}`, apiFetcher, {
+    refreshInterval: 30000,
+  })
 
   if (storyInfoIdError) {
     return <Error statusCode={storyInfoIdError.code} />
   }
 
-  if (!storyInfoId) {
-    return <Loader className='bg-gray-200' />
-  }
+  // if (!storyInfoId) {
+  //   return <Loader className='bg-gray-200' />
+  // }
 
-  const { storyinfo, stories } = storyInfoId
+  // const { storyinfo, stories } = storyInfoId
 
   return (
     <>
       <Head>
-        <title>{storyinfo.title} | 아이네의 깃털 라디오</title>
+        <title>{storyInfoId?.storyinfo.title ?? '로딩중'} | 아이네의 깃털 라디오</title>
       </Head>
       <DashboardFrame
         auth={auth}
         authError={authError}
         currentUrl='/dashboard/story'
-        title={storyinfo.title}
-        subTitle={`${dayjs(storyinfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')} 생성`}
+        title={storyInfoId?.storyinfo.title}
+        subTitle={`${dayjs(storyInfoId?.storyinfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')} 생성`}
       >
         <h1>a</h1>
       </DashboardFrame>
