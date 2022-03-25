@@ -58,7 +58,7 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
                       break
                     case 'ALREADY_SUBMITTED':
                       title = '이미 사연을 보냈어요.'
-                      subTitle = ''
+                      subTitle = res.message
                       break
                     case 'STORY_NOT_FOUND':
                       title = '사연을 찾을 수 없어요.'
