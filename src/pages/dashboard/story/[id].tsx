@@ -16,11 +16,6 @@ export default function DashboardStoryById() {
   const router = useRouter()
   const { id } = router.query
 
-  const tableBody = React.forwardRef<HTMLTableSectionElement>((props, ref) => (
-    <tbody {...props} ref={ref as any} className='bg-white divide-y divide-gray-300' />
-  ))
-  tableBody.displayName = 'tableBody'
-
   const { data: storyInfoId, error: storyInfoIdError } = useSWR<StoryInfoIdResponse, FetcherError>(
     `/storyinfo/${id}`,
     apiFetcher,
@@ -52,8 +47,12 @@ export default function DashboardStoryById() {
           data={storyInfoId?.stories}
           components={{
             Table: (props) => <table {...props} className='table-fixed w-full divide-y divide-gray-300' />,
-            TableHead: (props) => <thead {...props} className='bg-gray-50' />,
-            TableBody: tableBody,
+            // eslint-disable-next-line react/display-name
+            TableHead: React.forwardRef((props, ref) => <thead {...props} ref={ref as any} className='bg-gray-50' />),
+            // eslint-disable-next-line react/display-name
+            TableBody: React.forwardRef((props, ref) => (
+              <tbody {...props} ref={ref as any} className='bg-white divide-y divide-gray-300' />
+            )),
             TableRow: (props) => <tr {...props} className='hover:bg-gray-100' style={{ wordBreak: 'keep-all' }} />,
           }}
           fixedHeaderContent={() => (
@@ -91,6 +90,7 @@ export default function DashboardStoryById() {
                     return
                   }
                   // TODO: 사연 숨기기 구현
+                  alert(`[${story.id}] 사연을 숨겼어요.`)
                 }}
               >
                 숨기기
