@@ -81,3 +81,14 @@ export const apiFetcher = async (url: string) => {
 
   return res.json()
 }
+
+export const apiFetchPost = (url: string, body: any): Promise<Response> => {
+  return fetch(`http://localhost:3001${url}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
+}
