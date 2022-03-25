@@ -122,14 +122,6 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                   </div>
                 </div>
               </div>
-              <Transition
-                enter='transition duration-100 ease-out'
-                enterFrom='transform scale-95 opacity-0'
-                enterTo='transform scale-100 opacity-100'
-                leave='transition duration-75 ease-out'
-                leaveFrom='transform scale-100 opacity-100'
-                leaveTo='transform scale-95 opacity-0'
-              >
                 <Disclosure.Panel className='md:hidden'>
                   <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3'>
                     {navigation.map((item) => (
@@ -160,7 +152,6 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                     </div>
                   </div>
                 </Disclosure.Panel>
-              </Transition>
             </>
           )}
         </Disclosure>
@@ -171,7 +162,7 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
           </div>
         </header>
         <main className='flex-1 overflow-auto'>
-          <div className='max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8'>{children}</div>
+          <div className='min-h-full h-full max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8'>{children}</div>
         </main>
       </div>
     </>

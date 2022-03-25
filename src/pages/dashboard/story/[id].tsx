@@ -17,7 +17,7 @@ export default function DashboardStoryById() {
   const { id } = router.query
 
   const {
-    data: storyInfoId,
+    data: { storyinfo, stories },
     error: storyInfoIdError,
   } = useSWR<StoryInfoIdResponse, FetcherError>(`/storyinfo/${id}`, apiFetcher, {
     refreshInterval: 30000,
