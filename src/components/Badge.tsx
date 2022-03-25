@@ -1,9 +1,10 @@
 interface Props {
-  type: 'anonymous' | 'onlyFollowers' | 'onlySubscribers'
+  type?: 'anonymous' | 'onlyFollowers' | 'onlySubscribers'
   enabled?: boolean
+  title?: string
 }
 
-export default function Badge({ type, enabled }: Props) {
+export default function Badge({ type, enabled, title: propsTitle }: Props) {
   let title = ''
   let className = ''
   switch (type) {
@@ -19,6 +20,10 @@ export default function Badge({ type, enabled }: Props) {
       title = '구독자 전용'
       className = 'bg-purple-500 shadow-purple-500/50'
       break
+    default:
+      title = propsTitle ?? ''
+      className = 'bg-purple-500 shadow-purple-500/50'
+      break;
   }
 
   if (enabled !== undefined) {

@@ -15,16 +15,18 @@ export default function StoryInfo({ storyInfo }: Props) {
       <a className={`flex justify-between items-center shadow bg-white px-4 py-3 rounded-2xl${activationClass}`}>
         <div className='flex flex-col min-w-0 max-w-md'>
           <h1 className='font-bold text-2xl truncate'>{storyInfo.title}</h1>
-          <p className='font-normal text-base truncate'>{storyInfo.subTitle ?? '상세설명 없음'}</p>
+          <p className='font-normal text-base truncate'>
+            <span className='font-semibold'>{dayjs(storyInfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')}</span> 생성
+          </p>
         </div>
         <div className='flex flex-col gap-1 shrink-0 items-end'>
           <div className='flex gap-1'>
             <Badge type='onlyFollowers' enabled={storyInfo.onlyFollowers} />
             <Badge type='onlySubscribers' enabled={storyInfo.onlySubscribers} />
           </div>
-          <p>
-            <span className='font-semibold'>{dayjs(storyInfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')}</span> 생성
-          </p>
+          <div className='flex gap-1'>
+            <Badge title={`최대 ${storyInfo.maxSubmitCount}개 제출 가능`} />
+          </div>
         </div>
       </a>
     </Link>
