@@ -8,6 +8,7 @@ interface Props {
   characterCount: number
   onlyFollowers: boolean
   onlySubscribers: boolean
+  onFetchResponse: (fetchResponse: FetchResponse) => void
 }
 
 interface FormValues {
@@ -21,7 +22,7 @@ export interface FetchResponse {
   subTitle?: string
 }
 
-export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, onlySubscribers }: Props) {
+export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, onlySubscribers, onFetchResponse }: Props) {
   const initialValues: FormValues = {
     storyinfoId: storyInfoId,
     content: '',
@@ -38,9 +39,42 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
               .then((res) => res.json())
               .then((res) => {
                 if (res.ok) {
-
+                  onFetchResponse({
+                    iconType: 'success',
+                    title: '사연이 성공적으로 접수되었어요!',
+                  })
                 } else {
+                  let title = ''
+                  let subTitle = ''
 
+                  switch (res.error as string) {
+                    case 'DATABASE_ERROR':
+                      title = '데이터베이스에 연결하는 도중 문제가 생겼어요.'
+                      subTitle = '다음에 다시 시도해주세요.'
+                      break
+                    case 'UNAUTHORIZED':
+                      title = '로그인이 필요해요.'
+                      subTitle = '로그인 후 다시 시도해주세요.'
+                      break
+                    case 'ALREADY_SUBMITTED':
+                      title = '이미 사연을 보냈어요.'
+                      subTitle = ''
+                      break
+                    case 'STORY_NOT_FOUND':
+                      title = '사연을 찾을 수 없어요.'
+                      subTitle = '이미 마감된 사연은 아닌지 확인 해보세요.'
+                      break
+                    case 'VERIFICATION_FAILURE':
+                      title = '사연 내용에 문제가 있어요!'
+                      subTitle = res.message
+                      break
+                  }
+
+                  onFetchResponse({
+                    iconType: 'error',
+                    title,
+                    subTitle: subTitle != '' ? subTitle : undefined,
+                  })
                 }
               })
               .catch((err) => {

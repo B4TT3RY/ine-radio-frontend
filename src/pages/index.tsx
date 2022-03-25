@@ -10,7 +10,7 @@ import useSWR from 'swr'
 import StoryForm, { FetchResponse } from '../components/StoryForm'
 import Error from 'next/error'
 import Script from 'next/script'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 export default function Index() {
   const [fetchResponse, setFetchResponse] = useState<FetchResponse | undefined>(undefined)
@@ -35,7 +35,7 @@ export default function Index() {
     return <Error statusCode={storyInfoError.code} />
   }
 
-  const sectionElement = createSection({ auth, authError, storyInfo, storyInfoError, fetchResponse })
+  const sectionElement = createSection({ auth, authError, storyInfo, storyInfoError, fetchResponse, setFetchResponse })
 
   return (
     <>
@@ -68,12 +68,14 @@ const createSection = ({
   storyInfo,
   storyInfoError,
   fetchResponse,
+  setFetchResponse,
 }: {
   auth?: AuthResponse
   authError?: FetcherError
   storyInfo?: StoryInfoResponse
   storyInfoError?: FetcherError
   fetchResponse?: FetchResponse
+  setFetchResponse: Dispatch<SetStateAction<FetchResponse | undefined>>
 }) => {
   if (fetchResponse) {
     return <SectionCard type={fetchResponse.iconType} title={fetchResponse.title} subTitle={fetchResponse.subTitle} />
@@ -116,6 +118,9 @@ const createSection = ({
         characterCount={storyInfo.charCount}
         onlyFollowers={storyInfo.onlyFollowers}
         onlySubscribers={storyInfo.onlySubscribers}
+        onFetchResponse={(res) => {
+          setFetchResponse(res)
+        }}
       />
     </SectionCard>
   )
