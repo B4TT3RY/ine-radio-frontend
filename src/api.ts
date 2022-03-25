@@ -65,6 +65,10 @@ export interface ErrorBody {
 }
 
 export const apiFetcher = async (url: string) => {
+  if (url == '/storyinfo/undefined') {
+    return new Promise(() => undefined)
+  }
+
   const res = await fetch(`http://localhost:3001${url}`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
