@@ -1,5 +1,6 @@
 import { Field, Form, Formik } from 'formik'
-import { ChangeEvent, FormEvent, KeyboardEvent, useState } from 'react'
+import { KeyboardEvent } from 'react'
+import { apiFetchPost } from '../api'
 import Badge from './Badge'
 
 interface Props {
@@ -10,23 +11,20 @@ interface Props {
 }
 
 interface FormValues {
-  storyInfoId: string
+  storyinfoId: string
   content: string
+}
+
+export interface FetchResponse {
+  iconType: 'info' | 'success' | 'warning' | 'error' | 'loading' | undefined
+  title: string
+  subTitle?: string
 }
 
 export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, onlySubscribers }: Props) {
   const initialValues: FormValues = {
-    storyInfoId,
+    storyinfoId: storyInfoId,
     content: '',
-  }
-
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
-    const canSend = confirm('사연을 보내면 수정하거나 삭제할 수 없어요.\n사연을 보내시겠어요?')
-    if (!canSend) {
-      event.preventDefault()
-      return false
-    }
-    return true
   }
 
   return (
@@ -36,9 +34,22 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
         onSubmit={async (values, actions) => {
           const isSubmit = confirm('사연을 보내면 수정하거나 삭제할 수 없어요.\n사연을 보내시겠어요?')
           if (isSubmit) {
-            // TODO: fetch POST /story/submit
+            apiFetchPost('/story/submit', values)
+              .then((res) => res.json())
+              .then((res) => {
+                if (res.ok) {
+
+                } else {
+
+                }
+              })
+              .catch((err) => {
+                console.log(`err: ${err}`)
+              })
+              .finally(() => {
+                actions.setSubmitting(false)
+              })
           }
-          actions.setSubmitting(false)
         }}
       >
         {({ isSubmitting, values, submitForm }) => (

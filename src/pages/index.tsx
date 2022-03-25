@@ -7,12 +7,13 @@ import logoPicture from '../assets/img/logo.png'
 import Head from 'next/head'
 import { apiFetcher, AuthResponse, FetcherError, Role, StoryInfoResponse } from '../api'
 import useSWR from 'swr'
-import StoryForm from '../components/StoryForm'
+import StoryForm, { FetchResponse } from '../components/StoryForm'
 import Error from 'next/error'
 import Script from 'next/script'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Index() {
+  const [fetchResponse, setFetchResponse] = useState<FetchResponse | undefined>(undefined)
   const { data: auth, error: authError } = useSWR<AuthResponse, FetcherError>('/auth', apiFetcher, {
     revalidateOnFocus: false,
     revalidateOnMount: true,
@@ -34,7 +35,7 @@ export default function Index() {
     return <Error statusCode={storyInfoError.code} />
   }
 
-  const sectionElement = createSection({ auth, authError, storyInfo, storyInfoError })
+  const sectionElement = createSection({ auth, authError, storyInfo, storyInfoError, fetchResponse })
 
   return (
     <>
@@ -66,27 +67,17 @@ const createSection = ({
   authError,
   storyInfo,
   storyInfoError,
+  fetchResponse,
 }: {
   auth?: AuthResponse
   authError?: FetcherError
   storyInfo?: StoryInfoResponse
   storyInfoError?: FetcherError
+  fetchResponse?: FetchResponse
 }) => {
-  // if (actionData?.success) {
-  //   return (
-  //     <SectionCard title={storyInfo?.title} subTitle={storyInfo?.subTitle}>
-  //       <SectionCard type='info' title='사연이 성공적으로 접수되었어요!' />
-  //     </SectionCard>
-  //   )
-  // }
-
-  // if (actionData?.error) {
-  //   return (
-  //     <SectionCard title={storyInfo?.title} subTitle={storyInfo?.subTitle}>
-  //       <SectionCard type='error' title={actionData.error} />
-  //     </SectionCard>
-  //   )
-  // }
+  if (fetchResponse) {
+    return <SectionCard type={fetchResponse.iconType} title={fetchResponse.title} subTitle={fetchResponse.subTitle} />
+  }
 
   if (storyInfoError && storyInfoError.body.error == 'STORY_NOT_FOUND') {
     return <SectionCard type='warning' title='지금은 사연을 받고 있지 않아요' subTitle='다음에 다시 도전해주세요!' />

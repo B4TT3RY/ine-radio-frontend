@@ -16,12 +16,18 @@ export default function DashboardStoryById() {
   const router = useRouter()
   const { id } = router.query
 
-  const {
-    data: { storyinfo, stories },
-    error: storyInfoIdError,
-  } = useSWR<StoryInfoIdResponse, FetcherError>(`/storyinfo/${id}`, apiFetcher, {
-    refreshInterval: 30000,
-  })
+  const tableBody = React.forwardRef<HTMLTableSectionElement>((props, ref) => (
+    <tbody {...props} ref={ref as any} className='bg-white divide-y divide-gray-300' />
+  ))
+  tableBody.displayName = 'tableBody'
+
+  const { data: storyInfoId, error: storyInfoIdError } = useSWR<StoryInfoIdResponse, FetcherError>(
+    `/storyinfo/${id}`,
+    apiFetcher,
+    {
+      refreshInterval: 30000,
+    }
+  )
 
   if (storyInfoIdError) {
     return <Error statusCode={storyInfoIdError.code} />
@@ -41,15 +47,13 @@ export default function DashboardStoryById() {
       >
         <TableVirtuoso
           style={{ height: undefined }}
-          className='h-[80vh] shadow'
+          className='h-full shadow'
           // data={regex ? stories.filter((s) => regex.test(s.content)) : stories}
           data={storyInfoId?.stories}
           components={{
             Table: (props) => <table {...props} className='table-fixed w-full divide-y divide-gray-300' />,
             TableHead: (props) => <thead {...props} className='bg-gray-50' />,
-            TableBody: React.forwardRef((props, ref) => (
-              <tbody {...props} ref={ref as any} className='bg-white divide-y divide-gray-300' />
-            )),
+            TableBody: tableBody,
             TableRow: (props) => <tr {...props} className='hover:bg-gray-100' style={{ wordBreak: 'keep-all' }} />,
           }}
           fixedHeaderContent={() => (
