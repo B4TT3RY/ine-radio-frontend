@@ -78,7 +78,11 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
                 }
               })
               .catch((err) => {
-                console.log(`err: ${err}`)
+                onFetchResponse({
+                  iconType: 'error',
+                  title: '제출을 시도하던 도중 문제가 생겼어요.',
+                  subTitle: '다시 시도하거나 채팅으로 문의 해 주세요.',
+                })
               })
               .finally(() => {
                 actions.setSubmitting(false)
