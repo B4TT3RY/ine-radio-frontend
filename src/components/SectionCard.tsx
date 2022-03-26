@@ -1,4 +1,5 @@
 import { CheckIcon, ExclamationIcon, ExclamationCircleIcon, InformationCircleIcon } from '@heroicons/react/outline'
+import ReactMarkdown from 'react-markdown'
 import LoadingSpinner from './LoadingSpinner'
 
 interface Props {
@@ -27,10 +28,13 @@ export default function SectionCard({ type, title, subTitle, children }: Props) 
           {title}
         </h1>
       )}
-      {subTitle && (
+      {/* {subTitle && (
         <p className='text-center m-0 text-black dark:text-white' style={{ wordBreak: 'keep-all' }}>
           {subTitle}
         </p>
+      )} */}
+      {subTitle && (
+        <ReactMarkdown className='leading-6 text-center'>{subTitle}</ReactMarkdown>
       )}
       {children}
     </>
