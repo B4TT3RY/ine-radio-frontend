@@ -122,36 +122,40 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                   </div>
                 </div>
               </div>
-                <Disclosure.Panel className='md:hidden'>
-                  <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3'>
-                    {navigation.map((item) => (
-                      <Link key={item.href} href={item.href}>
-                        <a className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'>
-                          {item.name}
-                        </a>
-                      </Link>
-                    ))}
-                  </div>
-                  <div className='pt-4 pb-3 border-t border-gray-700'>
-                    <div className='flex items-center px-5'>
-                      <div className='flex-shrink-0'>
+              <Disclosure.Panel className='md:hidden'>
+                <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3'>
+                  {navigation.map((item) => (
+                    <Link key={item.href} href={item.href}>
+                      <a className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'>
+                        {item.name}
+                      </a>
+                    </Link>
+                  ))}
+                </div>
+                <div className='pt-4 pb-3 border-t border-gray-700'>
+                  <div className='flex items-center px-5'>
+                    <div className='flex-shrink-0'>
+                      <div className='relative h-8 w-8 bg-slate-700 rounded-full'>
                         {auth && (
                           <Image
-                            className='h-10 w-10 rounded-full'
                             loader={loader}
                             src={auth.profileImage}
                             alt='프로필'
+                            layout='fill'
+                            objectFit='cover'
+                            className='object-contain rounded-full'
                             unoptimized
                           />
                         )}
                       </div>
-                      <div className='ml-3'>
-                        <div className='text-base font-medium leading-none text-white'>{auth?.displayName}</div>
-                        <div className='text-sm font-medium leading-none text-gray-400'>{auth?.login}</div>
-                      </div>
+                    </div>
+                    <div className='ml-3'>
+                      <div className='text-base font-medium leading-none text-white'>{auth?.displayName}</div>
+                      <div className='text-sm font-medium leading-none text-gray-400'>{auth?.login}</div>
                     </div>
                   </div>
-                </Disclosure.Panel>
+                </div>
+              </Disclosure.Panel>
             </>
           )}
         </Disclosure>
