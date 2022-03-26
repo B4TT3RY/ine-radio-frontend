@@ -47,10 +47,10 @@ export interface StoryInfoIdResponse {
 }
 
 export enum Role {
-  ADMIN,
-  STREAMER,
-  STAFF,
-  USER,
+  ADMIN = 'Admin',
+  STREAMER = 'Streamer',
+  STAFF = 'Staff',
+  USER = 'User',
 }
 
 export interface FetcherError {
