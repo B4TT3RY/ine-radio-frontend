@@ -1,7 +1,9 @@
+import { PlusIcon } from '@heroicons/react/outline'
 import Error from 'next/error'
 import Head from 'next/head'
+import Link from 'next/link'
 import useSWR from 'swr'
-import { apiFetcher, FetcherError, StoryInfoListResponse } from '../../../api'
+import { apiFetcher, FetcherError, Role, StoryInfoListResponse } from '../../../api'
 import DashboardFrame from '../../../components/dashboard/DashboardFrame'
 import StoryInfo from '../../../components/dashboard/StoryInfo'
 import LoadingSpinner from '../../../components/LoadingSpinner'
@@ -35,6 +37,15 @@ export default function DashboardStoryIndex() {
         subTitle='녹색 테두리가 현재 활성화 된 사연이에요.'
       >
         <ul className='space-y-3'>
+          {auth && auth.role != Role.STAFF && (
+            <li>
+              <Link href='/dashboard/story/new'>
+                <a className='flex items-center justify-center border-4 border-dashed border-gray-400 rounded-2xl h-[5.5rem]'>
+                  <PlusIcon className='w-12 h-12 text-gray-400' />
+                </a>
+              </Link>
+            </li>
+          )}
           {storyInfoList ? (
             storyInfoList.map((storyInfo) => (
               <li key={storyInfo.id}>
