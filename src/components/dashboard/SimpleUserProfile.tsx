@@ -3,6 +3,7 @@ import Image, { ImageLoaderProps } from 'next/image'
 import { AuthResponse, Role } from '../../api'
 
 interface Props {
+  className?: string
   user?: AuthResponse
 }
 
@@ -10,9 +11,9 @@ const loader = ({ src }: ImageLoaderProps) => {
   return src
 }
 
-export default function SimpleUserProfile({ user }: Props) {
+export default function SimpleUserProfile({ className, user }: Props) {
   return (
-    <div className='flex justify-between shadow bg-white px-4 py-3 rounded-2xl'>
+    <div className={`flex justify-between shadow bg-white px-4 py-3 rounded-2xl${className ? ` ${className}` : ''}`}>
       <div className='flex items-center'>
         <div className='relative h-10 w-10 rounded-full scale-105'>
           {user && (
