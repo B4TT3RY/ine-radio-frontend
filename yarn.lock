@@ -1756,6 +1756,11 @@ kleur@^4.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-4.1.4.tgz#8c202987d7e577766d039a8cd461934c01cda04d"
   integrity sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==
 
+korean-regexp@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/korean-regexp/-/korean-regexp-1.0.9.tgz#474d9b16e4050a13c496e0066ed857d1933855bd"
+  integrity sha512-rhuYSVkwH2NDskWhaZbzeOC480t/wr8a/WED1gFk60NPeZIM7Ohl1F2/Mtn038V9Op2XXvQ4cSRAhtm44V+lfg==
+
 language-subtag-registry@~0.3.2:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/language-subtag-registry/-/language-subtag-registry-0.3.21.tgz#04ac218bea46f04cb039084602c6da9e788dd45a"

@@ -41,6 +41,7 @@ export default function SimpleUserProfile({ className, user }: Props) {
             if (!answer) {
               return
             }
+            // TODO: 스탭 제거 구현
           }}
         >
           <XIcon className='text-red-600 w-10 h-10' />

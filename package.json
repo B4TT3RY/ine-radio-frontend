@@ -17,6 +17,7 @@
     "axios": "^0.26.1",
     "dayjs": "^1.11.0",
     "formik": "^2.2.9",
+    "korean-regexp": "^1.0.9",
     "next": "12.1.0",
     "nprogress": "^0.2.0",
     "react": "17.0.2",
