@@ -42,7 +42,7 @@ export default function DashboardStoryById() {
       >
         <TableVirtuoso
           style={{ height: undefined }}
-          className='h-full shadow rounded-2xl bg-gray-100'
+          className='h-full shadow rounded-2xl bg-gray-50'
           // data={regex ? stories.filter((s) => regex.test(s.content)) : stories}
           data={storyInfoId?.stories}
           components={{
