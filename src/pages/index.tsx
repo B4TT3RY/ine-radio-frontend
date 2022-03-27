@@ -103,13 +103,13 @@ const createSection = ({
     )
   }
 
-  // if (storyInfo.currentSubmitCount >= storyInfo.maxSubmitCount) {
-  //   return (
-  //     <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
-  //       <SectionCard type='error' title={`사연은 ${storyInfo.maxSubmitCount}개까지만 보낼 수 있어요.`} />
-  //     </SectionCard>
-  //   )
-  // }
+  if (storyInfo.currentSubmitCount >= storyInfo.maxSubmitCount) {
+    return (
+      <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
+        <SectionCard type='error' title={`사연은 ${storyInfo.maxSubmitCount}개까지만 보낼 수 있어요.`} />
+      </SectionCard>
+    )
+  }
 
   return (
     <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
