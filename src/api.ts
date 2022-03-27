@@ -96,3 +96,21 @@ export const apiFetchPost = (url: string, body: any): Promise<Response> => {
     body: JSON.stringify(body),
   })
 }
+
+// apiFetchDownload(`/storyinfo/${id}/download`, `${id}.csv`)
+export const apiFetchDownload = (url: string, fileName: string) => {
+  fetch(`http://localhost:3001${url}`, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    },
+  })
+    .then((res) => res.blob())
+    .then((blob) => {
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = fileName
+      a.click()
+      window.URL.revokeObjectURL(url)
+    })
+}
