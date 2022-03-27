@@ -10,7 +10,7 @@ export default function Markdown({ className, children }: Props) {
     <ReactMarkdown
       className={className}
       components={{
-        a({ ...props }) {
+        a({ node, ...props }) {
           return (
             <a
               {...props}
@@ -20,6 +20,12 @@ export default function Markdown({ className, children }: Props) {
             />
           )
         },
+        ol({ node, ...props }) {
+          return <ol className='text-center list-decimal list-inside' {...props} />
+        },
+        ul({ node, ...props }) {
+          return <ul className='text-center list-disc list-inside' {...props} />
+        }
       }}
     >
       {children ?? ''}
