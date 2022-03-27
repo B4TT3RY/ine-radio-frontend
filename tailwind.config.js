@@ -3,5 +3,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require('tailwindcss-safe-area')],
+  plugins: [require('@tailwindcss/forms'), require('tailwindcss-safe-area')],
 }
