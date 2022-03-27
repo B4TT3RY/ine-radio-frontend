@@ -33,9 +33,7 @@ export default function SectionCard({ type, title, subTitle, children }: Props) 
           {subTitle}
         </p>
       )} */}
-      {subTitle && (
-        <ReactMarkdown className='leading-6 text-center'>{subTitle}</ReactMarkdown>
-      )}
+      {subTitle && <ReactMarkdown className='leading-6 text-center  overflow-hidden'>{subTitle}</ReactMarkdown>}
       {children}
     </>
   )
