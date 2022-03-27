@@ -8,8 +8,8 @@ import Error from 'next/error'
 import { useEffect } from 'react'
 
 const navigation = [
-  { name: '사연 관리', href: '/dashboard/story' },
-  { name: '권한 관리', href: '/dashboard/permission' },
+  { name: '사연 관리', href: '/dashboard/story', role: [Role.ADMIN, Role.STREAMER, Role.STAFF] },
+  { name: '권한 관리', href: '/dashboard/permission', role: [Role.ADMIN, Role.STREAMER] },
 ]
 
 interface Props {
@@ -64,19 +64,21 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                     </div>
                     <div className='hidden md:block'>
                       <div className='ml-10 flex items-baseline space-x-4'>
-                        {navigation.map((item) => (
-                          <Link key={item.href} href={item.href}>
-                            <a
-                              className={`${
-                                item.href === currentUrl
-                                  ? 'bg-gray-900 text-white'
-                                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                              } px-3 py-2 rounded-md text-sm font-medium`}
-                            >
-                              {item.name}
-                            </a>
-                          </Link>
-                        ))}
+                        {navigation
+                          .filter((item) => item.role.includes(auth?.role ?? Role.USER))
+                          .map((item) => (
+                            <Link key={item.href} href={item.href}>
+                              <a
+                                className={`${
+                                  item.href === currentUrl
+                                    ? 'bg-gray-900 text-white'
+                                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                                } px-3 py-2 rounded-md text-sm font-medium`}
+                              >
+                                {item.name}
+                              </a>
+                            </Link>
+                          ))}
                       </div>
                     </div>
                   </div>
@@ -124,13 +126,15 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
               </div>
               <Disclosure.Panel className='md:hidden'>
                 <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3'>
-                  {navigation.map((item) => (
-                    <Link key={item.href} href={item.href}>
-                      <a className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'>
-                        {item.name}
-                      </a>
-                    </Link>
-                  ))}
+                  {navigation
+                    .filter((item) => item.role.includes(auth?.role ?? Role.USER))
+                    .map((item) => (
+                      <Link key={item.href} href={item.href}>
+                        <a className='block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700'>
+                          {item.name}
+                        </a>
+                      </Link>
+                    ))}
                 </div>
                 <div className='pt-4 pb-3 border-t border-gray-700'>
                   <div className='flex items-center px-5'>
