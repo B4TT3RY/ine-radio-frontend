@@ -170,6 +170,13 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.1.tgz#782fa5da44c4f38ae9fd38e9184b54e451936118"
   integrity sha512-BUyKJGdDWqvWC5GEhyOiUrGNi9iJUr4CU0O2WxJL6QJhHeeA/NVBalH+FeK0r/x/W0rPymXt5s78TDS7d6lCwg==
 
+"@tailwindcss/forms@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@tailwindcss/forms/-/forms-0.5.0.tgz#d4bea2560a10aac642573e72d3b4d62a88960449"
+  integrity sha512-KzWugryEBFkmoaYcBE18rs6gthWCFHHO7cAZm2/hv3hwD67AzwP7udSCa22E7R1+CEJL/FfhYsJWrc0b1aeSzw==
+  dependencies:
+    mini-svg-data-uri "^1.2.3"
+
 "@types/cookie@^0.3.3":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.3.3.tgz#85bc74ba782fb7aa3a514d11767832b0e3bc6803"
@@ -2016,6 +2023,11 @@ mime-types@~2.1.34:
   integrity sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==
   dependencies:
     mime-db "1.52.0"
+
+mini-svg-data-uri@^1.2.3:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.4.4.tgz#8ab0aabcdf8c29ad5693ca595af19dd2ead09939"
+  integrity sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==
 
 minimatch@3.0.4:
   version "3.0.4"
