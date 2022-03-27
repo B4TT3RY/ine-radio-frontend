@@ -8,7 +8,7 @@ interface Props {
 export default function Markdown({ className, children }: Props) {
   return (
     <ReactMarkdown
-      className={className}
+      className={`dark:text-white${className ? ` ${className}` : ''}`}
       components={{
         a({ node, ...props }) {
           return (
@@ -25,7 +25,7 @@ export default function Markdown({ className, children }: Props) {
         },
         ul({ node, ordered, ...props }) {
           return <ul className='text-center list-disc list-inside' {...props} />
-        }
+        },
       }}
     >
       {children ?? ''}
