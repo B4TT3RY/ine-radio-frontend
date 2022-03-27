@@ -23,7 +23,7 @@ export default function Markdown({ className, children }: Props) {
         ol({ node, ...props }) {
           return <ol className='text-center list-decimal list-inside' {...props} />
         },
-        ul({ node, ...props }) {
+        ul({ node, ordered, ...props }) {
           return <ul className='text-center list-disc list-inside' {...props} />
         }
       }}
