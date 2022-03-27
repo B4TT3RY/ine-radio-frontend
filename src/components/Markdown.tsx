@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown'
+import rehypeRaw from 'rehype-raw'
 
 interface Props {
   className?: string
@@ -8,6 +9,7 @@ interface Props {
 export default function Markdown({ className, children }: Props) {
   return (
     <ReactMarkdown
+      rehypePlugins={[rehypeRaw]}
       className={`dark:text-white${className ? ` ${className}` : ''}`}
       components={{
         a({ node, ...props }) {
