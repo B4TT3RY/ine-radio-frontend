@@ -1,4 +1,4 @@
-// /auth
+// /auth, /auth/getUsers
 export interface AuthResponse {
   login: string
   displayName: string
