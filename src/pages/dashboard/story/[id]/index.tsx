@@ -6,9 +6,9 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { TableVirtuoso } from 'react-virtuoso'
 import useSWR from 'swr'
-import { apiFetcher, FetcherError, StoryInfoIdResponse } from '../../../api'
-import DashboardFrame from '../../../components/dashboard/DashboardFrame'
-import useAuth from '../../../hooks/useAuth'
+import { apiFetcher, FetcherError, StoryInfoIdResponse } from '../../../../api'
+import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
+import useAuth from '../../../../hooks/useAuth'
 
 export default function DashboardStoryById() {
   const [auth, authError] = useAuth()
