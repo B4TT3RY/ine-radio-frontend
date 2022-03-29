@@ -6,7 +6,7 @@ export default function AuthLogin() {
   const router = useRouter()
 
   useEffect(() => {
-    router.push('http://localhost:3001/auth/login')
+    router.push('https://ine-radio-api.isegye.xyz/auth/login')
   }, [router])
 
   return (

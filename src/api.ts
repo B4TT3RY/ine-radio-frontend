@@ -69,7 +69,7 @@ export const apiFetcher = async (url: string) => {
     return new Promise(() => undefined)
   }
 
-  const res = await fetch(`http://localhost:3001${url}`, {
+  const res = await fetch(`https://ine-radio-api.isegye.xyz${url}`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
@@ -87,7 +87,7 @@ export const apiFetcher = async (url: string) => {
 }
 
 export const apiFetchPost = (url: string, body: any): Promise<Response> => {
-  return fetch(`http://localhost:3001${url}`, {
+  return fetch(`https://ine-radio-api.isegye.xyz${url}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -99,7 +99,7 @@ export const apiFetchPost = (url: string, body: any): Promise<Response> => {
 
 // apiFetchDownload(`/storyinfo/${id}/download`, `${id}.csv`)
 export const apiFetchDownload = (url: string, fileName: string) => {
-  fetch(`http://localhost:3001${url}`, {
+  fetch(`https://ine-radio-api.isegye.xyz${url}`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
