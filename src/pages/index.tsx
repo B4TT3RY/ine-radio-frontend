@@ -103,6 +103,10 @@ const createSection = ({
     )
   }
 
+  if (!auth) {
+    return <SectionCard type='loading' title='계정 정보를 불러오고 있어요.' subTitle='잠시만 기다려주세요...' />
+  }
+
   if (storyInfo.currentSubmitCount >= storyInfo.maxSubmitCount) {
     return (
       <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
