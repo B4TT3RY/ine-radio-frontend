@@ -115,17 +115,21 @@ const createSection = ({
     )
   }
 
-  return (
-    <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
-      <StoryForm
-        storyInfoId={storyInfo.id}
-        characterCount={storyInfo.charCount}
-        onlyFollowers={storyInfo.onlyFollowers}
-        onlySubscribers={storyInfo.onlySubscribers}
-        onFetchResponse={(res) => {
-          setFetchResponse(res)
-        }}
-      />
-    </SectionCard>
-  )
+  if (auth && !authError) {
+    return (
+      <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
+        <StoryForm
+          storyInfoId={storyInfo.id}
+          characterCount={storyInfo.charCount}
+          onlyFollowers={storyInfo.onlyFollowers}
+          onlySubscribers={storyInfo.onlySubscribers}
+          onFetchResponse={(res) => {
+            setFetchResponse(res)
+          }}
+        />
+      </SectionCard>
+    )
+  }
+
+  return null;
 }
