@@ -32,9 +32,10 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
     <>
       <Formik
         initialValues={initialValues}
-        onSubmit={async (values, actions) => {
+        onSubmit={(values, actions) => {
           const isSubmit = confirm('사연을 보내면 수정하거나 삭제할 수 없어요.\n사연을 보내시겠어요?')
           if (isSubmit) {
+            actions.setSubmitting(true)
             apiFetchPost('/story/submit', values)
               .then((res) => res.json())
               .then((res) => {
@@ -83,8 +84,6 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
                   title: '제출을 시도하던 도중 문제가 생겼어요.',
                   subTitle: '다시 시도하거나 채팅으로 문의 해 주세요.',
                 })
-              })
-              .finally(() => {
                 actions.setSubmitting(false)
               })
           }

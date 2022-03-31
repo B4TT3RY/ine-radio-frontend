@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { apiFetcher, apiFetchPost, FetcherError, Role, StoryInfoIdResponse } from '../../../../api'
+import { apiFetcher, apiFetchPut, FetcherError, Role, StoryInfoIdResponse } from '../../../../api'
 import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
 import StoryInfoForm, { FormValues } from '../../../../components/dashboard/StoryInfoForm'
 import useAuth from '../../../../hooks/useAuth'
@@ -54,23 +54,21 @@ export default function DashboardStoryEdit() {
         {initialValues && (
           <StoryInfoForm
             initialValues={initialValues}
-            onSubmit={async (values, actions) => {
-              // TODO: /storyinfo/:id/edit 에 PUT 요청
-              // {"ok": true}
-              apiFetchPost('/storyinfo/new', values)
+            submitButtonName="수정"
+            onSubmit={(values, actions) => {
+              actions.setSubmitting(true)
+              apiFetchPut(`/storyinfo/${id}/edit`, values)
                 .then((res) => res.json())
                 .then((res) => {
                   if (res.ok) {
-                    router.push(`/dashboard/story/${res.id}`)
+                    router.push(`/dashboard/story/${id}`)
                   } else {
                     alert(`[${res.error}] 오류가 발생했어요`)
                   }
                 })
                 .catch((err) => {
                   console.error(err)
-                  alert('사연을 생성하던 도중 문제가 생겼어요.\n나중에 다시 시도해주세요.')
-                })
-                .finally(() => {
+                  alert('사연을 수정하던 도중 문제가 생겼어요.\n나중에 다시 시도해주세요.')
                   actions.setSubmitting(false)
                 })
             }}

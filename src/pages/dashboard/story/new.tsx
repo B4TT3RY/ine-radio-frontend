@@ -27,7 +27,8 @@ export default function DashboardStoryIndex() {
       <DashboardFrame auth={auth} authError={authError} currentUrl='/dashboard/story' title='사연 생성'>
         <StoryInfoForm
           initialValues={initialValues}
-          onSubmit={async (values, actions) => {
+          onSubmit={(values, actions) => {
+            actions.setSubmitting(true)
             apiFetchPost('/storyinfo/new', values)
               .then((res) => res.json())
               .then((res) => {
@@ -40,8 +41,6 @@ export default function DashboardStoryIndex() {
               .catch((err) => {
                 console.error(err)
                 alert('사연을 생성하던 도중 문제가 생겼어요.\n나중에 다시 시도해주세요.')
-              })
-              .finally(() => {
                 actions.setSubmitting(false)
               })
           }}
