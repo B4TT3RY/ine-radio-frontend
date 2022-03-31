@@ -40,9 +40,12 @@ export default function DashboardStoryById() {
         title={storyInfoId?.storyinfo.title}
         subTitle={`${dayjs(storyInfoId?.storyinfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')} 생성`}
       >
+        {/* TODO: 사연 정보 수정 버튼 추가 */}
+        {/* TODO: 입력 필드 추가 */}
         <TableVirtuoso
           style={{ height: undefined }}
           className='h-full shadow rounded-2xl bg-gray-50'
+          // TODO: regex 추가
           // data={regex ? stories.filter((s) => regex.test(s.content)) : stories}
           data={storyInfoId?.stories}
           components={{
