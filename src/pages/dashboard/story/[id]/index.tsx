@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { TableVirtuoso } from 'react-virtuoso'
 import useSWR, { useSWRConfig } from 'swr'
-import { apiFetcher, apiFetchPost, FetcherError, StoryInfoIdResponse } from '../../../../api'
+import { apiFetchDownload, apiFetcher, apiFetchPost, FetcherError, StoryInfoIdResponse } from '../../../../api'
 import Button from '../../../../components/button/Button'
 import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
 import useAuth from '../../../../hooks/useAuth'
@@ -64,12 +64,20 @@ export default function DashboardStoryById() {
         title={storyInfoId?.storyinfo.title}
         subTitle={`${dayjs(storyInfoId?.storyinfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')} 생성`}
       >
-        {/* TODO: 사연 정보 수정 버튼 추가 */}
-        <div className='flex justify-end mb-3'>
+        <div className='flex justify-end gap-3 mb-3'>
           <Button>
             <Link href={`/dashboard/story/${id}/edit`}>
               <a>사연 수정</a>
             </Link>
+          </Button>
+          <Button
+            color='green-600'
+            hoverColor='green-700'
+            onClick={() => {
+              apiFetchDownload(`/storyinfo/${id}/download`, `${storyInfoId?.storyinfo.title ?? id}.csv`)
+            }}
+          >
+              엑셀(csv) 다운로드
           </Button>
         </div>
         <input
