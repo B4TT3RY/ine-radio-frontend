@@ -33,7 +33,7 @@ export default function DashboardStoryById() {
         id: number
         content: string
         favorite: boolean
-        createdAt: Date
+        createdAt: string
       }[]
     | undefined
   >(storyInfoId?.stories)

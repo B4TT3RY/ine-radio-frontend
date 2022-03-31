@@ -59,7 +59,7 @@ export interface StoryInfoIdResponse {
     id: number
     content: string
     favorite: boolean
-    createdAt: Date
+    createdAt: string
   }[]
 }
 
