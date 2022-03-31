@@ -8,6 +8,10 @@ module.exports = {
       pattern: /bg-/,
       variants: ['hover', 'focus'],
     },
+    {
+      pattern: /text-/,
+      variants: ['dark'],
+    },
   ],
   plugins: [require('@tailwindcss/forms'), require('tailwindcss-safe-area')],
 }
