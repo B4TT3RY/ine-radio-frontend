@@ -3,5 +3,11 @@ module.exports = {
   theme: {
     extend: {},
   },
+  safelist: [
+    {
+      pattern: /bg-/,
+      variants: ['hover', 'focus'],
+    },
+  ],
   plugins: [require('@tailwindcss/forms'), require('tailwindcss-safe-area')],
 }
