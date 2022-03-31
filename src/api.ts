@@ -1,5 +1,6 @@
 // /auth, /auth/getUsers
 export interface AuthResponse {
+  id: number
   login: string
   displayName: string
   profileImage: string
