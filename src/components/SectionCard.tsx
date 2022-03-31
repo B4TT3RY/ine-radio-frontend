@@ -23,7 +23,7 @@ export default function SectionCard({ type, title, subTitle, children }: Props) 
 
       {title && (
         <h1
-          className='font-semibold text-xl md:text-2xl text-center m-0 text-black dark:text-white'
+          className='font-semibold text-2xl text-center m-0 text-black dark:text-white'
           style={{ wordBreak: 'keep-all' }}
         >
           {title}
@@ -34,7 +34,7 @@ export default function SectionCard({ type, title, subTitle, children }: Props) 
           {subTitle}
         </p>
       )} */}
-      {subTitle && <Markdown className='leading-6 text-center overflow-hidden'>{subTitle}</Markdown>}
+      {subTitle && <Markdown className='leading-6 text-center text-base overflow-hidden'>{subTitle}</Markdown>}
       {children}
     </>
   )

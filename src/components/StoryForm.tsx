@@ -84,7 +84,6 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
                 className='resize-none w-full text-base p-3 transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-2xl dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400'
               />
               <div className='flex items-center gap-2 select-none'>
-                <Badge type='anonymous' />
                 {onlyFollowers && <Badge type='onlyFollowers' />}
                 {onlySubscribers && <Badge type='onlySubscribers' />}
               </div>
