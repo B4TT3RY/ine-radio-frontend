@@ -54,7 +54,7 @@ export default function StoryInfoForm({ initialValues, submitButtonName, onSubmi
                 </label>
                 <div
                   id='subTitlePreview'
-                  className='h-full w-full text-base text-center px-4 py-3 shadow-sm bg-white border border-gray-300 rounded-2xl overflow-hidden'
+                  className='h-full w-full text-base text-center px-4 py-3 shadow-sm bg-white dark:bg-slate-700 border border-gray-300 rounded-2xl overflow-hidden'
                 >
                   <Markdown>{values.subTitle}</Markdown>
                 </div>
