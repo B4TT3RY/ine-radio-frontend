@@ -97,6 +97,17 @@ export const apiFetchPost = (url: string, body: any): Promise<Response> => {
   })
 }
 
+export const apiFetchPut = (url: string, body: any): Promise<Response> => {
+  return fetch(`https://ine-radio-api.isegye.xyz${url}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
+}
+
 // apiFetchDownload(`/storyinfo/${id}/download`, `${id}.csv`)
 export const apiFetchDownload = (url: string, fileName: string) => {
   fetch(`https://ine-radio-api.isegye.xyz${url}`, {
