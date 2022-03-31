@@ -10,7 +10,7 @@ export default function Markdown({ className, children }: Props) {
   return (
     <ReactMarkdown
       rehypePlugins={[rehypeRaw]}
-      className={`dark:text-white${className ? ` ${className}` : ''}`}
+      className={`break-all dark:text-white${className ? ` ${className}` : ''}`}
       components={{
         a({ node, ...props }) {
           return (
