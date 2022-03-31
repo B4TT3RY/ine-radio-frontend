@@ -1,15 +1,17 @@
 import { getRegExp } from 'korean-regexp'
 import Error from 'next/error'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import useSWR from 'swr'
-import { apiFetcher, AuthResponse, FetcherError, Role } from '../../../api'
+import { apiFetcher, apiFetchPost, AuthResponse, FetcherError, Role } from '../../../api'
 import DashboardFrame from '../../../components/dashboard/DashboardFrame'
 import SimpleUserProfile from '../../../components/dashboard/SimpleUserProfile'
 import useAuth from '../../../hooks/useAuth'
 
 export default function PermissionIndex() {
+  const router = useRouter()
   const [auth, authError] = useAuth()
   const [regex, setRegex] = useState<RegExp | undefined>()
   const { data: users, error: usersError } = useSWR<AuthResponse[], FetcherError>(`/auth/getUsers`, apiFetcher)
@@ -55,7 +57,21 @@ export default function PermissionIndex() {
                   if (!answer) {
                     return
                   }
-                  // TODO: 스탭 추가 구현
+                  apiFetchPost('/auth/setRole', {
+                    userId: user.id,
+                    role: Role.STAFF,
+                  })
+                    .then((res) => res.json())
+                    .then((res) => {
+                      if (res.ok) {
+                        router.push('/dashboard/permission')
+                      } else {
+                        alert(`[${res.error}] 오류가 발생했습니다${res.message ? `:\n${res.message}` : '.'}`)
+                      }
+                    })
+                    .catch((err) => {
+                      alert(`오류가 발생했습니다.\n${err}`)
+                    })
                 }}
               >
                 <SimpleUserProfile className='mb-3' user={user} />

@@ -2,13 +2,15 @@ import { PlusIcon } from '@heroicons/react/outline'
 import Error from 'next/error'
 import Head from 'next/head'
 import Link from 'next/link'
-import useSWR from 'swr'
-import { apiFetcher, AuthResponse, FetcherError, Role } from '../../../api'
+import { useRouter } from 'next/router'
+import useSWR, { useSWRConfig } from 'swr'
+import { apiFetcher, apiFetchPost, AuthResponse, FetcherError, Role } from '../../../api'
 import DashboardFrame from '../../../components/dashboard/DashboardFrame'
 import SimpleUserProfile from '../../../components/dashboard/SimpleUserProfile'
 import useAuth from '../../../hooks/useAuth'
 
 export default function PermissionIndex() {
+  const { mutate } = useSWRConfig()
   const [auth, authError] = useAuth()
   const { data: users, error: usersError } = useSWR<AuthResponse[], FetcherError>(`/auth/getUsers`, apiFetcher)
 
@@ -56,7 +58,30 @@ export default function PermissionIndex() {
               .filter((users) => users.role == Role.STAFF)
               .map((user) => (
                 <li key={user.login}>
-                  <SimpleUserProfile user={user} />
+                  <SimpleUserProfile
+                    user={user}
+                    onClick={() => {
+                      const answer = confirm(`${user.displayName}(${user.login})님의 스탭 권한을 제거하시겠어요?`)
+                      if (!answer) {
+                        return
+                      }
+                      apiFetchPost('/auth/setRole', {
+                        userId: user.id,
+                        role: Role.USER,
+                      })
+                        .then((res) => res.json())
+                        .then((res) => {
+                          if (res.ok) {
+                            mutate('/api/getUsers')
+                          } else {
+                            alert(`[${res.error}] 오류가 발생했습니다${res.message ? `:\n${res.message}` : '.'}`)
+                          }
+                        })
+                        .catch((err) => {
+                          alert(`오류가 발생했습니다.\n${err}`)
+                        })
+                    }}
+                  />
                 </li>
               ))}
         </ul>

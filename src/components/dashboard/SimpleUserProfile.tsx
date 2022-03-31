@@ -5,13 +5,14 @@ import { AuthResponse, Role } from '../../api'
 interface Props {
   className?: string
   user?: AuthResponse
+  onClick?: () => void
 }
 
 const loader = ({ src }: ImageLoaderProps) => {
   return src
 }
 
-export default function SimpleUserProfile({ className, user }: Props) {
+export default function SimpleUserProfile({ className, user, onClick }: Props) {
   return (
     <div className={`flex justify-between shadow bg-white px-4 py-3 rounded-2xl${className ? ` ${className}` : ''}`}>
       <div className='flex items-center'>
@@ -36,13 +37,7 @@ export default function SimpleUserProfile({ className, user }: Props) {
       {user?.role == Role.STAFF && (
         <div
           className='flex items-center justify-center cursor-pointer'
-          onClick={async () => {
-            const answer = confirm(`${user.displayName}(${user.login})님의 스탭 권한을 제거하시겠어요?`)
-            if (!answer) {
-              return
-            }
-            // TODO: 스탭 제거 구현
-          }}
+          onClick={onClick}
         >
           <XIcon className='text-red-600 w-10 h-10' />
         </div>
