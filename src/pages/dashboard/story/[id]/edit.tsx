@@ -28,10 +28,10 @@ export default function DashboardStoryEdit() {
         title: storyInfoId.storyinfo.title,
         subTitle: storyInfoId.storyinfo.subTitle,
         charCount: storyInfoId.storyinfo.charCount,
-        isOnlyFollowers: storyInfoId.storyinfo.isOnlyFollowers,
+        isOnlyFollowers: storyInfoId.storyinfo.onlyFollowers,
         followDiff: storyInfoId.storyinfo.followDiff,
         followDiffUnit: storyInfoId.storyinfo.followDiffUnit,
-        isOnlySubscribers: storyInfoId.storyinfo.isOnlySubscribers,
+        isOnlySubscribers: storyInfoId.storyinfo.onlySubscribers,
         maxSubmitCount: storyInfoId.storyinfo.maxSubmitCount
       })
     }

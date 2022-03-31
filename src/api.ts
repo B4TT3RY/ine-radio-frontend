@@ -52,7 +52,7 @@ export interface StoryInfoIdResponse {
     onlySubscribers: boolean,
     activation: boolean,
     followDiff: number,
-    followDiffUnit: number,
+    followDiffUnit: string,
     createdAt: string,
     maxSubmitCount: number,
   }
