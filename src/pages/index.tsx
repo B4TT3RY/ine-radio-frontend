@@ -23,6 +23,14 @@ export default function Index() {
   const { data: storyInfo, error: storyInfoError } = useSWR<StoryInfoResponse, FetcherError>('/storyinfo', apiFetcher, {
     refreshInterval: 30000,
   })
+  const { data: storyInfoValidate, error: storyInfoValidateError } = useSWR<{ ok: boolean }, FetcherError>(
+    `/storyinfo/${storyInfo?.id}/validate`,
+    apiFetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnMount: true,
+    }
+  )
 
   useEffect(() => {
     document.querySelector('html')?.classList.remove('bg-gray-200')
@@ -37,7 +45,16 @@ export default function Index() {
     return <Error statusCode={storyInfoError.code} />
   }
 
-  const sectionElement = createSection({ auth, authError, storyInfo, storyInfoError, fetchResponse, setFetchResponse })
+  const sectionElement = createSection({
+    auth,
+    authError,
+    storyInfo,
+    storyInfoError,
+    storyInfoValidate,
+    storyInfoValidateError,
+    fetchResponse,
+    setFetchResponse,
+  })
 
   return (
     <>
@@ -69,6 +86,8 @@ const createSection = ({
   authError,
   storyInfo,
   storyInfoError,
+  storyInfoValidate,
+  storyInfoValidateError,
   fetchResponse,
   setFetchResponse,
 }: {
@@ -76,6 +95,8 @@ const createSection = ({
   authError?: FetcherError
   storyInfo?: StoryInfoResponse
   storyInfoError?: FetcherError
+  storyInfoValidate?: { ok: boolean }
+  storyInfoValidateError?: FetcherError
   fetchResponse?: FetchResponse
   setFetchResponse: Dispatch<SetStateAction<FetchResponse | undefined>>
 }) => {

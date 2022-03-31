@@ -83,7 +83,7 @@ export interface ErrorBody {
 }
 
 export const apiFetcher = async (url: string) => {
-  if (url == '/storyinfo/undefined') {
+  if (url.includes('undefined')) {
     return new Promise(() => undefined)
   }
 
