@@ -62,7 +62,11 @@ export default function DashboardStoryById() {
         authError={authError}
         currentUrl='/dashboard/story'
         title={storyInfoId?.storyinfo.title}
-        subTitle={`${dayjs(storyInfoId?.storyinfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')} 생성`}
+        subTitle={
+          storyInfoId?.storyinfo.createdAt
+            ? `${dayjs(storyInfoId?.storyinfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')}  생성`
+            : undefined
+        }
       >
         <div className='flex justify-end gap-3 mb-3'>
           <Button>
@@ -77,7 +81,7 @@ export default function DashboardStoryById() {
               apiFetchDownload(`/storyinfo/${id}/download`, `${storyInfoId?.storyinfo.title ?? id}.csv`)
             }}
           >
-              엑셀(csv) 다운로드
+            엑셀(csv) 다운로드
           </Button>
         </div>
         <input
