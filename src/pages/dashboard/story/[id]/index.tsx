@@ -3,11 +3,13 @@ import dayjs from 'dayjs'
 import { getRegExp } from 'korean-regexp'
 import Error from 'next/error'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { TableVirtuoso } from 'react-virtuoso'
 import useSWR, { useSWRConfig } from 'swr'
 import { apiFetcher, apiFetchPost, FetcherError, StoryInfoIdResponse } from '../../../../api'
+import Button from '../../../../components/button/Button'
 import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
 import useAuth from '../../../../hooks/useAuth'
 
@@ -63,6 +65,13 @@ export default function DashboardStoryById() {
         subTitle={`${dayjs(storyInfoId?.storyinfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')} 생성`}
       >
         {/* TODO: 사연 정보 수정 버튼 추가 */}
+        <div className='flex justify-end mb-3'>
+          <Button>
+            <Link href={`/dashboard/story/${id}/edit`}>
+              <a>사연 수정</a>
+            </Link>
+          </Button>
+        </div>
         <input
           type='search'
           name='search'
