@@ -12,6 +12,8 @@ import Error from 'next/error'
 import Script from 'next/script'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
+// TODO: /storyinfo/:id:/validate 사용
+
 export default function Index() {
   const [fetchResponse, setFetchResponse] = useState<FetchResponse | undefined>(undefined)
   const { data: auth, error: authError } = useSWR<AuthResponse, FetcherError>('/auth', apiFetcher, {
