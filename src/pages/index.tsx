@@ -63,7 +63,7 @@ export default function Index() {
         <meta name='theme-color' content='#E9D5FF' media='(prefers-color-scheme: light)' />
         <meta name='theme-color' content='#0F172A' media='(prefers-color-scheme: dark)' />
       </Head>
-      <div className='flex flex-col items-center justify-center gap-6 w-screen h-screen max-h-ios'>
+      <div className='flex flex-col items-center justify-center gap-6 w-screen-safe h-screen-safe'>
         <div className='flex gap-4 absolute top-2 right-2'>
           {authError && authError.code == 401 && <LoginButton />}
           {auth && !authError && auth.role != Role.STAFF && <DashboardButton />}
