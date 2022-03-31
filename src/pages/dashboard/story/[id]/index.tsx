@@ -6,12 +6,14 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { TableVirtuoso } from 'react-virtuoso'
-import useSWR from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 import { apiFetcher, apiFetchPost, FetcherError, StoryInfoIdResponse } from '../../../../api'
 import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
 import useAuth from '../../../../hooks/useAuth'
 
 export default function DashboardStoryById() {
+  const { mutate } = useSWRConfig()
+
   const [auth, authError] = useAuth()
   const [regex, setRegex] = useState<RegExp | undefined>()
 
@@ -137,8 +139,21 @@ export default function DashboardStoryById() {
                   if (!answer) {
                     return
                   }
-                  // TODO: 사연 숨기기 구현
-                  alert(`[${story.id}] 사연을 숨겼어요.`)
+                  apiFetchPost(`/storyinfo/${storyInfoId?.storyinfo.id}/hide`, {
+                    storyId: story.id,
+                  })
+                    .then((res) => res.json())
+                    .then((res) => {
+                      if (res.ok) {
+                        mutate(`/storyinfo/${id}`)
+                        alert(`[${story.id}] 사연을 숨겼어요.`)
+                      } else {
+                        alert(`[${res.error}] 오류가 발생했습니다${res.message ? `:\n${res.message}` : '.'}`)
+                      }
+                    })
+                    .catch((err) => {
+                      alert(`오류가 발생했습니다.\n${err}`)
+                    })
                 }}
               >
                 숨기기
