@@ -106,7 +106,7 @@ export default function StoryInfoForm({ initialValues, submitButtonName, onSubmi
                       className='text-base px-3 py-2 w-20 transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-xl'
                       min={0}
                       defaultValue={0}
-                      max={getMaxTimeWithUnit(values.followDiffUnit)}
+                      // max={getMaxTimeWithUnit(values.followDiffUnit)}
                     />
                     <Field
                       as='select'
