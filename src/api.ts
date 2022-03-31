@@ -42,8 +42,25 @@ export interface StoryInfoListResponse {
 
 // /storyinfo/:id
 export interface StoryInfoIdResponse {
-  storyinfo: any
-  stories: any[]
+  storyinfo: {
+    id: string,
+    title: string,
+    subTitle: string,
+    charCount: number,
+    onlyFollowers: boolean,
+    onlySubscribers: boolean,
+    activation: boolean,
+    followDiff: number,
+    followDiffUnit: number,
+    createdAt: string,
+    maxSubmitCount: number,
+  }
+  stories: {
+    id: number
+    content: string
+    favorite: boolean
+    createdAt: Date
+  }[]
 }
 
 export enum Role {

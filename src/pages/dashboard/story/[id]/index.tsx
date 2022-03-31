@@ -1,17 +1,19 @@
 import { HeartIcon } from '@heroicons/react/solid'
 import dayjs from 'dayjs'
+import { getRegExp } from 'korean-regexp'
 import Error from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TableVirtuoso } from 'react-virtuoso'
 import useSWR from 'swr'
-import { apiFetcher, FetcherError, StoryInfoIdResponse } from '../../../../api'
+import { apiFetcher, apiFetchPost, FetcherError, StoryInfoIdResponse } from '../../../../api'
 import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
 import useAuth from '../../../../hooks/useAuth'
 
 export default function DashboardStoryById() {
   const [auth, authError] = useAuth()
+  const [regex, setRegex] = useState<RegExp | undefined>()
 
   const router = useRouter()
   const { id } = router.query
@@ -23,6 +25,24 @@ export default function DashboardStoryById() {
       refreshInterval: 30000,
     }
   )
+
+  const [filteredStories, setFilteredStories] = useState<
+    | {
+        id: number
+        content: string
+        favorite: boolean
+        createdAt: Date
+      }[]
+    | undefined
+  >(storyInfoId?.stories)
+
+  useEffect(() => {
+    if (regex) {
+      setFilteredStories(storyInfoId?.stories.filter((s) => regex.test(s.content)))
+    } else {
+      setFilteredStories(storyInfoId?.stories)
+    }
+  }, [regex, storyInfoId?.stories])
 
   if (storyInfoIdError) {
     return <Error statusCode={storyInfoIdError.code} />
@@ -41,13 +61,17 @@ export default function DashboardStoryById() {
         subTitle={`${dayjs(storyInfoId?.storyinfo.createdAt).format('YYYY년 M월 D일 HH시 mm분')} 생성`}
       >
         {/* TODO: 사연 정보 수정 버튼 추가 */}
-        {/* TODO: 입력 필드 추가 */}
+        <input
+          type='search'
+          name='search'
+          onChange={(e) => setRegex(getRegExp(e.target.value, { initialSearch: true }))}
+          placeholder='검색할 사연을 입력해주세요'
+          className='text-base p-3 w-full transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-xl mb-4'
+        />
         <TableVirtuoso
           style={{ height: undefined }}
           className='h-full shadow rounded-2xl bg-gray-50'
-          // TODO: regex 추가
-          // data={regex ? stories.filter((s) => regex.test(s.content)) : stories}
-          data={storyInfoId?.stories}
+          data={filteredStories}
           components={{
             Table: (props) => <table {...props} className='table-fixed w-full divide-y divide-gray-300' />,
             // eslint-disable-next-line react/display-name
@@ -73,7 +97,28 @@ export default function DashboardStoryById() {
                     story.favorite ? 'text-red-500' : 'text-gray-300 '
                   }`}
                   onClick={() => {
-                    // TODO: 사연 좋아요 구현
+                    apiFetchPost(`/storyinfo/${storyInfoId?.storyinfo.id}/favorite`, {
+                      storyId: story.id,
+                      favorite: !story.favorite,
+                    })
+                      .then((res) => res.json())
+                      .then((res) => {
+                        if (res.ok) {
+                          setFilteredStories((prev) => {
+                            return prev?.map((s) => {
+                              if (s.id === story.id) {
+                                s.favorite = !s.favorite
+                              }
+                              return s
+                            })
+                          })
+                        } else {
+                          alert(`[${res.error}] 오류가 발생했습니다${res.message ? `:\n${res.message}` : '.'}`)
+                        }
+                      })
+                      .catch((err) => {
+                        alert(`오류가 발생했습니다.\n${err}`)
+                      })
                   }}
                 />
                 {story.content}
@@ -101,6 +146,7 @@ export default function DashboardStoryById() {
             </>
           )}
         />
+        <div className='h-4'></div>
       </DashboardFrame>
     </>
   )
