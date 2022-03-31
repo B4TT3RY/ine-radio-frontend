@@ -1,3 +1,7 @@
+export function classNames(...classes: string[]): string {
+  return classes.filter(Boolean).join(' ').trim()
+}
+
 export function unitToKorean(unit: string): string {
   switch (unit) {
     case 'minutes':
