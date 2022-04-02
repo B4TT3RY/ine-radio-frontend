@@ -114,7 +114,10 @@ export default function DashboardStoryById() {
           )}
           itemContent={(_, story) => (
             <>
-              <td className='flex items-center gap-2 px-4 py-4 font-medium keep-all'>
+              <td
+                className='flex items-center gap-2 px-4 py-4 font-medium keep-all'
+                style={{ overflowWrap: 'anywhere' }}
+              >
                 <HeartIcon
                   className={`flex-none h-6 w-6 cursor-pointer hover:text-red-300 ${
                     story.favorite ? 'text-red-500' : 'text-gray-300 '
