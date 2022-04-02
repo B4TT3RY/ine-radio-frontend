@@ -5,7 +5,6 @@ const nextConfig = {
     domains: ['static-cdn.jtvnw.net'],
     loader: 'custom',
   },
-  trailingSlash: true,
 }
 
 module.exports = nextConfig
