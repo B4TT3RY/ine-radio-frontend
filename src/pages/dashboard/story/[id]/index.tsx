@@ -1,6 +1,7 @@
 import { HeartIcon } from '@heroicons/react/solid'
 import dayjs from 'dayjs'
 import { getRegExp } from 'korean-regexp'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Error from 'next/error'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -191,4 +192,5 @@ export default function DashboardStoryById() {
   )
 }
 
-export const getStaticPaths = () => ({ paths: ['/dashboard/story/[id]'], fallback: true })
+export const getStaticPaths: GetStaticPaths = () => ({ paths: [], fallback: true })
+export const getStaticProps: GetStaticProps = () => ({ props: {} })
