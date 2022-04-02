@@ -191,6 +191,3 @@ export default function DashboardStoryById() {
     </>
   )
 }
-
-export const getStaticPaths: GetStaticPaths = () => ({ paths: [], fallback: false })
-export const getStaticProps: GetStaticProps = () => ({ props: {} })
