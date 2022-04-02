@@ -190,3 +190,5 @@ export default function DashboardStoryById() {
     </>
   )
 }
+
+export const getStaticPaths = () => ({ paths: ['/dashboard/story/[id]'], fallback: true })
