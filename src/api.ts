@@ -44,17 +44,17 @@ export interface StoryInfoListResponse {
 // /storyinfo/:id
 export interface StoryInfoIdResponse {
   storyinfo: {
-    id: string,
-    title: string,
-    subTitle: string,
-    charCount: number,
-    onlyFollowers: boolean,
-    onlySubscribers: boolean,
-    activation: boolean,
-    followDiff: number,
-    followDiffUnit: string,
-    createdAt: string,
-    maxSubmitCount: number,
+    id: string
+    title: string
+    subTitle: string
+    charCount: number
+    onlyFollowers: boolean
+    onlySubscribers: boolean
+    activation: boolean
+    followDiff: number
+    followDiffUnit: string
+    createdAt: string
+    maxSubmitCount: number
   }
   stories: {
     id: number
@@ -87,7 +87,7 @@ export const apiFetcher = async (url: string) => {
     return new Promise(() => undefined)
   }
 
-  const res = await fetch(`https://ine-radio-api.isegye.xyz${url}`, {
+  const res = await fetch(`https://v5yz308m.isegye.xyz${url}`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
@@ -105,7 +105,7 @@ export const apiFetcher = async (url: string) => {
 }
 
 export const apiFetchPost = (url: string, body: any): Promise<Response> => {
-  return fetch(`https://ine-radio-api.isegye.xyz${url}`, {
+  return fetch(`https://v5yz308m.isegye.xyz${url}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -116,7 +116,7 @@ export const apiFetchPost = (url: string, body: any): Promise<Response> => {
 }
 
 export const apiFetchPut = (url: string, body: any): Promise<Response> => {
-  return fetch(`https://ine-radio-api.isegye.xyz${url}`, {
+  return fetch(`https://v5yz308m.isegye.xyz${url}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -128,7 +128,7 @@ export const apiFetchPut = (url: string, body: any): Promise<Response> => {
 
 // apiFetchDownload(`/storyinfo/${id}/download`, `${id}.csv`)
 export const apiFetchDownload = (url: string, fileName: string) => {
-  fetch(`https://ine-radio-api.isegye.xyz${url}`, {
+  fetch(`https://v5yz308m.isegye.xyz${url}`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
