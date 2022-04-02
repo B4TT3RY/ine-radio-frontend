@@ -66,7 +66,7 @@ export default function Index() {
       <div className='flex flex-col items-center justify-center gap-6 w-screen-safe h-screen-safe'>
         <div className='flex gap-4 absolute top-2 right-2'>
           {authError && authError.code == 401 && <LoginButton />}
-          {auth && !authError && auth.role != Role.STAFF && <DashboardButton />}
+          {auth && !authError && auth.role != Role.USER && <DashboardButton />}
           {auth && !authError && <LogoutButton />}
         </div>
         <header className='flex justify-center select-none'>
