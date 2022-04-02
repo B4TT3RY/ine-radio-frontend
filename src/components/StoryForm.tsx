@@ -63,6 +63,8 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
                 })
                 actions.setSubmitting(false)
               })
+          } else {
+            actions.setSubmitting(false)
           }
         }}
       >
