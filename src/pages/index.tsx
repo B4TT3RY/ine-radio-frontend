@@ -24,7 +24,8 @@ export default function Index() {
     refreshInterval: 30000,
   })
   const { data: storyInfoValidate, error: storyInfoValidateError } = useSWR<{ ok: boolean }, FetcherError>(
-    `/storyinfo/${storyInfo?.id}/validate`,
+    // `/storyinfo/${storyInfo?.id}/validate`,
+    null,
     apiFetcher,
     {
       revalidateOnFocus: false,
