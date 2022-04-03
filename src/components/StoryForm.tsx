@@ -1,6 +1,7 @@
 import { Field, Form, Formik } from 'formik'
-import { KeyboardEvent } from 'react'
+import { KeyboardEvent, useEffect } from 'react'
 import { apiFetchPost } from '../api'
+import usePreventLeave from '../hooks/usePreventLeave'
 import { getErrorMessage } from '../utils'
 import Badge from './Badge'
 
@@ -24,6 +25,16 @@ export interface FetchResponse {
 }
 
 export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, onlySubscribers, onFetchResponse }: Props) {
+  const { enablePrevent, disablePrevent } = usePreventLeave()
+  
+  useEffect(() => {
+    enablePrevent()
+
+    return () => {
+      disablePrevent()
+    }
+  }, [enablePrevent, disablePrevent])
+
   const initialValues: FormValues = {
     storyinfoId: storyInfoId,
     content: '',
@@ -36,6 +47,7 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
         onSubmit={(values, actions) => {
           const isSubmit = confirm('사연을 보내면 수정하거나 삭제할 수 없어요.\n사연을 보내시겠어요?')
           if (isSubmit) {
+            disablePrevent()
             actions.setSubmitting(true)
             apiFetchPost('/story/submit', values)
               .then((res) => res.json())
@@ -64,6 +76,7 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
                 actions.setSubmitting(false)
               })
           } else {
+            enablePrevent()
             actions.setSubmitting(false)
           }
         }}
