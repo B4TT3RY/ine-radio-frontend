@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { TableVirtuoso } from 'react-virtuoso'
 import useSWR, { useSWRConfig } from 'swr'
-import { apiFetchDownload, apiFetcher, apiFetchPost, FetcherError, StoryInfoIdResponse } from '../../../../api'
+import { apiFetchDownload, apiFetcher, apiFetchPost, FetcherError, Role, StoryInfoIdResponse } from '../../../../api'
 import Button from '../../../../components/button/Button'
 import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
 import useAuth from '../../../../hooks/useAuth'
@@ -43,7 +43,7 @@ export default function DashboardStoryById() {
   >(storyInfoId?.stories)
 
   useEffect(() => {
-    let stories = storyInfoId?.stories;
+    let stories = storyInfoId?.stories
 
     if (regex) {
       stories = stories?.filter((s) => regex.test(s.content))
@@ -77,11 +77,13 @@ export default function DashboardStoryById() {
         }
       >
         <div className='flex justify-end gap-3 mb-3'>
-          <Button>
-            <Link href={`/dashboard/story/${id}/edit`}>
-              <a>사연 수정</a>
-            </Link>
-          </Button>
+          {auth?.role != Role.STAFF && (
+            <Button>
+              <Link href={`/dashboard/story/${id}/edit`}>
+                <a>사연 수정</a>
+              </Link>
+            </Button>
+          )}
           <Button
             color='green-600'
             hoverColor='green-700'
