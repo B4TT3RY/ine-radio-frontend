@@ -19,6 +19,7 @@ export default function DashboardStoryById() {
 
   const [auth, authError] = useAuth()
   const [regex, setRegex] = useState<RegExp | undefined>()
+  const [favoriteFilter, setFavoriteFilter] = useState(false)
 
   const router = useRouter()
   const { id } = router.query
@@ -42,12 +43,18 @@ export default function DashboardStoryById() {
   >(storyInfoId?.stories)
 
   useEffect(() => {
+    let stories = storyInfoId?.stories;
+
     if (regex) {
-      setFilteredStories(storyInfoId?.stories.filter((s) => regex.test(s.content)))
-    } else {
-      setFilteredStories(storyInfoId?.stories)
+      stories = stories?.filter((s) => regex.test(s.content))
     }
-  }, [regex, storyInfoId?.stories])
+
+    if (favoriteFilter) {
+      stories = stories?.filter((s) => s.favorite)
+    }
+
+    setFilteredStories(stories)
+  }, [regex, storyInfoId?.stories, favoriteFilter])
 
   if (storyInfoIdError) {
     return <Error statusCode={storyInfoIdError.code} />
@@ -108,7 +115,17 @@ export default function DashboardStoryById() {
           }}
           fixedHeaderContent={() => (
             <tr>
-              <th className='text-left px-4 py-2'>사연</th>
+              <th className='flex text-left px-4 py-2 gap-2'>
+                <HeartIcon
+                  className={`h-6 w-6 cursor-pointer hover:text-red-300 ${
+                    favoriteFilter ? 'text-red-500' : 'text-gray-300 '
+                  }`}
+                  onClick={() => {
+                    setFavoriteFilter((prev) => !prev)
+                  }}
+                />
+                사연
+              </th>
               <th className='py-2 w-24 sm:w-36'>접수일자</th>
               <th className='py-2 w-20'>숨기기</th>
             </tr>
