@@ -41,7 +41,7 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
 
   return (
     <>
-      <div className='flex flex-col h-screen-safe'>
+      <div className='flex flex-col h-screen p-safe'>
         <Disclosure as='nav' className='bg-gray-800 z-10'>
           {({ open }) => (
             <>
