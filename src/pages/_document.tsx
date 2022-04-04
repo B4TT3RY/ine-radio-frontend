@@ -25,7 +25,7 @@ function BaseMeta() {
       <meta name='og:type' content='website' />
       <meta name='og:url' content='https://ine-radio.isegye.xyz/' />
       <meta name='og:title' content='아이네의 깃털 라디오' />
-      <meta name='og:image' content='/og_image.jpg' />
+      <meta name='og:image' content='/img/og_image.jpg' />
       <meta name='og:description' content='아이네의 깃털 라디오에 사연을 보낼 수 있어요.' />
       <meta name='og:site_name' content='아이네의 깃털 라디오' />
       <meta name='og:locale' content='ko_KR' />
