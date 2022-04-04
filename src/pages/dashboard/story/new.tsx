@@ -12,9 +12,10 @@ export default function DashboardStoryIndex() {
     title: '',
     subTitle: '',
     charCount: 40,
-    isOnlyFollowers: false,
+    activation: false,
     followDiff: 0,
     followDiffUnit: 'minutes',
+    isOnlyFollowers: false,
     isOnlySubscribers: false,
     maxSubmitCount: 1,
   }
