@@ -64,7 +64,7 @@ export default function Index() {
         <meta name='theme-color' content='#E9D5FF' media='(prefers-color-scheme: light)' />
         <meta name='theme-color' content='#0F172A' media='(prefers-color-scheme: dark)' />
       </Head>
-      <div className='w-screen-safe h-screen-safe'>
+      <div className='h-screen-safe mb-3 sm:mb-0'>
         <div className='flex justify-end gap-4 p-3 sm:absolute sm:top-0 sm:right-0'>
           {authError && authError.code == 401 && <LoginButton />}
           {auth && !authError && auth.role != Role.USER && <DashboardButton />}
