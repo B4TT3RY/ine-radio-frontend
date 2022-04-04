@@ -33,7 +33,7 @@ export default function DashboardStoryEdit() {
         followDiff: storyInfoId.storyinfo.followDiff,
         followDiffUnit: storyInfoId.storyinfo.followDiffUnit,
         isOnlySubscribers: storyInfoId.storyinfo.onlySubscribers,
-        maxSubmitCount: storyInfoId.storyinfo.maxSubmitCount
+        maxSubmitCount: storyInfoId.storyinfo.maxSubmitCount,
       })
     }
   }, [storyInfoId])
@@ -84,11 +84,11 @@ export default function DashboardStoryEdit() {
                     if (res.ok) {
                       router.push('/dashboard/story')
                     } else {
-                      alert(`[${res.error}] 오류가 발생했습니다${res.message ? `:\n${res.message}` : '.'}`)
+                      alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
                     }
                   })
                   .catch((err) => {
-                    alert(`오류가 발생했습니다.\n${err}`)
+                    alert(`오류가 발생했어요.\n${err}`)
                   })
               }
             }}

@@ -66,11 +66,11 @@ export default function PermissionIndex() {
                       if (res.ok) {
                         router.push('/dashboard/permission')
                       } else {
-                        alert(`[${res.error}] 오류가 발생했습니다${res.message ? `:\n${res.message}` : '.'}`)
+                        alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
                       }
                     })
                     .catch((err) => {
-                      alert(`오류가 발생했습니다.\n${err}`)
+                      alert(`오류가 발생했어요.\n${err}`)
                     })
                 }}
               >
