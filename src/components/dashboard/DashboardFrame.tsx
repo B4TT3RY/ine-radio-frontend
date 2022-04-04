@@ -164,11 +164,11 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
           )}
         </Disclosure>
         <header className='bg-white shadow z-10'>
-          <div className='max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8'>
+          <div className='max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8'>
             {title ? (
-              <h1 className='text-3xl font-bold text-gray-900'>{title}</h1>
+              <h1 className='text-2xl font-extrabold text-gray-900'>{title}</h1>
             ) : (
-              <p className='animate-pulse h-7 w-64 rounded-3xl bg-slate-700'></p>
+              <p className='animate-pulse h-6 w-64 rounded-3xl bg-slate-700'></p>
             )}
 
             {subTitle && <span className='text-base font-medium text-gray-800'>{subTitle}</span>}
