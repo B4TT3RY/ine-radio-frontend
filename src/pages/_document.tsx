@@ -18,7 +18,7 @@ function BaseMeta() {
   return (
     <>
       <meta charSet='utf-8' />
-      <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
+      <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover, minimal-ui' />
       <meta name='description' content='아이네의 깃털 라디오에 사연을 보낼 수 있어요.' />
       <meta name='og:type' content='website' />
       <meta name='og:url' content='https://ine-radio.isegye.xyz/' />
