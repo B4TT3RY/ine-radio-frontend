@@ -108,7 +108,6 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onD
                       className='text-base px-3 py-2 w-20 transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-xl'
                       min={0}
                       defaultValue={0}
-                      // max={getMaxTimeWithUnit(values.followDiffUnit)}
                     />
                     <Field
                       as='select'
@@ -138,14 +137,22 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onD
                   </label>
                 </div>
               </div>
+              <div className='flex flex-col w-full'>
+                <div className='flex items-center gap-2'>
+                  <Field
+                    type='checkbox'
+                    id='activation'
+                    name='activation'
+                    className='w-5 h-5 text-violet-600 focus:ring-violet-600 focus:ring-opacity-25 border border-gray-300 rounded'
+                  />
+                  <label htmlFor='activation' className='text-lg select-none'>
+                    사연 활성화
+                  </label>
+                </div>
+              </div>
             </div>
             <div className='flex gap-3 sm:justify-end'>
-              <Button
-                color='red-500'
-                hoverColor='red-600'
-                extraClassName='text-xl'
-                onClick={onDelete}
-              >
+              <Button color='red-500' hoverColor='red-600' extraClassName='text-xl' onClick={onDelete}>
                 사연 삭제
               </Button>
               <button
