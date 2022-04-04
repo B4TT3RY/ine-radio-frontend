@@ -126,6 +126,17 @@ export const apiFetchPut = (url: string, body: any): Promise<Response> => {
   })
 }
 
+export const apiFetchDelete = (url: string, body?: any): Promise<Response> => {
+  return fetch(`https://v5yz308m.isegye.xyz${url}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      'Content-Type': 'application/json',
+    },
+    body: body ? JSON.stringify(body) : undefined,
+  })
+}
+
 // apiFetchDownload(`/storyinfo/${id}/download`, `${id}.csv`)
 export const apiFetchDownload = (url: string, fileName: string) => {
   fetch(`https://v5yz308m.isegye.xyz${url}`, {

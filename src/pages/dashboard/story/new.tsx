@@ -27,6 +27,7 @@ export default function DashboardStoryIndex() {
       <DashboardFrame auth={auth} authError={authError} currentUrl='/dashboard/story' title='사연 생성'>
         <StoryInfoForm
           initialValues={initialValues}
+          isEditPage={false}
           onSubmit={(values, actions) => {
             actions.setSubmitting(true)
             apiFetchPost('/storyinfo/new', values)

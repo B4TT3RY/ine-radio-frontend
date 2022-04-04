@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { apiFetcher, apiFetchPut, FetcherError, Role, StoryInfoIdResponse } from '../../../../api'
+import { apiFetchDelete, apiFetcher, apiFetchPut, FetcherError, Role, StoryInfoIdResponse } from '../../../../api'
 import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
 import StoryInfoForm, { FormValues } from '../../../../components/dashboard/StoryInfoForm'
 import useAuth from '../../../../hooks/useAuth'
@@ -28,6 +28,7 @@ export default function DashboardStoryEdit() {
         title: storyInfoId.storyinfo.title,
         subTitle: storyInfoId.storyinfo.subTitle,
         charCount: storyInfoId.storyinfo.charCount,
+        activation: storyInfoId.storyinfo.activation,
         isOnlyFollowers: storyInfoId.storyinfo.onlyFollowers,
         followDiff: storyInfoId.storyinfo.followDiff,
         followDiffUnit: storyInfoId.storyinfo.followDiffUnit,
@@ -54,7 +55,7 @@ export default function DashboardStoryEdit() {
         {initialValues && (
           <StoryInfoForm
             initialValues={initialValues}
-            submitButtonName="수정"
+            isEditPage={true}
             onSubmit={(values, actions) => {
               actions.setSubmitting(true)
               apiFetchPut(`/storyinfo/${id}/edit`, values)
@@ -71,6 +72,25 @@ export default function DashboardStoryEdit() {
                   alert('사연을 수정하던 도중 문제가 생겼어요.\n나중에 다시 시도해주세요.')
                   actions.setSubmitting(false)
                 })
+            }}
+            onDelete={() => {
+              const answer = confirm(
+                `삭제한 사연은 복구할 수 없어요.\n사연을 삭제하면 ${storyInfoId?.stories.length}개의 답변도 복구할 수 없어요.\n삭제하시겠어요?`
+              )
+              if (answer) {
+                apiFetchDelete(`/storyinfo/${storyInfoId?.storyinfo.id}/delete`)
+                  .then((res) => res.json())
+                  .then((res) => {
+                    if (res.ok) {
+                      router.push('/dashboard/story')
+                    } else {
+                      alert(`[${res.error}] 오류가 발생했습니다${res.message ? `:\n${res.message}` : '.'}`)
+                    }
+                  })
+                  .catch((err) => {
+                    alert(`오류가 발생했습니다.\n${err}`)
+                  })
+              }
             }}
           />
         )}

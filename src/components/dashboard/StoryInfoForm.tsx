@@ -1,11 +1,12 @@
-import { Field, Form, Formik, FormikHelpers } from "formik"
-import { getMaxTimeWithUnit } from "../../utils"
-import Markdown from "../Markdown"
+import { Field, Form, Formik, FormikHelpers } from 'formik'
+import Button from '../button/Button'
+import Markdown from '../Markdown'
 
 interface Props {
   initialValues: FormValues
   isEditPage: boolean
   onSubmit: (values: FormValues, actions: FormikHelpers<FormValues>) => void | Promise<void>
+  onDelete?: () => void | Promise<void>
 }
 
 export interface FormValues {
@@ -20,7 +21,7 @@ export interface FormValues {
   maxSubmitCount: number
 }
 
-export default function StoryInfoForm({ initialValues, isEditPage, onSubmit }: Props) {
+export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onDelete }: Props) {
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({ isSubmitting, values }) => (
@@ -138,7 +139,15 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit }: P
                 </div>
               </div>
             </div>
-            <div className='flex sm:justify-end'>
+            <div className='flex gap-3 sm:justify-end'>
+              <Button
+                color='red-500'
+                hoverColor='red-600'
+                extraClassName='text-xl'
+                onClick={onDelete}
+              >
+                사연 삭제
+              </Button>
               <button
                 type='submit'
                 className='text-xl select-none text-white transition-all shadow-lg bg-purple-500 shadow-purple-500/50 hover:bg-purple-600 hover:shadow-purple-600/50 rounded-2xl b-0 px-3 py-2'
