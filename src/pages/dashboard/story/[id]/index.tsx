@@ -103,7 +103,7 @@ export default function DashboardStoryById() {
         />
         <TableVirtuoso
           style={{ height: undefined }}
-          className='h-full shadow rounded-2xl bg-gray-50'
+          className='h-full shadow rounded-2xl bg-gray-50 top-0 left-0'
           data={filteredStories}
           components={{
             Table: (props) => <table {...props} className='table-fixed w-full divide-y divide-gray-300' />,
