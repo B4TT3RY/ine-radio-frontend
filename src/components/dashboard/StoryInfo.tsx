@@ -25,7 +25,7 @@ export default function StoryInfo({ storyInfo }: Props) {
             <Badge color={storyInfo.onlySubscribers ? 'lime-500' : 'red-500'}>구독자 전용</Badge>
           </div>
           <div className='flex gap-1'>
-            <Badge>최대 ${storyInfo.maxSubmitCount}개 제출 가능</Badge>
+            <Badge>최대 {storyInfo.maxSubmitCount}개 제출 가능</Badge>
           </div>
         </div>
       </a>
