@@ -64,18 +64,20 @@ export default function Index() {
         <meta name='theme-color' content='#E9D5FF' media='(prefers-color-scheme: light)' />
         <meta name='theme-color' content='#0F172A' media='(prefers-color-scheme: dark)' />
       </Head>
-      <div className='flex flex-col items-center justify-center gap-6 w-screen-safe h-screen-safe'>
-        <div className='flex gap-4 absolute top-2 right-2'>
+      <div className='w-screen-safe h-screen-safe'>
+        <div className='flex justify-end gap-4 p-3 sm:absolute sm:top-0 sm:right-0'>
           {authError && authError.code == 401 && <LoginButton />}
           {auth && !authError && auth.role != Role.USER && <DashboardButton />}
           {auth && !authError && <LogoutButton />}
         </div>
-        <header className='flex justify-center select-none'>
-          <Image loader={({ src }) => src} src={logoPicture} alt='아이네 라디오 로고' draggable={false} unoptimized />
-        </header>
-        <section className='flex flex-col items-center justify-center gap-2 w-11/12 md:w-10/12 lg:w-10/12 xl:w-8/12 rounded-2xl p-4 bg-white shadow-lg dark:bg-slate-800'>
-          {sectionElement}
-        </section>
+        <div className='flex flex-col items-center justify-center gap-6 h-full sm:h-screen-safe'>
+          <header className='flex justify-center select-none'>
+            <Image loader={({ src }) => src} src={logoPicture} alt='아이네 라디오 로고' draggable={false} unoptimized />
+          </header>
+          <section className='flex flex-col items-center justify-center gap-2 w-11/12 md:w-10/12 lg:w-10/12 xl:w-8/12 rounded-2xl p-4 bg-white shadow-lg dark:bg-slate-800'>
+            {sectionElement}
+          </section>
+        </div>
       </div>
       <Script src='/js/channelio.js' />
     </>
