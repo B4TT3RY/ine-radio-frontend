@@ -106,7 +106,7 @@ export default function DashboardStoryById() {
           className='h-full shadow rounded-2xl bg-gray-50'
           data={filteredStories}
           components={{
-            Table: (props) => <table {...props} className='table-fixed w-full divide-y divide-gray-300' />,
+            Table: (props) => <table {...props} className='w-[200vw] md:w-full table-fixed divide-y divide-gray-300' />,
             // eslint-disable-next-line react/display-name
             TableHead: React.forwardRef((props, ref) => <thead {...props} ref={ref as any} className='bg-gray-50' />),
             // eslint-disable-next-line react/display-name
@@ -128,7 +128,7 @@ export default function DashboardStoryById() {
                 />
                 사연 ({filteredStories?.length ?? 0})
               </th>
-              <th className='py-2 w-24 sm:w-36'>접수일자</th>
+              <th className='py-2 w-36'>접수일자</th>
               <th className='py-2 w-20'>숨기기</th>
             </tr>
           )}
