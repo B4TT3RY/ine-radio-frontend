@@ -21,11 +21,11 @@ export default function StoryInfo({ storyInfo }: Props) {
         </div>
         <div className='flex flex-col gap-1 shrink-0 items-end'>
           <div className='flex gap-1'>
-            <Badge type='onlyFollowers' enabled={storyInfo.onlyFollowers} />
-            <Badge type='onlySubscribers' enabled={storyInfo.onlySubscribers} />
+            <Badge color={storyInfo.onlyFollowers ? 'lime-500' : 'red-500'}>팔로워 전용</Badge>
+            <Badge color={storyInfo.onlySubscribers ? 'lime-500' : 'red-500'}>구독자 전용</Badge>
           </div>
           <div className='flex gap-1'>
-            <Badge title={`최대 ${storyInfo.maxSubmitCount}개 제출 가능`} />
+            <Badge>최대 ${storyInfo.maxSubmitCount}개 제출 가능</Badge>
           </div>
         </div>
       </a>

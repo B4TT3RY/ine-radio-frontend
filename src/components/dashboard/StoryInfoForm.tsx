@@ -4,7 +4,7 @@ import Markdown from "../Markdown"
 
 interface Props {
   initialValues: FormValues
-  submitButtonName?: string
+  isEditPage: boolean
   onSubmit: (values: FormValues, actions: FormikHelpers<FormValues>) => void | Promise<void>
 }
 
@@ -12,14 +12,15 @@ export interface FormValues {
   title: string
   subTitle: string
   charCount: number
-  isOnlyFollowers: boolean
+  activation: boolean
   followDiff: number
   followDiffUnit: string
+  isOnlyFollowers: boolean
   isOnlySubscribers: boolean
   maxSubmitCount: number
 }
 
-export default function StoryInfoForm({ initialValues, submitButtonName, onSubmit }: Props) {
+export default function StoryInfoForm({ initialValues, isEditPage, onSubmit }: Props) {
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({ isSubmitting, values }) => (
@@ -142,7 +143,7 @@ export default function StoryInfoForm({ initialValues, submitButtonName, onSubmi
                 type='submit'
                 className='text-xl select-none text-white transition-all shadow-lg bg-purple-500 shadow-purple-500/50 hover:bg-purple-600 hover:shadow-purple-600/50 rounded-2xl b-0 px-3 py-2'
               >
-                {isSubmitting ? `${submitButtonName ?? '생성'}하는 중...` : submitButtonName ?? '생성'}
+                {isSubmitting ? `${isEditPage ? '수정' : '생성'}하는 중...` : isEditPage ? '수정' : '생성'}
               </button>
             </div>
           </fieldset>

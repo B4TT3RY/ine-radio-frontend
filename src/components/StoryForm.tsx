@@ -1,12 +1,12 @@
 import { Field, Form, Formik } from 'formik'
 import { KeyboardEvent, useEffect } from 'react'
-import { apiFetchPost } from '../api'
+import { apiFetchPost, StoryInfoResponse } from '../api'
 import usePreventLeave from '../hooks/usePreventLeave'
-import { getErrorMessage } from '../utils'
+import { getErrorMessage, unitToKorean } from '../utils'
 import Badge from './Badge'
 
 interface Props {
-  storyInfoId: string
+  storyInfo: StoryInfoResponse
   characterCount: number
   onlyFollowers: boolean
   onlySubscribers: boolean
@@ -24,9 +24,15 @@ export interface FetchResponse {
   subTitle?: string
 }
 
-export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, onlySubscribers, onFetchResponse }: Props) {
+export default function StoryForm({
+  storyInfo,
+  characterCount,
+  onlyFollowers,
+  onlySubscribers,
+  onFetchResponse,
+}: Props) {
   const { enablePrevent, disablePrevent } = usePreventLeave()
-  
+
   useEffect(() => {
     enablePrevent()
 
@@ -36,7 +42,7 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
   }, [enablePrevent, disablePrevent])
 
   const initialValues: FormValues = {
-    storyinfoId: storyInfoId,
+    storyinfoId: storyInfo.id,
     content: '',
   }
 
@@ -99,8 +105,13 @@ export default function StoryForm({ storyInfoId, characterCount, onlyFollowers, 
                 className='resize-none w-full text-base p-3 transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-2xl dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400'
               />
               <div className='flex items-center gap-2 select-none'>
-                {onlyFollowers && <Badge type='onlyFollowers' />}
-                {onlySubscribers && <Badge type='onlySubscribers' />}
+                {onlyFollowers && (
+                  <Badge>
+                    팔로워 전용
+                    {storyInfo.followDiff > 0 && ` (+${storyInfo.followDiff}${unitToKorean(storyInfo.followDiffUnit)})`}
+                  </Badge>
+                )}
+                {onlySubscribers && <Badge>구독자 전용</Badge>}
               </div>
               <div className='flex items-center gap-2 select-none'>
                 <span

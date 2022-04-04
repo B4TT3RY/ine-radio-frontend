@@ -144,7 +144,7 @@ const createSection = ({
   return (
     <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
       <StoryForm
-        storyInfoId={storyInfo.id}
+        storyInfo={storyInfo}
         characterCount={storyInfo.charCount}
         onlyFollowers={storyInfo.onlyFollowers}
         onlySubscribers={storyInfo.onlySubscribers}
