@@ -168,7 +168,7 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
             {title ? (
               <h1 className='text-2xl font-extrabold text-gray-900'>{title}</h1>
             ) : (
-              <p className='animate-pulse h-6 w-64 rounded-3xl bg-slate-700'></p>
+              <p className='animate-pulse h-6 w-64 rounded-3xl bg-slate-200'></p>
             )}
 
             {subTitle && <span className='text-base font-medium text-gray-800'>{subTitle}</span>}
