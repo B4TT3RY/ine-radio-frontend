@@ -137,24 +137,28 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onD
                   </label>
                 </div>
               </div>
-              <div className='flex flex-col w-full'>
-                <div className='flex items-center gap-2'>
-                  <Field
-                    type='checkbox'
-                    id='activation'
-                    name='activation'
-                    className='w-5 h-5 text-violet-600 focus:ring-violet-600 focus:ring-opacity-25 border border-gray-300 rounded'
-                  />
-                  <label htmlFor='activation' className='text-lg select-none'>
-                    사연 활성화
-                  </label>
+              {isEditPage && (
+                <div className='flex flex-col w-full'>
+                  <div className='flex items-center gap-2'>
+                    <Field
+                      type='checkbox'
+                      id='activation'
+                      name='activation'
+                      className='w-5 h-5 text-violet-600 focus:ring-violet-600 focus:ring-opacity-25 border border-gray-300 rounded'
+                    />
+                    <label htmlFor='activation' className='text-lg select-none'>
+                      사연 활성화
+                    </label>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             <div className='flex gap-3 sm:justify-end'>
-              <Button color='red-500' hoverColor='red-600' extraClassName='text-xl' onClick={onDelete}>
-                사연 삭제
-              </Button>
+              {isEditPage && (
+                <Button color='red-500' hoverColor='red-600' extraClassName='text-xl' onClick={onDelete}>
+                  사연 삭제
+                </Button>
+              )}
               <button
                 type='submit'
                 className='text-xl select-none text-white transition-all shadow-lg bg-purple-500 shadow-purple-500/50 hover:bg-purple-600 hover:shadow-purple-600/50 rounded-2xl b-0 px-3 py-2'
