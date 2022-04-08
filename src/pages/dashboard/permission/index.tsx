@@ -85,6 +85,7 @@ export default function PermissionIndex() {
                 </li>
               ))}
         </ul>
+        <div className='h-4'></div>
       </DashboardFrame>
     </>
   )
