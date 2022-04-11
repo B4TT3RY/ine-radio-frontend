@@ -18,15 +18,18 @@ import {
   Role,
   StoryInfoIdResponse,
 } from '../../../../api'
+import Badge from '../../../../components/Badge'
 import Button from '../../../../components/button/Button'
 import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
 import useAuth from '../../../../hooks/useAuth'
+import { classNames } from '../../../../utils'
 
 export default function DashboardStoryById() {
   const { mutate } = useSWRConfig()
 
   const [auth, authError] = useAuth()
   const [regex, setRegex] = useState<RegExp | undefined>()
+  const [category, setCategory] = useState('전체')
   const [favoriteFilter, setFavoriteFilter] = useState(false)
 
   const router = useRouter()
@@ -44,6 +47,7 @@ export default function DashboardStoryById() {
     | {
         id: number
         content: string
+        category: string
         favorite: boolean
         createdAt: string
       }[]
@@ -61,8 +65,12 @@ export default function DashboardStoryById() {
       stories = stories?.filter((s) => s.favorite)
     }
 
+    if (category !== '전체') {
+      stories = stories?.filter((s) => s.category === category)
+    }
+
     setFilteredStories(stories)
-  }, [regex, storyInfoId?.stories, favoriteFilter])
+  }, [category, regex, storyInfoId?.stories, favoriteFilter])
 
   if (storyInfoIdError) {
     return <Error statusCode={storyInfoIdError.code} />
@@ -133,13 +141,29 @@ export default function DashboardStoryById() {
             엑셀(csv) 다운로드
           </Button>
         </div>
-        <input
-          type='search'
-          name='search'
-          onChange={(e) => setRegex(getRegExp(e.target.value, { initialSearch: true }))}
-          placeholder='검색할 사연을 입력해주세요'
-          className='text-base p-3 w-full transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-xl mb-4'
-        />
+        <div className='flex gap-3 mb-4'>
+          <select
+            onChange={(e) => setCategory(e.target.value)}
+            className={classNames(
+              'text-base px-3 py-2 w-2/12 transition-all shadow-sm',
+              'focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-xl'
+            )}
+          >
+            <option value='전체'>전체</option>
+            {storyInfoId?.storyinfo.category.split(',').map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+          <input
+            type='search'
+            name='search'
+            onChange={(e) => setRegex(getRegExp(e.target.value, { initialSearch: true }))}
+            placeholder='검색할 사연을 입력해주세요'
+            className='text-base p-3 w-10/12 transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-xl'
+          />
+        </div>
         <TableVirtuoso
           style={{ height: undefined }}
           className='h-full shadow rounded-2xl bg-gray-50'
@@ -206,6 +230,10 @@ export default function DashboardStoryById() {
                       })
                   }}
                 />
+                <Badge color='gray-400' extraClassName='whitespace-nowrap' small={true}>
+                  {story.category}
+                </Badge>
+
                 {story.content}
               </td>
               <td className='py-4 font-medium text-center select-none'>

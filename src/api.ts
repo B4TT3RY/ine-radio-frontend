@@ -12,6 +12,7 @@ export interface StoryInfoResponse {
   id: string
   title: string
   subTitle?: string
+  category: string
   charCount: number
   onlyFollowers: boolean
   onlySubscribers: boolean
@@ -47,6 +48,7 @@ export interface StoryInfoIdResponse {
     id: string
     title: string
     subTitle: string
+    category: string
     charCount: number
     onlyFollowers: boolean
     onlySubscribers: boolean
@@ -59,6 +61,7 @@ export interface StoryInfoIdResponse {
   stories: {
     id: number
     content: string
+    category: string
     favorite: boolean
     createdAt: string
   }[]
