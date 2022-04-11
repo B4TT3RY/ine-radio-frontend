@@ -15,6 +15,7 @@ interface Props {
 
 interface FormValues {
   storyinfoId: string
+  category: string
   content: string
 }
 
@@ -43,6 +44,7 @@ export default function StoryForm({
 
   const initialValues: FormValues = {
     storyinfoId: storyInfo.id,
+    category: '',
     content: '',
   }
 
@@ -87,9 +89,21 @@ export default function StoryForm({
           }
         }}
       >
-        {({ isSubmitting, values, submitForm }) => (
+        {({ isSubmitting, values }) => (
           <Form className='w-full'>
             <fieldset disabled={isSubmitting} className='w-full gap-2 flex flex-wrap items-center justify-between'>
+              <Field
+                as='select'
+                name='category'
+                className='text-base ml-1 px-3 py-2 w-full transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-xl'
+                required
+              >
+                <option value='' className='hidden' disabled selected>
+                  카테고리를 선택하세요
+                </option>
+                <option value='질문'>질문</option>
+                <option value='사연'>사연</option>
+              </Field>
               <Field
                 as='textarea'
                 name='content'
@@ -104,9 +118,7 @@ export default function StoryForm({
                 className='resize-none w-full text-base p-3 transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-2xl dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400'
               />
               <div className='flex items-center gap-2 select-none'>
-                <Badge>
-                  {storyInfo.maxSubmitCount - storyInfo.currentSubmitCount}개 제출 가능
-                </Badge>
+                <Badge>{storyInfo.maxSubmitCount - storyInfo.currentSubmitCount}개 제출 가능</Badge>
                 {onlyFollowers && (
                   <Badge>
                     팔로워 전용
@@ -125,7 +137,7 @@ export default function StoryForm({
                 </span>
                 <button
                   type='submit'
-                  disabled={values.content.length === 0 || values.content.length > characterCount}
+                  disabled={values.category.length === 0 || values.content.length === 0 || values.content.length > characterCount}
                   className='text-lg text-white rounded-2xl b-0 p-3 transition-all shadow-lg bg-purple-500 shadow-purple-500/50 hover:bg-purple-600 hover:shadow-purple-600/50 disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-gray-200/50 dark:disabled:bg-gray-700 dark:disabled:text-gray-400 dark:disabled:shadow-gray-700/50'
                 >
                   {isSubmitting ? '사연 보내는 중...' : '사연 보내기'}
