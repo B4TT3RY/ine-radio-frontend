@@ -9,7 +9,15 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { TableVirtuoso } from 'react-virtuoso'
 import useSWR, { useSWRConfig } from 'swr'
-import { apiFetchDownload, apiFetcher, apiFetchPost, FetcherError, Role, StoryInfoIdResponse } from '../../../../api'
+import {
+  apiFetchDownload,
+  apiFetcher,
+  apiFetchGet,
+  apiFetchPost,
+  FetcherError,
+  Role,
+  StoryInfoIdResponse,
+} from '../../../../api'
 import Button from '../../../../components/button/Button'
 import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
 import useAuth from '../../../../hooks/useAuth'
@@ -88,7 +96,38 @@ export default function DashboardStoryById() {
             color='green-600'
             hoverColor='green-700'
             onClick={() => {
-              apiFetchDownload(`/storyinfo/${id}/download`, `${storyInfoId?.storyinfo.title ?? id}.csv`)
+              apiFetchGet(`/storyinfo/${id}/download`)
+                .then((res) => res.json())
+                .then((res) => {
+                  if (res.ok) {
+                    window.open(`https://docs.google.com/viewer?url=https://d1c26dab.isegye.xyz/download/${res.id}`)
+                  } else {
+                    alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
+                  }
+                })
+                .catch((err) => {
+                  alert(`오류가 발생했어요.\n${err}`)
+                })
+            }}
+          >
+            구글 스프레드시트에서 보기
+          </Button>
+          <Button
+            color='green-600'
+            hoverColor='green-700'
+            onClick={() => {
+              apiFetchGet(`/storyinfo/${id}/download`)
+                .then((res) => res.json())
+                .then((res) => {
+                  if (res.ok) {
+                    apiFetchDownload(`/download/${res.id}`, `${storyInfoId?.storyinfo.title ?? id}.csv`)
+                  } else {
+                    alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
+                  }
+                })
+                .catch((err) => {
+                  alert(`오류가 발생했어요.\n${err}`)
+                })
             }}
           >
             엑셀(csv) 다운로드

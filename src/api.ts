@@ -104,6 +104,14 @@ export const apiFetcher = async (url: string) => {
   return res.json()
 }
 
+export const apiFetchGet = (url: string): Promise<Response> => {
+  return fetch(`https://d1c26dab.isegye.xyz${url}`, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    },
+  })
+}
+
 export const apiFetchPost = (url: string, body: any): Promise<Response> => {
   return fetch(`https://d1c26dab.isegye.xyz${url}`, {
     method: 'POST',
