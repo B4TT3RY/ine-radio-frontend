@@ -46,7 +46,7 @@ export default function CategoryDialog({ isEdit, initialValues, isOpen, setIsOpe
             leaveTo='opacity-0 scale-95'
           >
             <div className='relative bg-white rounded-2xl max-w-sm mx-auto px-4 py-3'>
-              <h1 className='text-2xl font-bold mb-3'>카테고리 {isEdit ? '수정' : '추가'}</h1>
+              <h1 className='text-2xl font-bold mb-3 select-none'>카테고리 {isEdit ? '수정' : '추가'}</h1>
               <div className='space-y-2'>
                 <div className='flex flex-col'>
                   <label htmlFor='name' className='text-lg select-none after:content-["_*"] after:text-red-600'>

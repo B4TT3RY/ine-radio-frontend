@@ -181,7 +181,10 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
           </div>
         </header>
         <main className='flex flex-1 overflow-auto'>
-          <div className='flex-1 max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8'>{children}</div>
+          <div className='flex-1 max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8'>
+            {children}
+            <div className='h-4'></div>
+          </div>
         </main>
       </div>
     </>

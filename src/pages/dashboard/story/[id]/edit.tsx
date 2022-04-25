@@ -64,14 +64,14 @@ export default function DashboardStoryEdit() {
                   if (res.ok) {
                     router.push(`/dashboard/story/${id}`)
                   } else {
-                    alert(`[${res.error}] 오류가 발생했어요`)
+                    alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
                   }
                 })
                 .catch((err) => {
                   console.error(err)
                   alert('사연을 수정하던 도중 문제가 생겼어요.\n나중에 다시 시도해주세요.')
-                  actions.setSubmitting(false)
                 })
+                .finally(() => actions.setSubmitting(false))
             }}
             onDelete={() => {
               const answer = confirm(
