@@ -33,7 +33,7 @@ export default function CategoryDialog({ isEdit, initialValues, isOpen, setIsOpe
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <Dialog.Overlay className='fixed inset-0 bg-black/50' />
+            <Dialog.Overlay className='fixed inset-0 bg-black/40 backdrop-blur-sm' />
           </Transition.Child>
 
           <Transition.Child
@@ -45,7 +45,7 @@ export default function CategoryDialog({ isEdit, initialValues, isOpen, setIsOpe
             leaveFrom='opacity-100 scale-100'
             leaveTo='opacity-0 scale-95'
           >
-            <div className='relative bg-white rounded-2xl max-w-sm mx-auto px-4 py-3'>
+            <div className='relative bg-white rounded-2xl max-w-sm mx-auto px-4 py-3 shadow-2xl'>
               <h1 className='text-2xl font-bold mb-3 select-none'>카테고리 {isEdit ? '수정' : '추가'}</h1>
               <div className='space-y-2'>
                 <div className='flex flex-col'>
