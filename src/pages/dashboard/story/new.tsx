@@ -11,13 +11,13 @@ export default function DashboardStoryIndex() {
   const initialValues: FormValues = {
     title: '',
     subTitle: '',
+    category: [],
     charCount: 40,
     activation: false,
     followDiff: 0,
     followDiffUnit: 'minutes',
     isOnlyFollowers: false,
     isOnlySubscribers: false,
-    maxSubmitCount: 1,
   }
 
   return (

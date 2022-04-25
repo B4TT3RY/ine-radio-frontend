@@ -2,6 +2,7 @@ import { classNames } from '../../utils'
 
 interface Props {
   children: React.ReactNode
+  type?: 'button' | 'submit' | 'reset'
   color?: string
   textColor?: string
   hoverColor?: string
@@ -9,10 +10,10 @@ interface Props {
   onClick?: () => void
 }
 
-export default function Button({ children, color, textColor, hoverColor, extraClassName, onClick }: Props) {
+export default function Button({ children, type, color, textColor, hoverColor, extraClassName, onClick }: Props) {
   return (
     <button
-      type='button'
+      type={type ?? 'button'}
       onClick={onClick}
       className={classNames(
         'select-none shadow-md px-2.5 py-1 rounded-2xl',

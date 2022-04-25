@@ -6,7 +6,7 @@ export default function AuthLogin() {
   const router = useRouter()
 
   useEffect(() => {
-    router.push('https://d1c26dab.isegye.xyz/auth/login')
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`)
   }, [router])
 
   return (

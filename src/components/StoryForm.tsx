@@ -1,13 +1,12 @@
 import { Field, Form, Formik } from 'formik'
-import { KeyboardEvent, useEffect } from 'react'
-import { apiFetchPost, StoryInfoResponse } from '../api'
+import { KeyboardEvent, useEffect, useRef, useState } from 'react'
+import { apiFetchPost, Category, StoryInfoResponse } from '../api'
 import usePreventLeave from '../hooks/usePreventLeave'
 import { classNames, getErrorMessage, unitToKorean } from '../utils'
 import Badge from './Badge'
 
 interface Props {
   storyInfo: StoryInfoResponse
-  characterCount: number
   onlyFollowers: boolean
   onlySubscribers: boolean
   onFetchResponse: (fetchResponse: FetchResponse) => void
@@ -25,13 +24,7 @@ export interface FetchResponse {
   subTitle?: string
 }
 
-export default function StoryForm({
-  storyInfo,
-  characterCount,
-  onlyFollowers,
-  onlySubscribers,
-  onFetchResponse,
-}: Props) {
+export default function StoryForm({ storyInfo, onlyFollowers, onlySubscribers, onFetchResponse }: Props) {
   const { enablePrevent, disablePrevent } = usePreventLeave()
 
   useEffect(() => {
@@ -44,7 +37,7 @@ export default function StoryForm({
 
   const initialValues: FormValues = {
     storyinfoId: storyInfo.id,
-    category: '',
+    category: storyInfo.category.length > 1 ? '' : storyInfo.category[0].name,
     content: '',
   }
 
@@ -89,78 +82,110 @@ export default function StoryForm({
           }
         }}
       >
-        {({ isSubmitting, values }) => (
-          <Form className='w-full'>
-            <fieldset disabled={isSubmitting} className='w-full gap-2 flex flex-wrap items-center justify-between'>
-              <Field
-                as='select'
-                name='category'
-                className={classNames(
-                  'text-base px-3 py-2 w-full transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-xl',
-                  'dark:bg-slate-700 dark:text-white',
-                  'disabled:bg-gray-200 disabled:text-gray-600 dark:disabled:bg-slate-500 dark:disabled:text-gray-400'
-                )}
-                required
-                value={values.category}
-              >
-                <option value='' className='hidden' disabled>
-                  카테고리를 선택하세요
-                </option>
-                {storyInfo.category.split(',').map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </Field>
-              <Field
-                as='textarea'
-                name='content'
-                placeholder='사연을 작성해주세요'
-                rows={3}
-                onKeyPress={(e: KeyboardEvent<HTMLTextAreaElement>) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault()
-                  }
-                }}
-                className={classNames(
-                  'resize-none w-full text-base p-3 transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border',
-                  'border-gray-300 rounded-2xl dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400',
-                  'disabled:bg-gray-200 disabled:text-gray-500 dark:disabled:bg-slate-500 dark:disabled:text-gray-300'
-                )}
-              />
-              <div className='flex items-center gap-2 select-none'>
-                <Badge>{storyInfo.maxSubmitCount - storyInfo.currentSubmitCount}개 제출 가능</Badge>
-                {onlyFollowers && (
-                  <Badge>
-                    팔로워 전용
-                    {storyInfo.followDiff > 0 && ` (+${storyInfo.followDiff}${unitToKorean(storyInfo.followDiffUnit)})`}
+        {({ isSubmitting, values }) => {
+          const category = storyInfo.category.find((c) => c.name == values.category)
+          const maxSubmitCount = category?.maxSubmitCount ?? 0
+          const currentSubmitCount = category?.currentSubmitCount ?? 0
+          const remainingSubmitCount = maxSubmitCount - currentSubmitCount
+
+          return (
+            <Form className='w-full'>
+              <fieldset disabled={isSubmitting} className='w-full gap-2 flex flex-wrap items-center justify-between'>
+                <div className='flex flex-1 gap-3'>
+                  <Field
+                    as='select'
+                    name='category'
+                    className={classNames(
+                      'text-base px-3 py-2 w-full transition-all shadow-sm border border-gray-300 rounded-xl',
+                      'focus:ring-purple-500 focus:border-purple-500',
+                      'dark:bg-slate-700 dark:text-white',
+                      'disabled:bg-gray-200 disabled:text-gray-600 dark:disabled:bg-slate-500 dark:disabled:text-gray-400'
+                    )}
+                    required
+                    value={values.category}
+                  >
+                    <option value='' className='hidden' disabled>
+                      카테고리를 선택하세요
+                    </option>
+                    {storyInfo.category.map((c) => (
+                      <option key={c.name} value={c.name}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </Field>
+                  <Badge
+                    color={
+                      values.category.length == 0 ? 'gray-400' : remainingSubmitCount > 0 ? 'green-500' : 'red-500'
+                    }
+                    extraClassName='flex items-center whitespace-nowrap text-lg transition-all'
+                  >
+                    {remainingSubmitCount} / {maxSubmitCount}
                   </Badge>
+                </div>
+                {values.category.length != 0 && (
+                  <p
+                    className={classNames(
+                      'w-full text-right transition-all',
+                      // TODO: 다크모드에서 빨간색 잘 안보이는 이슈
+                      remainingSubmitCount > 0 ? 'text-black dark:text-white' : 'text-red-500'
+                    )}
+                  >
+                    사연 {remainingSubmitCount}개를 제출할 수 있어요.
+                  </p>
                 )}
-                {onlySubscribers && <Badge>구독자 전용</Badge>}
-              </div>
-              <div className='flex items-center gap-2 select-none'>
-                <span
-                  className={`${
-                    values.content.length > characterCount ? 'text-rose-600' : 'text-black dark:text-white'
-                  }`}
-                >
-                  {values.content.length}/{characterCount}자
-                </span>
-                <button
-                  type='submit'
-                  disabled={
-                    values.category.length === 0 ||
-                    values.content.length === 0 ||
-                    values.content.length > characterCount
-                  }
-                  className='text-lg text-white rounded-2xl b-0 p-3 transition-all shadow-lg bg-purple-500 shadow-purple-500/50 hover:bg-purple-600 hover:shadow-purple-600/50 disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-gray-200/50 dark:disabled:bg-gray-700 dark:disabled:text-gray-400 dark:disabled:shadow-gray-700/50'
-                >
-                  {isSubmitting ? '사연 보내는 중...' : '사연 보내기'}
-                </button>
-              </div>
-            </fieldset>
-          </Form>
-        )}
+                <Field
+                  as='textarea'
+                  name='content'
+                  placeholder={category?.description ? category?.description.replace('\n', '\r\n') : '사연을 작성해주세요'}
+                  rows={6}
+                  className={classNames(
+                    'resize-none w-full text-base p-3 transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border',
+                    'border-gray-300 rounded-2xl dark:bg-slate-700 dark:text-white dark:placeholder:text-slate-400',
+                    'disabled:bg-gray-200 disabled:text-gray-500 dark:disabled:bg-slate-500 dark:disabled:text-gray-300'
+                  )}
+                />
+                <div className='flex items-center gap-2 select-none'>
+                  {onlyFollowers && (
+                    <Badge>
+                      팔로워 전용
+                      {storyInfo.followDiff > 0 &&
+                        ` (+${storyInfo.followDiff}${unitToKorean(storyInfo.followDiffUnit)})`}
+                    </Badge>
+                  )}
+                  {onlySubscribers && <Badge>구독자 전용</Badge>}
+                </div>
+                <div className='flex items-center gap-2 select-none'>
+                  <span
+                    className={`${
+                      values.content.length > (category?.charCount ?? 0)
+                        ? 'text-rose-600'
+                        : 'text-black dark:text-white'
+                    }`}
+                  >
+                    {values.content.length}/{category?.charCount ?? 0}자
+                  </span>
+                  <button
+                    type='submit'
+                    disabled={
+                      values.category.length === 0 ||
+                      values.content.length === 0 ||
+                      values.content.length > (category?.charCount ?? 0) ||
+                      remainingSubmitCount <= 0
+                    }
+                    className={classNames(
+                      'text-lg text-white rounded-2xl b-0 p-3 transition-all shadow-lg',
+                      'bg-purple-500 shadow-purple-500/50 hover:bg-purple-600 hover:shadow-purple-600/50',
+                      'disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-gray-200/50',
+                      'dark:disabled:bg-gray-700 dark:disabled:text-gray-400 dark:disabled:shadow-gray-700/50'
+                    )}
+                  >
+                    {isSubmitting ? '사연 보내는 중...' : '사연 보내기'}
+                  </button>
+                </div>
+              </fieldset>
+            </Form>
+          )
+        }}
       </Formik>
     </>
   )

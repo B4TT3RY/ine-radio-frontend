@@ -108,7 +108,9 @@ export default function DashboardStoryById() {
                 .then((res) => res.json())
                 .then((res) => {
                   if (res.ok) {
-                    window.open(`https://docs.google.com/viewer?url=https://d1c26dab.isegye.xyz/download/${res.id}`)
+                    window.open(
+                      `https://docs.google.com/viewer?url=${process.env.NEXT_PUBLIC_API_URL}/download/${res.id}`
+                    )
                   } else {
                     alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
                   }
@@ -150,9 +152,9 @@ export default function DashboardStoryById() {
             )}
           >
             <option value='전체'>전체</option>
-            {storyInfoId?.storyinfo.category.split(',').map((category) => (
-              <option key={category} value={category}>
-                {category}
+            {storyInfoId?.storyinfo.category?.map((c) => (
+              <option key={c.name} value={c.name}>
+                {c.name}
               </option>
             ))}
           </select>
@@ -161,7 +163,10 @@ export default function DashboardStoryById() {
             name='search'
             onChange={(e) => setRegex(getRegExp(e.target.value, { initialSearch: true }))}
             placeholder='검색할 사연을 입력해주세요'
-            className='text-base p-3 w-10/12 transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-xl'
+            className={classNames(
+              'text-base p-3 w-10/12 transition-all shadow-sm rounded-xl',
+              'focus:ring-purple-500 focus:border-purple-500 border border-gray-300'
+            )}
           />
         </div>
         <TableVirtuoso
@@ -202,33 +207,41 @@ export default function DashboardStoryById() {
                 style={{ overflowWrap: 'anywhere' }}
               >
                 <HeartIcon
-                  className={`flex-none h-6 w-6 cursor-pointer hover:text-red-300 ${
-                    story.favorite ? 'text-red-500' : 'text-gray-300 '
-                  }`}
-                  onClick={() => {
-                    apiFetchPost(`/storyinfo/${storyInfoId?.storyinfo.id}/favorite`, {
-                      storyId: story.id,
-                      favorite: !story.favorite,
-                    })
-                      .then((res) => res.json())
-                      .then((res) => {
-                        if (res.ok) {
-                          setFilteredStories((prev) => {
-                            return prev?.map((s) => {
-                              if (s.id === story.id) {
-                                s.favorite = !s.favorite
-                              }
-                              return s
-                            })
+                  className={classNames(
+                    'flex-none h-6 w-6',
+                    story.favorite ? 'text-red-500' : 'text-gray-300',
+                    [Role.ADMIN, Role.STREAMER].includes(auth?.role ?? Role.USER)
+                      ? 'cursor-pointer hover:text-red-300'
+                      : ''
+                  )}
+                  onClick={
+                    [Role.ADMIN, Role.STREAMER].includes(auth?.role ?? Role.USER)
+                      ? () => {
+                          apiFetchPost(`/storyinfo/${storyInfoId?.storyinfo.id}/favorite`, {
+                            storyId: story.id,
+                            favorite: !story.favorite,
                           })
-                        } else {
-                          alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
+                            .then((res) => res.json())
+                            .then((res) => {
+                              if (res.ok) {
+                                setFilteredStories((prev) => {
+                                  return prev?.map((s) => {
+                                    if (s.id === story.id) {
+                                      s.favorite = !s.favorite
+                                    }
+                                    return s
+                                  })
+                                })
+                              } else {
+                                alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
+                              }
+                            })
+                            .catch((err) => {
+                              alert(`오류가 발생했어요.\n${err}`)
+                            })
                         }
-                      })
-                      .catch((err) => {
-                        alert(`오류가 발생했어요.\n${err}`)
-                      })
-                  }}
+                      : undefined
+                  }
                 />
                 <Badge color='gray-400' extraClassName='whitespace-nowrap' small={true}>
                   {story.category}

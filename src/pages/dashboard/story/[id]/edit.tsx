@@ -27,13 +27,13 @@ export default function DashboardStoryEdit() {
       setInitialValues({
         title: storyInfoId.storyinfo.title,
         subTitle: storyInfoId.storyinfo.subTitle,
+        category: storyInfoId.storyinfo.category,
         charCount: storyInfoId.storyinfo.charCount,
         activation: storyInfoId.storyinfo.activation,
         isOnlyFollowers: storyInfoId.storyinfo.onlyFollowers,
         followDiff: storyInfoId.storyinfo.followDiff,
         followDiffUnit: storyInfoId.storyinfo.followDiffUnit,
         isOnlySubscribers: storyInfoId.storyinfo.onlySubscribers,
-        maxSubmitCount: storyInfoId.storyinfo.maxSubmitCount,
       })
     }
   }, [storyInfoId])

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import logoPicture from '../../assets/img/logo.png'
 import Error from 'next/error'
 import { useEffect } from 'react'
+import { classNames } from '../../utils'
 
 const navigation = [
   { name: '사연 관리', href: '/dashboard/story', role: [Role.ADMIN, Role.STREAMER, Role.STAFF] },
@@ -114,7 +115,12 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                     </div>
                   </div>
                   <div className='-mr-2 flex md:hidden'>
-                    <Disclosure.Button className='bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
+                    <Disclosure.Button
+                      className={classNames(
+                        'bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400',
+                        'hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
+                      )}
+                    >
                       {open ? (
                         <XIcon className='block h-6 w-6' aria-hidden='true' />
                       ) : (

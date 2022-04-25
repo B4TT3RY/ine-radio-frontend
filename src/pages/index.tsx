@@ -11,17 +11,25 @@ import StoryForm, { FetchResponse } from '../components/StoryForm'
 import Error from 'next/error'
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
+import { classNames } from '../utils'
 
 // TODO: /storyinfo/:id:/validate 사용
 
 export default function Index() {
   const [fetchResponse, setFetchResponse] = useState<FetchResponse | undefined>(undefined)
+  const [isLoadingSlow, setLoadingSlow] = useState(false)
   const { data: auth, error: authError } = useSWR<AuthResponse, FetcherError>('/auth', apiFetcher, {
     revalidateOnFocus: false,
     revalidateOnMount: true,
+    onLoadingSlow: () => {
+      setLoadingSlow(true)
+    },
   })
   const { data: storyInfo, error: storyInfoError } = useSWR<StoryInfoResponse, FetcherError>('/storyinfo', apiFetcher, {
     refreshInterval: 30000,
+    onLoadingSlow: () => {
+      setLoadingSlow(true)
+    },
   })
 
   useEffect(() => {
@@ -45,7 +53,13 @@ export default function Index() {
     }
 
     if (!storyInfo) {
-      return <SectionCard type='loading' title='사연 정보를 불러오고 있어요.' subTitle='잠시만 기다려주세요...' />
+      return (
+        <SectionCard
+          type='loading'
+          title='사연 정보를 불러오고 있어요.'
+          subTitle={isLoadingSlow ? '로딩이 조금 오래 걸리고 있어요.<br>조금만 더 기다려 주세요...' : '잠시만 기다려주세요...'}
+        />
+      )
     }
 
     if (authError && authError.code !== 401) {
@@ -63,22 +77,30 @@ export default function Index() {
     }
 
     if (!auth) {
-      return <SectionCard type='loading' title='계정 정보를 불러오고 있어요.' subTitle='잠시만 기다려주세요...' />
-    }
-
-    if (storyInfo.currentSubmitCount >= storyInfo.maxSubmitCount) {
       return (
-        <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
-          <SectionCard type='error' title={`사연은 ${storyInfo.maxSubmitCount}개까지만 보낼 수 있어요.`} />
-        </SectionCard>
+        <SectionCard
+          type='loading'
+          title='계정 정보를 불러오고 있어요.'
+          subTitle={
+            isLoadingSlow ? '로딩이 조금 오래 걸리고 있어요.<br>조금만 더 기다려 주세요...' : '잠시만 기다려주세요...'
+          }
+        />
       )
     }
+
+    // TODO: 카테고리 별 사연 제출 제한 적용
+    // if (storyInfo.currentSubmitCount >= storyInfo.maxSubmitCount) {
+    //   return (
+    //     <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
+    //       <SectionCard type='error' title={`사연은 ${storyInfo.maxSubmitCount}개까지만 보낼 수 있어요.`} />
+    //     </SectionCard>
+    //   )
+    // }
 
     return (
       <SectionCard title={storyInfo.title} subTitle={storyInfo.subTitle}>
         <StoryForm
           storyInfo={storyInfo}
-          characterCount={storyInfo.charCount}
           onlyFollowers={storyInfo.onlyFollowers}
           onlySubscribers={storyInfo.onlySubscribers}
           onFetchResponse={(res) => {
@@ -106,7 +128,12 @@ export default function Index() {
           <header className='flex justify-center select-none'>
             <Image loader={({ src }) => src} src={logoPicture} alt='라디오 로고' draggable={false} unoptimized />
           </header>
-          <section className='flex flex-col items-center justify-center gap-2 w-11/12 md:w-10/12 lg:w-10/12 xl:w-8/12 rounded-2xl p-4 bg-white shadow-lg dark:bg-slate-800'>
+          <section
+            className={classNames(
+              'flex flex-col items-center justify-center gap-2 w-11/12 md:w-10/12 lg:w-10/12 xl:w-8/12',
+              'rounded-2xl p-4 bg-white shadow-lg dark:bg-slate-800'
+            )}
+          >
             {sectionElement()}
           </section>
         </div>

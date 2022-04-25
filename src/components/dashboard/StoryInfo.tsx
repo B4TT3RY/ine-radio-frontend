@@ -25,15 +25,8 @@ export default function StoryInfo({ storyInfo }: Props) {
           </p>
         </div>
         <div className='flex flex-col gap-1 shrink-0 items-end'>
-          <div className='flex gap-1'>
-            <Badge color={storyInfo.onlyFollowers ? 'lime-500' : 'red-500'}>팔로워 {isSm ? '전용' : ''}</Badge>
-            <Badge color={storyInfo.onlySubscribers ? 'lime-500' : 'red-500'}>구독자 {isSm ? '전용' : ''}</Badge>
-          </div>
-          <div className='flex gap-1'>
-            <Badge>
-              {isSm ? `최대 ` : ''}{storyInfo.maxSubmitCount}개 제출 가능
-            </Badge>
-          </div>
+          <Badge color={storyInfo.onlyFollowers ? 'lime-500' : 'red-500'}>팔로워 {isSm ? '전용' : ''}</Badge>
+          <Badge color={storyInfo.onlySubscribers ? 'lime-500' : 'red-500'}>구독자 {isSm ? '전용' : ''}</Badge>
         </div>
       </a>
     </Link>

@@ -12,13 +12,11 @@ export interface StoryInfoResponse {
   id: string
   title: string
   subTitle?: string
-  category: string
-  charCount: number
+  category: Category[]
   onlyFollowers: boolean
   onlySubscribers: boolean
   followDiff: number
   followDiffUnit: string
-  maxSubmitCount: number
   currentSubmitCount: number
 }
 
@@ -39,7 +37,6 @@ export interface StoryInfoListResponse {
   followDiff: number
   followDiffUnit: number
   createdAt: string
-  maxSubmitCount: number
 }
 
 // /storyinfo/:id
@@ -48,7 +45,7 @@ export interface StoryInfoIdResponse {
     id: string
     title: string
     subTitle: string
-    category: string
+    category: Category[]
     charCount: number
     onlyFollowers: boolean
     onlySubscribers: boolean
@@ -56,7 +53,6 @@ export interface StoryInfoIdResponse {
     followDiff: number
     followDiffUnit: string
     createdAt: string
-    maxSubmitCount: number
   }
   stories: {
     id: number
@@ -72,6 +68,14 @@ export enum Role {
   STREAMER = 'Streamer',
   STAFF = 'Staff',
   USER = 'User',
+}
+
+export interface Category {
+  name: string,
+  charCount: number,
+  currentSubmitCount?: number,
+  maxSubmitCount: number,
+  description: string,
 }
 
 export interface FetcherError {
@@ -90,7 +94,7 @@ export const apiFetcher = async (url: string) => {
     return new Promise(() => undefined)
   }
 
-  const res = await fetch(`https://d1c26dab.isegye.xyz${url}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
@@ -108,7 +112,7 @@ export const apiFetcher = async (url: string) => {
 }
 
 export const apiFetchGet = (url: string): Promise<Response> => {
-  return fetch(`https://d1c26dab.isegye.xyz${url}`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
@@ -116,7 +120,7 @@ export const apiFetchGet = (url: string): Promise<Response> => {
 }
 
 export const apiFetchPost = (url: string, body: any): Promise<Response> => {
-  return fetch(`https://d1c26dab.isegye.xyz${url}`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -127,7 +131,7 @@ export const apiFetchPost = (url: string, body: any): Promise<Response> => {
 }
 
 export const apiFetchPut = (url: string, body: any): Promise<Response> => {
-  return fetch(`https://d1c26dab.isegye.xyz${url}`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     method: 'PUT',
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -138,7 +142,7 @@ export const apiFetchPut = (url: string, body: any): Promise<Response> => {
 }
 
 export const apiFetchDelete = (url: string, body?: any): Promise<Response> => {
-  return fetch(`https://d1c26dab.isegye.xyz${url}`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -150,7 +154,7 @@ export const apiFetchDelete = (url: string, body?: any): Promise<Response> => {
 
 // apiFetchDownload(`/storyinfo/${id}/download`, `${id}.csv`)
 export const apiFetchDownload = (url: string, fileName: string) => {
-  fetch(`https://d1c26dab.isegye.xyz${url}`, {
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },

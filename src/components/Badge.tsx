@@ -8,7 +8,7 @@ interface Props {
   small?: boolean
 }
 
-export default function Button({ children, color, textColor, extraClassName, small }: Props) {
+export default function Badge({ children, color, textColor, extraClassName, small }: Props) {
   return (
     <span
       className={classNames(
