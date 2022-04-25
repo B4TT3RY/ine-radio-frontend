@@ -45,6 +45,7 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onD
                 제목
               </label>
               <Field
+                type='text'
                 id='title'
                 name='title'
                 className={classNames(
@@ -56,11 +57,12 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onD
             </div>
             <div className='flex gap-3'>
               <div className='flex flex-col flex-1'>
-                <label htmlFor='title' className='text-lg select-none'>
+                <label htmlFor='subTitle' className='text-lg select-none'>
                   설명
                 </label>
                 <Field
                   as='textarea'
+                  id='subTitle'
                   name='subTitle'
                   rows={6}
                   className={classNames(
@@ -76,7 +78,7 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onD
                 <div
                   id='subTitlePreview'
                   className={classNames(
-                    'h-full w-full text-base text-center px-4 py-3 shadow-sm rounded-2xl overflow-hidden',
+                    'h-[10.5rem] w-full text-base text-center px-4 py-3 shadow-sm rounded-2xl overflow-auto',
                     'bg-white dark:bg-slate-700 border border-gray-300'
                   )}
                 >
@@ -128,7 +130,7 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onD
                 <div
                   id='subTitlePreview'
                   className={classNames(
-                    'w-full grid grid-cols-1 md:grid-cols-3 gap-3 p-3 shadow-sm rounded-2xl',
+                    'h-full w-full grid grid-cols-1 md:grid-cols-3 gap-3 p-3 shadow-sm rounded-2xl overflow-auto',
                     'bg-white border border-gray-300'
                   )}
                 >
