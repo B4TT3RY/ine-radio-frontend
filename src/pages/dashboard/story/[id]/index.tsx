@@ -285,7 +285,6 @@ export default function DashboardStoryById() {
             </>
           )}
         />
-        <div className='h-4'></div>
       </DashboardFrame>
     </>
   )
