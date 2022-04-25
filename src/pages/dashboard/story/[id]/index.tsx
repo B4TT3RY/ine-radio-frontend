@@ -93,13 +93,11 @@ export default function DashboardStoryById() {
         }
       >
         <div className='flex justify-end gap-3 mb-3'>
-          {auth?.role != Role.STAFF && (
-            <Button>
-              <Link href={`/dashboard/story/${id}/edit`}>
-                <a>사연 수정</a>
-              </Link>
-            </Button>
-          )}
+          <Button>
+            <Link href={`/dashboard/story/${id}/edit`}>
+              <a>사연 수정</a>
+            </Link>
+          </Button>
           <Button
             color='green-600'
             hoverColor='green-700'
