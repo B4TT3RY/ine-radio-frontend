@@ -138,7 +138,7 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onD
                     <div
                       key={c.name}
                       className={classNames(
-                        'shadow-sm rounded-2xl px-4 py-3 cursor-pointer',
+                        'transition-all shadow-sm rounded-2xl px-4 py-3 cursor-pointer',
                         'border border-gray-300 hover:border-gray-600'
                       )}
                       onClick={() => {
