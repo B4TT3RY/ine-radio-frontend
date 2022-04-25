@@ -38,9 +38,9 @@ export default function DashboardStoryEdit() {
     }
   }, [storyInfoId])
 
-  if (auth?.role == Role.STAFF) {
-    return <Error statusCode={401} />
-  }
+  // if (auth?.role == Role.STAFF) {
+  //   return <Error statusCode={401} />
+  // }
 
   if (storyInfoIdError) {
     return <Error statusCode={storyInfoIdError.code} />
