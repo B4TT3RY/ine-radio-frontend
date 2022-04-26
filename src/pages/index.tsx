@@ -58,8 +58,12 @@ export default function Index() {
       )
     }
 
+    if (storyInfoError && storyInfoError.code === undefined && storyInfoError.body === undefined) {
+      return <SectionCard type='error' title='서버에 연결할 수 없어요.' subTitle='나중에 다시 시도해 주세요.' />
+    }
+
     if (storyInfoError && storyInfoError.body.error == 'STORY_NOT_FOUND') {
-      return <SectionCard type='warning' title='지금은 사연을 받고 있지 않아요' subTitle='다음에 다시 도전해주세요!' />
+      return <SectionCard type='warning' title='지금은 사연을 받고 있지 않아요.' subTitle='다음에 다시 도전해주세요.' />
     }
 
     if (storyInfoError && storyInfoError.body.error != 'STORY_NOT_FOUND') {
