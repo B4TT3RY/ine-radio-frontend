@@ -14,7 +14,7 @@ export default function DashboardStoryIndex() {
     category: [],
     charCount: 40,
     activation: false,
-    followDiff: 0,
+    followDiff: 1,
     followDiffUnit: 'minutes',
     isOnlyFollowers: false,
     isOnlySubscribers: false,
