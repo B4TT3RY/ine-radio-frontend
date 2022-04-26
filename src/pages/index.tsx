@@ -12,10 +12,12 @@ import Error from 'next/error'
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
 import { classNames } from '../utils'
+import { useRouter } from 'next/router'
 
 // TODO: /storyinfo/:id:/validate 사용
 
 export default function Index() {
+  const router = useRouter()
   const [fetchResponse, setFetchResponse] = useState<FetchResponse | undefined>(undefined)
   const [isLoadingSlow, setLoadingSlow] = useState(false)
   const { data: auth, error: authError } = useSWR<AuthResponse, FetcherError>('/auth', apiFetcher, {
@@ -39,7 +41,21 @@ export default function Index() {
 
   const sectionElement = () => {
     if (fetchResponse) {
-      return <SectionCard type={fetchResponse.iconType} title={fetchResponse.title} subTitle={fetchResponse.subTitle} />
+      return (
+        <SectionCard type={fetchResponse.iconType} title={fetchResponse.title} subTitle={fetchResponse.subTitle}>
+          <button
+            onClick={() => {
+              router.reload()
+            }}
+            className={classNames(
+              'text-xl text-white cursor-pointer transition-all shadow-lg rounded-2xl b-0 p-3',
+              'bg-purple-500 shadow-purple-500/50 hover:bg-purple-600 hover:shadow-purple-600/50'
+            )}
+          >
+            홈으로
+          </button>
+        </SectionCard>
+      )
     }
 
     if (storyInfoError && storyInfoError.body.error == 'STORY_NOT_FOUND') {
@@ -57,7 +73,9 @@ export default function Index() {
         <SectionCard
           type='loading'
           title='사연 정보를 불러오고 있어요.'
-          subTitle={isLoadingSlow ? '로딩이 조금 오래 걸리고 있어요.<br>조금만 더 기다려 주세요...' : '잠시만 기다려주세요...'}
+          subTitle={
+            isLoadingSlow ? '로딩이 조금 오래 걸리고 있어요.<br>조금만 더 기다려 주세요...' : '잠시만 기다려주세요...'
+          }
         />
       )
     }
