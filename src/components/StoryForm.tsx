@@ -1,5 +1,6 @@
 import { Field, Form, Formik } from 'formik'
 import { KeyboardEvent, useEffect, useRef, useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import { apiFetchPost, Category, StoryInfoResponse } from '../api'
 import usePreventLeave from '../hooks/usePreventLeave'
 import { classNames, getErrorMessage, unitToKorean } from '../utils'
@@ -136,7 +137,9 @@ export default function StoryForm({ storyInfo, onlyFollowers, onlySubscribers, o
                 <Field
                   as='textarea'
                   name='content'
-                  placeholder={category?.description ? category?.description.replace('\n', '\r\n') : '사연을 작성해주세요'}
+                  placeholder={
+                    category?.description ? category?.description.replace('\n', '\r\n') : '사연을 작성해주세요'
+                  }
                   rows={6}
                   className={classNames(
                     'resize-none w-full text-base p-3 transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border',
@@ -144,43 +147,45 @@ export default function StoryForm({ storyInfo, onlyFollowers, onlySubscribers, o
                     'disabled:bg-gray-200 disabled:text-gray-500 dark:disabled:bg-slate-500 dark:disabled:text-gray-300'
                   )}
                 />
-                <div className='flex items-center gap-2 select-none'>
-                  {onlyFollowers && (
-                    <Badge>
-                      팔로워 전용
-                      {storyInfo.followDiff > 0 &&
-                        ` (+${storyInfo.followDiff}${unitToKorean(storyInfo.followDiffUnit)})`}
-                    </Badge>
-                  )}
-                  {onlySubscribers && <Badge>구독자 전용</Badge>}
-                </div>
-                <div className='flex items-center gap-2 select-none'>
-                  <span
-                    className={`${
-                      values.content.length > (category?.charCount ?? 0)
-                        ? 'text-rose-600'
-                        : 'text-black dark:text-white'
-                    }`}
-                  >
-                    {values.content.length}/{category?.charCount ?? 0}자
-                  </span>
-                  <button
-                    type='submit'
-                    disabled={
-                      values.category.length === 0 ||
-                      values.content.length === 0 ||
-                      values.content.length > (category?.charCount ?? 0) ||
-                      remainingSubmitCount <= 0
-                    }
-                    className={classNames(
-                      'text-lg text-white rounded-2xl b-0 p-3 transition-all shadow-lg',
-                      'bg-purple-500 shadow-purple-500/50 hover:bg-purple-600 hover:shadow-purple-600/50',
-                      'disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-gray-200/50',
-                      'dark:disabled:bg-gray-700 dark:disabled:text-gray-400 dark:disabled:shadow-gray-700/50'
+                <div className='flex flex-col gap-1 sm:flex-row sm:gap-0 justify-between w-full'>
+                  <div className='flex items-center gap-2 select-none'>
+                    {onlyFollowers && (
+                      <Badge>
+                        팔로워 전용
+                        {storyInfo.followDiff > 0 &&
+                          ` (+${storyInfo.followDiff}${unitToKorean(storyInfo.followDiffUnit)})`}
+                      </Badge>
                     )}
-                  >
-                    {isSubmitting ? '사연 보내는 중...' : '사연 보내기'}
-                  </button>
+                    {onlySubscribers && <Badge>구독자 전용</Badge>}
+                  </div>
+                  <div className='flex items-center gap-2 select-none justify-end'>
+                    <span
+                      className={`${
+                        values.content.length > (category?.charCount ?? 0)
+                          ? 'text-rose-600'
+                          : 'text-black dark:text-white'
+                      }`}
+                    >
+                      {values.content.length}/{category?.charCount ?? 0}자
+                    </span>
+                    <button
+                      type='submit'
+                      disabled={
+                        values.category.length === 0 ||
+                        values.content.length === 0 ||
+                        values.content.length > (category?.charCount ?? 0) ||
+                        remainingSubmitCount <= 0
+                      }
+                      className={classNames(
+                        'text-lg text-white rounded-2xl b-0 p-3 transition-all shadow-lg',
+                        'bg-purple-500 shadow-purple-500/50 hover:bg-purple-600 hover:shadow-purple-600/50',
+                        'disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-gray-200/50',
+                        'dark:disabled:bg-gray-700 dark:disabled:text-gray-400 dark:disabled:shadow-gray-700/50'
+                      )}
+                    >
+                      {isSubmitting ? '사연 보내는 중...' : '사연 보내기'}
+                    </button>
+                  </div>
                 </div>
               </fieldset>
             </Form>

@@ -244,7 +244,7 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onD
                 </div>
               )}
             </div>
-            <div className='flex gap-3 sm:justify-end'>
+            <div className='flex gap-3 justify-end'>
               {isEditPage && (
                 <Button color='red-500' hoverColor='red-600' extraClassName='text-xl' onClick={onDelete}>
                   사연 삭제
