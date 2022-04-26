@@ -136,13 +136,13 @@ export default function Index() {
         <meta name='theme-color' content='#E9D5FF' media='(prefers-color-scheme: light)' />
         <meta name='theme-color' content='#0F172A' media='(prefers-color-scheme: dark)' />
       </Head>
-      <div className='h-screen-safe mb-3 sm:mb-0'>
+      <div className='flex flex-col h-screen-safe'>
         <div className='flex justify-end gap-4 p-3 lg:absolute lg:top-0 lg:right-0'>
           {authError && authError.code == 401 && <LoginButton />}
           {auth && !authError && auth.role != Role.USER && <DashboardButton />}
           {auth && !authError && <LogoutButton />}
         </div>
-        <div className='flex flex-col items-center justify-center gap-6 h-screen-safe'>
+        <div className='flex flex-1 flex-col items-center justify-center gap-6'>
           <header className='flex justify-center select-none'>
             <Image loader={({ src }) => src} src={logoPicture} alt='라디오 로고' draggable={false} unoptimized />
           </header>
