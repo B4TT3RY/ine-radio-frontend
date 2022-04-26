@@ -142,7 +142,7 @@ export default function Index() {
           {auth && !authError && auth.role != Role.USER && <DashboardButton />}
           {auth && !authError && <LogoutButton />}
         </div>
-        <div className='flex flex-col items-center justify-center gap-6'>
+        <div className='flex flex-col items-center justify-center gap-6 h-screen-safe'>
           <header className='flex justify-center select-none'>
             <Image loader={({ src }) => src} src={logoPicture} alt='라디오 로고' draggable={false} unoptimized />
           </header>
