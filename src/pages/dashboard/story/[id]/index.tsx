@@ -92,8 +92,8 @@ export default function DashboardStoryById() {
             : undefined
         }
       >
-        <div className='flex justify-end gap-3 mb-3'>
-          <Button>
+        <div className='flex flex-wrap justify-end gap-3 pb-3'>
+          <Button extraClassName='whitespace-nowrap'>
             <Link href={`/dashboard/story/${id}/edit`}>
               <a>사연 수정</a>
             </Link>
@@ -101,6 +101,7 @@ export default function DashboardStoryById() {
           <Button
             color='green-600'
             hoverColor='green-700'
+            extraClassName='whitespace-nowrap'
             onClick={() => {
               apiFetchGet(`/storyinfo/${id}/download`)
                 .then((res) => res.json())
@@ -123,6 +124,7 @@ export default function DashboardStoryById() {
           <Button
             color='green-600'
             hoverColor='green-700'
+            extraClassName='whitespace-nowrap'
             onClick={() => {
               apiFetchGet(`/storyinfo/${id}/download`)
                 .then((res) => res.json())
@@ -145,7 +147,7 @@ export default function DashboardStoryById() {
           <select
             onChange={(e) => setCategory(e.target.value)}
             className={classNames(
-              'text-base px-3 py-2 w-2/12 transition-all shadow-sm',
+              'text-base px-3 py-2 w-1/3 sm:w-2/12 transition-all shadow-sm',
               'focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-xl'
             )}
           >
