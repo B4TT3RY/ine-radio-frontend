@@ -136,7 +136,7 @@ export default function Index() {
         <meta name='theme-color' content='#E9D5FF' media='(prefers-color-scheme: light)' />
         <meta name='theme-color' content='#0F172A' media='(prefers-color-scheme: dark)' />
       </Head>
-      <div className='flex flex-col h-screen-safe'>
+      <div className='flex flex-col min-h-screen-safe'>
         <div className='flex justify-end gap-4 p-3 lg:absolute lg:top-0 lg:right-0'>
           {authError && authError.code == 401 && <LoginButton />}
           {auth && !authError && auth.role != Role.USER && <DashboardButton />}
@@ -155,6 +155,7 @@ export default function Index() {
             {sectionElement()}
           </section>
         </div>
+        <div className='h-3 lg:h-0 w-screen'></div>
       </div>
       <Script src='/js/channelio.js' />
     </>
