@@ -196,7 +196,6 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onD
                         'focus:ring-purple-500 focus:border-purple-500 border border-gray-300'
                       )}
                       min={1}
-                      defaultValue={1}
                     />
                     <Field
                       as='select'
