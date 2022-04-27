@@ -13,8 +13,12 @@ interface Props {
 }
 
 export default function CsvDownloadDialog({ storyInfoId, isOpen, setIsOpen }: Props) {
-  const minDate = new Date(storyInfoId?.stories[0].createdAt ?? new Date())
-  const maxDate = new Date(storyInfoId?.stories.slice(-1)[0].createdAt ?? new Date())
+  const minDate = new Date(
+    storyInfoId && storyInfoId.stories.length > 0 ? storyInfoId.stories[0].createdAt : new Date()
+  )
+  const maxDate = new Date(
+    storyInfoId && storyInfoId.stories.length > 0 ? storyInfoId.stories.slice(-1)[0].createdAt : new Date()
+  )
   const [state, setState] = useState<{ startDate?: Date; endDate?: Date; key?: string }[]>([
     {
       startDate: minDate,
