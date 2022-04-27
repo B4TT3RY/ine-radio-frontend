@@ -152,12 +152,14 @@ export const apiFetchDelete = (url: string, body?: any): Promise<Response> => {
   })
 }
 
-// apiFetchDownload(`/storyinfo/${id}/download`, `${id}.csv`)
-export const apiFetchDownload = (url: string, fileName: string) => {
+export const apiFetchDownload = (url: string, fileName: string, body?: any) => {
   fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      'Content-Type': 'application/json',
     },
+    body: body ? JSON.stringify(body) : undefined,
   })
     .then((res) => res.blob())
     .then((blob) => {

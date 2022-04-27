@@ -20,6 +20,7 @@ import {
 } from '../../../../api'
 import Badge from '../../../../components/Badge'
 import Button from '../../../../components/button/Button'
+import CsvDownloadDialog from '../../../../components/dashboard/CsvDownloadDialog'
 import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
 import useAuth from '../../../../hooks/useAuth'
 import { classNames } from '../../../../utils'
@@ -31,6 +32,7 @@ export default function DashboardStoryById() {
   const [regex, setRegex] = useState<RegExp | undefined>()
   const [category, setCategory] = useState('전체')
   const [favoriteFilter, setFavoriteFilter] = useState(false)
+  const [csvDownloadDialogIsOpen, setCsvDownloadDialogIsOpen] = useState(false)
 
   const router = useRouter()
   const { id } = router.query
@@ -103,45 +105,18 @@ export default function DashboardStoryById() {
             hoverColor='green-700'
             extraClassName='whitespace-nowrap'
             onClick={() => {
-              apiFetchGet(`/storyinfo/${id}/download`)
-                .then((res) => res.json())
-                .then((res) => {
-                  if (res.ok) {
-                    window.open(
-                      `https://docs.google.com/viewer?url=${process.env.NEXT_PUBLIC_API_URL}/download/${res.id}`
-                    )
-                  } else {
-                    alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
-                  }
-                })
-                .catch((err) => {
-                  alert(`오류가 발생했어요.\n${err}`)
-                })
-            }}
-          >
-            구글 스프레드시트에서 보기
-          </Button>
-          <Button
-            color='green-600'
-            hoverColor='green-700'
-            extraClassName='whitespace-nowrap'
-            onClick={() => {
-              apiFetchGet(`/storyinfo/${id}/download`)
-                .then((res) => res.json())
-                .then((res) => {
-                  if (res.ok) {
-                    apiFetchDownload(`/download/${res.id}`, `${storyInfoId?.storyinfo.title ?? id}.csv`)
-                  } else {
-                    alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
-                  }
-                })
-                .catch((err) => {
-                  alert(`오류가 발생했어요.\n${err}`)
-                })
+              setCsvDownloadDialogIsOpen(true)
             }}
           >
             엑셀(csv) 다운로드
           </Button>
+          <CsvDownloadDialog
+            storyInfoId={storyInfoId}
+            isOpen={csvDownloadDialogIsOpen}
+            setIsOpen={() => {
+              setCsvDownloadDialogIsOpen(false)
+            }}
+          />
         </div>
         <div className='flex gap-3 mb-4'>
           <select

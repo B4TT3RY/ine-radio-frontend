@@ -2,6 +2,8 @@ import '../styles/global.css'
 import '../styles/suit.css'
 import '../styles/tailwind.css'
 import 'nprogress/nprogress.css'
+import 'react-date-range/dist/styles.css'
+import 'react-date-range/dist/theme/default.css'
 
 import type { AppProps } from 'next/app'
 
