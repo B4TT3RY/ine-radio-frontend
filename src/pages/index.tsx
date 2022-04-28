@@ -21,6 +21,7 @@ export default function Index() {
   const [fetchResponse, setFetchResponse] = useState<FetchResponse | undefined>(undefined)
   const [isLoadingSlow, setLoadingSlow] = useState(false)
   const { data: auth, error: authError } = useSWR<AuthResponse, FetcherError>('/auth', apiFetcher, {
+    shouldRetryOnError: false,
     revalidateOnFocus: false,
     revalidateOnMount: true,
     onLoadingSlow: () => {
@@ -28,7 +29,9 @@ export default function Index() {
     },
   })
   const { data: storyInfo, error: storyInfoError } = useSWR<StoryInfoResponse, FetcherError>('/storyinfo', apiFetcher, {
-    refreshInterval: 30000,
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+    revalidateOnMount: true,
     onLoadingSlow: () => {
       setLoadingSlow(true)
     },
