@@ -13,5 +13,10 @@ module.exports = {
       variants: ['dark'],
     },
   ],
+  variants: {
+    extend: {
+      visibility: ['group-hover'],
+    },
+  },
   plugins: [require('@tailwindcss/forms'), require('tailwindcss-safe-area')],
 }

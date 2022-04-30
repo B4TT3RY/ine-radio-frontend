@@ -59,6 +59,7 @@ export interface StoryInfoIdResponse {
     content: string
     category: string
     favorite: boolean
+    isBanned: boolean
     createdAt: string
   }[]
 }

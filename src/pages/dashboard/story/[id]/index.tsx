@@ -1,4 +1,4 @@
-import { HeartIcon } from '@heroicons/react/solid'
+import { ExclamationCircleIcon, HeartIcon } from '@heroicons/react/solid'
 import dayjs from 'dayjs'
 import { getRegExp } from 'korean-regexp'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -51,6 +51,7 @@ export default function DashboardStoryById() {
         content: string
         category: string
         favorite: boolean
+        isBanned: boolean
         createdAt: string
       }[]
     | undefined
@@ -178,7 +179,10 @@ export default function DashboardStoryById() {
           itemContent={(_, story) => (
             <>
               <td
-                className='flex items-center gap-2 px-4 py-4 font-medium keep-all'
+                className={classNames(
+                  'flex transition-all items-center gap-2 px-4 py-4 font-medium keep-all',
+                  story.isBanned == null ? 'text-gray-400 hover:text-black' : ''
+                )}
                 style={{ overflowWrap: 'anywhere' }}
               >
                 <HeartIcon
@@ -218,6 +222,20 @@ export default function DashboardStoryById() {
                       : undefined
                   }
                 />
+                {story.isBanned == null && (
+                  <div className='flex-none group'>
+                    <ExclamationCircleIcon className='h-6 w-6 text-yellow-400' />
+                    <span
+                      className={classNames(
+                        'select-none invisible group-hover:visible absolute',
+                        'bg-slate-700 text-white rounded-md shadow-md px-1.5 py-0.5',
+                        'transition-opacity opacity-0 group-hover:opacity-100'
+                      )}
+                    >
+                      밴 여부 확인이 되지 않은 사연이에요.
+                    </span>
+                  </div>
+                )}
                 <Badge color='gray-400' extraClassName='whitespace-nowrap' small={true}>
                   {story.category}
                 </Badge>
