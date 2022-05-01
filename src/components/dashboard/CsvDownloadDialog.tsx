@@ -5,6 +5,7 @@ import { DateRange } from 'react-date-range'
 import { apiFetchDownload, StoryInfoIdResponse } from '../../api'
 import ko from 'date-fns/locale/ko'
 import dayjs from 'dayjs'
+import { ExclamationIcon } from '@heroicons/react/solid'
 
 interface Props {
   storyInfoId?: StoryInfoIdResponse
@@ -57,6 +58,11 @@ export default function CsvDownloadDialog({ storyInfoId, isOpen, setIsOpen }: Pr
                 <h1 className='text-2xl font-bold select-none' style={{ wordBreak: 'keep-all' }}>
                   &quot;{storyInfoId?.storyinfo.title}&quot; 사연 다운로드
                 </h1>
+                {storyInfoId?.stories.find((story) => story.isBanned == null) && (
+                  <p className='flex items-center justify-center'>
+                    <ExclamationIcon className='h-7 w-6 text-yellow-400' /> 밴 여부 확인이 되지 않은 사연이 있어요.
+                  </p>
+                )}
                 <div className='flex justify-center items-center'>
                   <DateRange
                     locale={ko}
