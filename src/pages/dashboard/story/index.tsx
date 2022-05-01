@@ -37,15 +37,13 @@ export default function DashboardStoryIndex() {
         subTitle='녹색 테두리가 현재 활성화 된 사연이에요.'
       >
         <ul className='space-y-3'>
-          {auth && auth.role != Role.STAFF && (
-            <li>
-              <Link href='/dashboard/story/new'>
-                <a className='flex items-center justify-center border-4 border-dashed border-gray-400 rounded-2xl h-[5.5rem]'>
-                  <PlusIcon className='w-12 h-12 text-gray-400' />
-                </a>
-              </Link>
-            </li>
-          )}
+          <li>
+            <Link href='/dashboard/story/new'>
+              <a className='group flex items-center justify-center border-4 border-dashed border-gray-400 hover:border-gray-500 rounded-2xl h-[5.5rem]'>
+                <PlusIcon className='w-12 h-12 text-gray-400 group-hover:text-gray-500' />
+              </a>
+            </Link>
+          </li>
           {storyInfoList ? (
             storyInfoList.map((storyInfo) => (
               <li key={storyInfo.id}>

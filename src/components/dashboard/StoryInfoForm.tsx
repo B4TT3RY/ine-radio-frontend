@@ -163,11 +163,11 @@ export default function StoryInfoForm({ initialValues, isEditPage, onSubmit, onD
                       setCategoryDialogIsOpen(true)
                     }}
                     className={classNames(
-                      'flex items-center justify-center h-[4.5rem] cursor-pointer',
-                      'rounded-2xl border-4 border-dashed border-gray-300'
+                      'group flex items-center justify-center h-[4.5rem] cursor-pointer',
+                      'rounded-2xl border-4 border-dashed border-gray-400 hover:border-gray-500'
                     )}
                   >
-                    <PlusIcon className='w-12 h-12 text-gray-300' />
+                    <PlusIcon className='w-12 h-12 text-gray-400 group-hover:text-gray-500' />
                   </div>
                 </div>
               </div>
