@@ -1,5 +1,4 @@
-import { CheckIcon, ExclamationIcon, ExclamationCircleIcon, InformationCircleIcon } from '@heroicons/react/outline'
-import ReactMarkdown from 'react-markdown'
+import { CheckIcon, ExclamationCircleIcon, ExclamationIcon, InformationCircleIcon } from '@heroicons/react/outline'
 import LoadingSpinner from './LoadingSpinner'
 import Markdown from './Markdown'
 

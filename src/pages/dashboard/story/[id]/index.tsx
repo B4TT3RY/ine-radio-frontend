@@ -1,7 +1,6 @@
 import { ExclamationCircleIcon, HeartIcon } from '@heroicons/react/solid'
 import dayjs from 'dayjs'
 import { getRegExp } from 'korean-regexp'
-import { GetStaticPaths, GetStaticProps } from 'next'
 import Error from 'next/error'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -10,13 +9,10 @@ import React, { useEffect, useState } from 'react'
 import { TableVirtuoso } from 'react-virtuoso'
 import useSWR, { useSWRConfig } from 'swr'
 import {
-  apiFetchDownload,
-  apiFetcher,
-  apiFetchGet,
-  apiFetchPost,
+  apiFetcher, apiFetchPost,
   FetcherError,
   Role,
-  StoryInfoIdResponse,
+  StoryInfoIdResponse
 } from '../../../../api'
 import Badge from '../../../../components/Badge'
 import Button from '../../../../components/button/Button'

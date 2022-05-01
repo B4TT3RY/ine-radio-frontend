@@ -1,4 +1,4 @@
-import { PlusIcon, XIcon } from '@heroicons/react/outline'
+import { PlusIcon } from '@heroicons/react/outline'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
 import { useState } from 'react'
 import { Category } from '../../api'

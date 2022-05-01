@@ -1,8 +1,8 @@
-import Badge from '../Badge'
 import dayjs from 'dayjs'
-import { StoryInfoListResponse } from '../../api'
 import Link from 'next/link'
 import { useMediaQuery } from 'react-responsive'
+import { StoryInfoListResponse } from '../../api'
+import Badge from '../Badge'
 
 interface Props {
   storyInfo: StoryInfoListResponse

@@ -1,5 +1,4 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Field, Form, Formik } from 'formik'
 import { Fragment, useRef } from 'react'
 import { Category } from '../../api'
 import { classNames } from '../../utils'

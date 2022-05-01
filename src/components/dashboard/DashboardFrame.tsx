@@ -1,11 +1,11 @@
-import { Disclosure, Transition } from '@headlessui/react'
-import { XIcon, MenuIcon } from '@heroicons/react/outline'
-import Image, { ImageLoaderProps } from 'next/image'
-import { AuthResponse, FetcherError, Role } from '../../api'
-import Link from 'next/link'
-import logoPicture from '../../assets/img/logo.png'
+import { Disclosure } from '@headlessui/react'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import Error from 'next/error'
+import Image, { ImageLoaderProps } from 'next/image'
+import Link from 'next/link'
 import { useEffect } from 'react'
+import { AuthResponse, FetcherError, Role } from '../../api'
+import logoPicture from '../../assets/img/logo.png'
 import { classNames } from '../../utils'
 
 const navigation = [

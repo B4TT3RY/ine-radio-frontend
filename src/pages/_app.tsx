@@ -1,15 +1,15 @@
+import type { AppProps } from 'next/app'
+import Router from 'next/router'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+import { useEffect } from 'react'
+import 'react-date-range/dist/styles.css'
+import 'react-date-range/dist/theme/default.css'
 import '../styles/global.css'
 import '../styles/suit.css'
 import '../styles/tailwind.css'
-import 'nprogress/nprogress.css'
-import 'react-date-range/dist/styles.css'
-import 'react-date-range/dist/theme/default.css'
 
-import type { AppProps } from 'next/app'
 
-import Router from 'next/router'
-import NProgress from 'nprogress'
-import { useEffect } from 'react'
 
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
