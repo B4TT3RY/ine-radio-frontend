@@ -11,6 +11,7 @@ import { classNames } from '../../utils'
 const navigation = [
   { name: '사연 관리', href: '/dashboard/story', role: [Role.ADMIN, Role.STREAMER, Role.STAFF] },
   { name: '권한 관리', href: '/dashboard/permission', role: [Role.ADMIN, Role.STREAMER] },
+  { name: '부검', href: '/dashboard/storyDetail', role: [Role.ADMIN] },
 ]
 
 interface Props {

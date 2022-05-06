@@ -64,6 +64,17 @@ export interface StoryInfoIdResponse {
   }[]
 }
 
+// /storyDetail/:id
+export interface StoryDetailResponse {
+  id: number
+  login: string
+  displayName: string
+  category: string
+  content: string
+  isBanned?: boolean
+  createdAt: Date
+}
+
 export enum Role {
   ADMIN = 'Admin',
   STREAMER = 'Streamer',
