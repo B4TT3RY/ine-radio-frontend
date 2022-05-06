@@ -30,7 +30,7 @@ export default function DashboardDetailViewIndex() {
         <div className='flex flex-col gap-3'>
           <Formik initialValues={initialValues} onSubmit={(values, actions) => {
             actions.setSubmitting(true)
-            window.open(`/dashboard/storyDetail/${values.storyId}`, '', 'status=0,title=0,height=777,width=500,scrollbars=1')
+            window.open(`/dashboard/storyDetail/view?id=${values.storyId}`, '', 'status=0,title=0,height=777,width=500,scrollbars=1')
             actions.setSubmitting(false)
           }}>
             {({ isSubmitting, values }) => (
