@@ -245,7 +245,7 @@ export default function DashboardStoryById() {
                 className='py-4 text-red-500 font-medium text-center cursor-pointer select-none'
                 onClick={() => {
                   const answer = confirm(
-                    `"${
+                    `"[${story.id}] ${
                       story.content.length > 5 ? `${story.content.substring(0, 5)}...` : story.content
                     }" 사연을 숨기시겠어요?\n한번 숨기면 다시 볼 수 없어요.`
                   )
