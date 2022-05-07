@@ -53,7 +53,7 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                   <div className='flex items-center'>
                     <div className='flex shrink-0'>
                       <Link href='/'>
-                        <a className='relative h-8 w-24'>
+                        <a className='relative h-8 w-24 select-none'>
                           <Image
                             loader={({ src }) => src}
                             className='object-contain'
@@ -76,7 +76,7 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                                   item.href === currentUrl
                                     ? 'bg-gray-900 text-white'
                                     : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                                } px-3 py-2 rounded-md text-sm font-medium`}
+                                } px-3 py-2 rounded-md text-sm font-medium select-none`}
                               >
                                 {item.name}
                               </a>
@@ -87,7 +87,7 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                   </div>
                   <div className={`hidden md:block${auth ? '' : ' animate-pulse'}`}>
                     <div className='ml-4 flex items-center md:ml-6'>
-                      <div className='relative h-8 w-8 bg-slate-700 rounded-full'>
+                      <div className='relative h-8 w-8 bg-slate-700 rounded-full select-none'>
                         {auth && (
                           <Image
                             loader={loader}
@@ -101,7 +101,7 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
                         )}
                       </div>
 
-                      <div className='ml-2 flex flex-col'>
+                      <div className='ml-2 flex flex-col select-none'>
                         {auth ? (
                           <>
                             <span className='text-base font-medium leading-none text-white'>{auth.displayName}</span>
@@ -174,12 +174,12 @@ export default function DashboardFrame({ children, auth, authError, title, subTi
         <header className='bg-white shadow z-10'>
           <div className='max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8'>
             {title ? (
-              <h1 className='text-2xl font-extrabold text-gray-900'>{title}</h1>
+              <h1 className='text-2xl font-extrabold text-gray-900 select-none'>{title}</h1>
             ) : (
-              <p className='animate-pulse h-6 w-64 rounded-3xl bg-slate-200'></p>
+              <p className='animate-pulse h-6 w-64 rounded-3xl bg-slate-200 select-none'></p>
             )}
 
-            {subTitle && <span className='text-base font-medium text-gray-800'>{subTitle}</span>}
+            {subTitle && <span className='text-base font-medium text-gray-800 select-none'>{subTitle}</span>}
           </div>
         </header>
         <main className='flex flex-1 overflow-auto'>
