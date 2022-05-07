@@ -34,6 +34,7 @@ export default function SimpleUserProfile({ className, user, onClick }: Props) {
           <span className='text-base leading-none mt-1'>{user?.login}</span>
         </div>
       </div>
+      {/* TODO: STAFF? */}
       {user?.role == Role.STAFF && (
         <div
           className='flex items-center justify-center cursor-pointer'
