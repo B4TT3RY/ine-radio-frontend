@@ -75,6 +75,12 @@ export interface StoryDetailResponse {
   createdAt: Date
 }
 
+// /ban/list
+export interface BanListResponse {
+  id: string
+  createdAt: Date
+}
+
 export enum Role {
   ADMIN = 'Admin',
   STREAMER = 'Streamer',
