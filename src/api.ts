@@ -1,4 +1,4 @@
-// /auth, /auth/getUsers
+// /auth, /user/list
 export interface AuthResponse {
   id: number
   login: string
@@ -79,6 +79,19 @@ export interface StoryDetailResponse {
 export interface BanListResponse {
   id: string
   createdAt: Date
+}
+
+// /ban/id
+export interface BanDetailResponse {
+  user: {
+    id: string,
+    createdAt: Date,
+  },
+  stories: {
+    id: number,
+    content: string,
+    createdAt: string
+  }[]
 }
 
 export enum Role {

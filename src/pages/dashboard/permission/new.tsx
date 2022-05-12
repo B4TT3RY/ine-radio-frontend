@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import useSWR from 'swr'
-import { apiFetcher, apiFetchPost, AuthResponse, FetcherError, Role } from '../../../api'
+import { apiFetcher, apiFetchPost, apiFetchPut, AuthResponse, FetcherError, Role } from '../../../api'
 import DashboardFrame from '../../../components/dashboard/DashboardFrame'
 import SimpleUserProfile from '../../../components/dashboard/SimpleUserProfile'
 import useAuth from '../../../hooks/useAuth'
@@ -14,7 +14,7 @@ export default function PermissionIndex() {
   const router = useRouter()
   const [auth, authError] = useAuth()
   const [regex, setRegex] = useState<RegExp | undefined>()
-  const { data: users, error: usersError } = useSWR<AuthResponse[], FetcherError>(`/auth/getUsers`, apiFetcher)
+  const { data: users, error: usersError } = useSWR<AuthResponse[], FetcherError>(`/user/list`, apiFetcher)
   const [filteredUsers, setFilteredUsers] = useState(users)
 
   useEffect(() => {
@@ -57,8 +57,7 @@ export default function PermissionIndex() {
                   if (!answer) {
                     return
                   }
-                  apiFetchPost('/auth/setRole', {
-                    userId: user.id,
+                  apiFetchPut(`/user/${user.id}/role`, {
                     role: Role.STAFF,
                   })
                     .then((res) => res.json())

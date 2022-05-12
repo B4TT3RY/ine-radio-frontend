@@ -3,7 +3,7 @@ import Error from 'next/error'
 import Head from 'next/head'
 import Link from 'next/link'
 import useSWR, { useSWRConfig } from 'swr'
-import { apiFetcher, apiFetchPost, AuthResponse, FetcherError, Role } from '../../../api'
+import { apiFetcher, apiFetchPost, apiFetchPut, AuthResponse, FetcherError, Role } from '../../../api'
 import DashboardFrame from '../../../components/dashboard/DashboardFrame'
 import SimpleUserProfile from '../../../components/dashboard/SimpleUserProfile'
 import useAuth from '../../../hooks/useAuth'
@@ -11,7 +11,7 @@ import useAuth from '../../../hooks/useAuth'
 export default function PermissionIndex() {
   const { mutate } = useSWRConfig()
   const [auth, authError] = useAuth()
-  const { data: users, error: usersError } = useSWR<AuthResponse[], FetcherError>(`/auth/getUsers`, apiFetcher)
+  const { data: users, error: usersError } = useSWR<AuthResponse[], FetcherError>(`/user/list`, apiFetcher)
 
   if (auth?.role == Role.STAFF) {
     return <Error statusCode={401} />
@@ -64,14 +64,13 @@ export default function PermissionIndex() {
                       if (!answer) {
                         return
                       }
-                      apiFetchPost('/auth/setRole', {
-                        userId: user.id,
+                      apiFetchPut(`/user/${user.id}/role`, {
                         role: Role.USER,
                       })
                         .then((res) => res.json())
                         .then((res) => {
                           if (res.ok) {
-                            mutate('/api/getUsers')
+                            mutate('/user/list')
                           } else {
                             alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
                           }
