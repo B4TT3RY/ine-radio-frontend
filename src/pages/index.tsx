@@ -39,7 +39,9 @@ export default function Index() {
 
   useEffect(() => {
     document.querySelector('html')?.classList.remove('bg-gray-200')
-    document.querySelector('html')?.classList.add('bg-purple-200', 'dark:bg-slate-900')
+    document
+      .querySelector('html')
+      ?.classList.add('bg-gradient-to-br', 'from-indigo-200', 'via-purple-200', 'to-pink-200', 'dark:bg-slate-900')
   }, [])
 
   const sectionElement = () => {

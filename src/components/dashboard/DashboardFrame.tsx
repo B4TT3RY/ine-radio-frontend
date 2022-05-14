@@ -30,7 +30,9 @@ const loader = ({ src }: ImageLoaderProps) => {
 
 export default function DashboardFrame({ children, auth, authError, title, subTitle, currentUrl }: Props) {
   useEffect(() => {
-    document.querySelector('html')?.classList.remove('bg-purple-200', 'dark:bg-slate-900')
+    document
+      .querySelector('html')
+      ?.classList.remove('bg-gradient-to-br', 'from-indigo-200', 'via-purple-200', 'to-pink-200', 'dark:bg-slate-900')
     document.querySelector('html')?.classList.add('bg-gray-200')
   }, [])
 
