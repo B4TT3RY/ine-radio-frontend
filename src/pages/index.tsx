@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import Error from 'next/error'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -40,7 +41,7 @@ export default function Index() {
     document
       .querySelector('html')
       ?.classList.add('bg-gradient-to-br', 'from-indigo-200', 'via-purple-200', 'to-pink-200', 'dark:from-[#52748a]', 'dark:to-[#343850]')
-      // ?.classList.add('bg-gradient-to-br', 'from-indigo-200', 'via-purple-200', 'to-pink-200', 'dark:from-[#71518b]', 'dark:to-[#42324b]')
+    // ?.classList.add('bg-gradient-to-br', 'from-indigo-200', 'via-purple-200', 'to-pink-200', 'dark:from-[#71518b]', 'dark:to-[#42324b]')
   }, [])
 
   const sectionElement = () => {
@@ -151,17 +152,26 @@ export default function Index() {
           {auth && !authError && <LogoutButton />}
         </div>
         <div className='flex flex-1 flex-col items-center justify-center gap-6'>
-          <header className='flex justify-center select-none drop-shadow-xl dark:brightness-[.95]'>
+          <motion.header
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring" }}
+            className='flex justify-center select-none drop-shadow-xl dark:brightness-[.95]'
+          >
             <Image loader={({ src }) => src} src={logoPicture} alt='라디오 로고' draggable={false} unoptimized />
-          </header>
-          <section
+          </motion.header>
+          <motion.section
+
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring" }}
             className={classNames(
               'flex flex-col items-center justify-center gap-2 w-11/12 md:w-10/12 lg:w-10/12 xl:w-8/12',
               'rounded-2xl p-4 bg-white shadow-lg dark:bg-slate-800'
             )}
           >
             {sectionElement()}
-          </section>
+          </motion.section>
         </div>
         <div className='h-3 lg:h-0 w-screen'></div>
       </div>
