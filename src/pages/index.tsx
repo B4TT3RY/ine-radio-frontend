@@ -14,8 +14,6 @@ import SectionCard from '../components/SectionCard'
 import StoryForm, { FetchResponse } from '../components/StoryForm'
 import { classNames } from '../utils'
 
-// TODO: /storyinfo/:id:/validate 사용
-
 export default function Index() {
   const router = useRouter()
   const [fetchResponse, setFetchResponse] = useState<FetchResponse | undefined>(undefined)
@@ -41,7 +39,8 @@ export default function Index() {
     document.querySelector('html')?.classList.remove('bg-gray-200')
     document
       .querySelector('html')
-      ?.classList.add('bg-gradient-to-br', 'from-indigo-200', 'via-purple-200', 'to-pink-200', 'dark:bg-slate-900')
+      ?.classList.add('bg-gradient-to-br', 'from-indigo-200', 'via-purple-200', 'to-pink-200', 'dark:from-[#52748a]', 'dark:to-[#343850]')
+      // ?.classList.add('bg-gradient-to-br', 'from-indigo-200', 'via-purple-200', 'to-pink-200', 'dark:from-[#71518b]', 'dark:to-[#42324b]')
   }, [])
 
   const sectionElement = () => {
@@ -152,7 +151,7 @@ export default function Index() {
           {auth && !authError && <LogoutButton />}
         </div>
         <div className='flex flex-1 flex-col items-center justify-center gap-6'>
-          <header className='flex justify-center select-none'>
+          <header className='flex justify-center select-none drop-shadow-xl dark:brightness-[.95]'>
             <Image loader={({ src }) => src} src={logoPicture} alt='라디오 로고' draggable={false} unoptimized />
           </header>
           <section
