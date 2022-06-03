@@ -86,8 +86,10 @@ export default function CsvDownloadDialog({ storyInfoId, isOpen, setIsOpen }: Pr
                         `/storyinfo/${storyInfoId?.storyinfo.id ?? ''}/download`,
                         `${storyInfoId?.storyinfo.title ?? ''}.csv`,
                         {
-                          startDate: dayjs(state[0].startDate).format('YYYY-MM-DD'),
-                          endDate: dayjs(state[0].endDate).format('YYYY-MM-DD'),
+                          date: {
+                            start: dayjs(state[0].startDate).format('YYYY-MM-DD'),
+                            end: dayjs(state[0].endDate).format('YYYY-MM-DD'),
+                          },
                         }
                       )
                       setIsOpen(false)

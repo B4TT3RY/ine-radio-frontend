@@ -105,7 +105,25 @@ export default function DashboardStoryById() {
               setCsvDownloadDialogIsOpen(true)
             }}
           >
-            엑셀(csv) 다운로드
+            csv 다운로드 (일자별)
+          </Button>
+          <CsvDownloadDialog
+            storyInfoId={storyInfoId}
+            isOpen={csvDownloadDialogIsOpen}
+            setIsOpen={() => {
+              setCsvDownloadDialogIsOpen(false)
+            }}
+          />
+
+          <Button
+            color='green-600'
+            hoverColor='green-700'
+            extraClassName='whitespace-nowrap'
+            onClick={() => {
+              setCsvDownloadDialogIsOpen(true)
+            }}
+          >
+            csv 다운로드 (오프셋)
           </Button>
           <CsvDownloadDialog
             storyInfoId={storyInfoId}
