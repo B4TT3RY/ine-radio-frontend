@@ -1,4 +1,4 @@
-import { ExclamationCircleIcon, HeartIcon } from '@heroicons/react/solid'
+import { ExclamationCircleIcon } from '@heroicons/react/solid'
 import dayjs from 'dayjs'
 import { getRegExp } from 'korean-regexp'
 import Error from 'next/error'
@@ -27,7 +27,6 @@ export default function DashboardStoryById() {
   const [auth, authError] = useAuth()
   const [regex, setRegex] = useState<RegExp | undefined>()
   const [category, setCategory] = useState('전체')
-  const [favoriteFilter, setFavoriteFilter] = useState(false)
   const [csvDownloadDialogIsOpen, setCsvDownloadDialogIsOpen] = useState(false)
 
   const router = useRouter()
@@ -60,16 +59,12 @@ export default function DashboardStoryById() {
       stories = stories?.filter((s) => regex.test(s.content))
     }
 
-    if (favoriteFilter) {
-      stories = stories?.filter((s) => s.favorite)
-    }
-
     if (category !== '전체') {
       stories = stories?.filter((s) => s.category === category)
     }
 
     setFilteredStories(stories)
-  }, [category, regex, storyInfoId?.stories, favoriteFilter])
+  }, [category, regex, storyInfoId?.stories])
 
   if (storyInfoIdError) {
     return <Error statusCode={storyInfoIdError.code} />
@@ -175,17 +170,6 @@ export default function DashboardStoryById() {
           }}
           fixedHeaderContent={() => (
             <tr>
-              <th className='flex text-left px-4 py-2 gap-2'>
-                <HeartIcon
-                  className={`h-6 w-6 cursor-pointer hover:text-red-300 ${
-                    favoriteFilter ? 'text-red-500' : 'text-gray-300 '
-                  }`}
-                  onClick={() => {
-                    setFavoriteFilter((prev) => !prev)
-                  }}
-                />
-                사연 ({filteredStories?.length ?? 0})
-              </th>
               <th className='py-2 w-36'>접수일자</th>
               <th className='py-2 w-20'>숨기기</th>
             </tr>
@@ -199,43 +183,6 @@ export default function DashboardStoryById() {
                 )}
                 style={{ overflowWrap: 'anywhere' }}
               >
-                <HeartIcon
-                  className={classNames(
-                    'flex-none h-6 w-6',
-                    story.favorite ? 'text-red-500' : 'text-gray-300',
-                    [Role.ADMIN, Role.STREAMER].includes(auth?.role ?? Role.USER)
-                      ? 'cursor-pointer hover:text-red-300'
-                      : ''
-                  )}
-                  onClick={
-                    [Role.ADMIN, Role.STREAMER].includes(auth?.role ?? Role.USER)
-                      ? () => {
-                          apiFetchPost(`/storyinfo/${storyInfoId?.storyinfo.id}/favorite`, {
-                            storyId: story.id,
-                            favorite: !story.favorite,
-                          })
-                            .then((res) => res.json())
-                            .then((res) => {
-                              if (res.ok) {
-                                setFilteredStories((prev) => {
-                                  return prev?.map((s) => {
-                                    if (s.id === story.id) {
-                                      s.favorite = !s.favorite
-                                    }
-                                    return s
-                                  })
-                                })
-                              } else {
-                                alert(`[${res.error}] 오류가 발생했어요${res.message ? `:\n${res.message}` : '.'}`)
-                              }
-                            })
-                            .catch((err) => {
-                              alert(`오류가 발생했어요.\n${err}`)
-                            })
-                        }
-                      : undefined
-                  }
-                />
                 {story.isBanned == null && (
                   <div className='flex-none group'>
                     <ExclamationCircleIcon className='h-6 w-6 text-yellow-400' />
