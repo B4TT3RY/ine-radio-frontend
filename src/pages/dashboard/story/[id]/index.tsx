@@ -8,16 +8,12 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { TableVirtuoso } from 'react-virtuoso'
 import useSWR, { useSWRConfig } from 'swr'
-import {
-  apiFetcher, apiFetchPost,
-  FetcherError,
-  Role,
-  StoryInfoIdResponse
-} from '../../../../api'
+import { apiFetcher, apiFetchPost, FetcherError, Role, StoryInfoIdResponse } from '../../../../api'
 import Badge from '../../../../components/Badge'
 import Button from '../../../../components/button/Button'
 import CsvDownloadDialog from '../../../../components/dashboard/CsvDownloadDialog'
 import DashboardFrame from '../../../../components/dashboard/DashboardFrame'
+import OffsetDownloadDialog from '../../../../components/dashboard/OffsetDownloadDialog'
 import useAuth from '../../../../hooks/useAuth'
 import { classNames } from '../../../../utils'
 
@@ -28,6 +24,7 @@ export default function DashboardStoryById() {
   const [regex, setRegex] = useState<RegExp | undefined>()
   const [category, setCategory] = useState('전체')
   const [csvDownloadDialogIsOpen, setCsvDownloadDialogIsOpen] = useState(false)
+  const [offsetDownloadDialogIsOpen, setOffsetDownloadDialogIsOpen] = useState(false)
 
   const router = useRouter()
   const { id } = router.query
@@ -92,41 +89,50 @@ export default function DashboardStoryById() {
               <a>사연 수정</a>
             </Link>
           </Button>
-          <Button
-            color='green-600'
-            hoverColor='green-700'
-            extraClassName='whitespace-nowrap'
-            onClick={() => {
-              setCsvDownloadDialogIsOpen(true)
-            }}
-          >
-            csv 다운로드 (기간)
-          </Button>
-          <CsvDownloadDialog
-            storyInfoId={storyInfoId}
-            isOpen={csvDownloadDialogIsOpen}
-            setIsOpen={() => {
-              setCsvDownloadDialogIsOpen(false)
-            }}
-          />
 
-          <Button
-            color='green-600'
-            hoverColor='green-700'
-            extraClassName='whitespace-nowrap'
-            onClick={() => {
-              setCsvDownloadDialogIsOpen(true)
-            }}
-          >
-            csv 다운로드 (오프셋)
-          </Button>
-          <CsvDownloadDialog
-            storyInfoId={storyInfoId}
-            isOpen={csvDownloadDialogIsOpen}
-            setIsOpen={() => {
-              setCsvDownloadDialogIsOpen(false)
-            }}
-          />
+          {storyInfoId && storyInfoId.stories.length > 0 && (
+            <>
+              <Button
+                color='green-600'
+                hoverColor='green-700'
+                extraClassName='whitespace-nowrap'
+                onClick={() => {
+                  setCsvDownloadDialogIsOpen(true)
+                }}
+              >
+                csv 다운로드 (기간)
+              </Button>
+              <CsvDownloadDialog
+                storyInfoId={storyInfoId}
+                isOpen={csvDownloadDialogIsOpen}
+                setIsOpen={() => {
+                  setCsvDownloadDialogIsOpen(false)
+                }}
+              />
+            </>
+          )}
+
+          {storyInfoId && storyInfoId.stories.length > 0 && (
+            <>
+              <Button
+                color='green-600'
+                hoverColor='green-700'
+                extraClassName='whitespace-nowrap'
+                onClick={() => {
+                  setOffsetDownloadDialogIsOpen(true)
+                }}
+              >
+                csv 다운로드 (오프셋)
+              </Button>
+              <OffsetDownloadDialog
+                storyInfoId={storyInfoId}
+                isOpen={offsetDownloadDialogIsOpen}
+                setIsOpen={() => {
+                  setOffsetDownloadDialogIsOpen(false)
+                }}
+              />
+            </>
+          )}
         </div>
         <div className='flex gap-3 mb-4'>
           <select
@@ -170,9 +176,7 @@ export default function DashboardStoryById() {
           }}
           fixedHeaderContent={() => (
             <tr>
-              <th className='text-left px-4 py-2'>
-                사연 ({filteredStories?.length ?? 0})
-              </th>
+              <th className='text-left px-4 py-2'>사연 ({filteredStories?.length ?? 0})</th>
               <th className='py-2 w-36'>접수일자</th>
               <th className='py-2 w-20'>숨기기</th>
             </tr>
