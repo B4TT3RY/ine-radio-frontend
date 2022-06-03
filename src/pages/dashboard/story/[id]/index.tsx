@@ -170,6 +170,9 @@ export default function DashboardStoryById() {
           }}
           fixedHeaderContent={() => (
             <tr>
+              <th className='text-left px-4 py-2'>
+                사연 ({filteredStories?.length ?? 0})
+              </th>
               <th className='py-2 w-36'>접수일자</th>
               <th className='py-2 w-20'>숨기기</th>
             </tr>
