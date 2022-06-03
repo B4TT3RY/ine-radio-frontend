@@ -105,7 +105,7 @@ export default function DashboardStoryById() {
               setCsvDownloadDialogIsOpen(true)
             }}
           >
-            csv 다운로드 (일자별)
+            csv 다운로드 (기간)
           </Button>
           <CsvDownloadDialog
             storyInfoId={storyInfoId}

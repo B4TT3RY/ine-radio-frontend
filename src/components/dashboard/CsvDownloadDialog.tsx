@@ -56,7 +56,7 @@ export default function CsvDownloadDialog({ storyInfoId, isOpen, setIsOpen }: Pr
             <div className='relative bg-white rounded-2xl max-w-sm mx-auto p-4 shadow-2xl'>
               <div className='space-y-2'>
                 <h1 className='text-2xl font-bold select-none' style={{ wordBreak: 'keep-all' }}>
-                  &quot;{storyInfoId?.storyinfo.title}&quot; 사연 다운로드
+                  &quot;{storyInfoId?.storyinfo.title}&quot; 사연 다운로드 (기간)
                 </h1>
                 {storyInfoId?.stories.find((story) => story.isBanned == null) && (
                   <p className='flex items-center justify-center'>
