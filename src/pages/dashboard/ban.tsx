@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react'
 import { getRegExp } from 'korean-regexp'
 import Button from '../../components/button/Button'
 import XIcon from '@heroicons/react/outline/XIcon'
+import AddBanListDialog from '../../components/dashboard/AddBanListDialog'
+import BanDetailDialog from '../../components/dashboard/BanDetailDialog'
 
 interface FormValues {
   storyId: string
@@ -18,6 +20,9 @@ interface FormValues {
 export default function DashboardDetailViewIndex() {
   const [auth, authError] = useAuth()
   const [regex, setRegex] = useState<RegExp | undefined>()
+  const [isAddBanListDialogOpen, setIsAddBanListDialogOpen] = useState(false)
+  const [isBanDetailDialogOpen, setIsBanDetailDialogOpen] = useState(false)
+  const [clickedId, setClickedId] = useState('')
 
   const { data: banList, error: banListError } = useSWR<BanListResponse[], FetcherError>('/ban/list', apiFetcher, {
     refreshInterval: 30000,
@@ -47,6 +52,12 @@ export default function DashboardDetailViewIndex() {
         title='밴 리스트'
         subTitle='요주의 인물 리스트를 관리할 수 있어요.'
       >
+        <AddBanListDialog isOpen={isAddBanListDialogOpen} setIsOpen={(value) => setIsAddBanListDialogOpen(value)} />
+        <BanDetailDialog
+          id={clickedId}
+          isOpen={isBanDetailDialogOpen}
+          setIsOpen={(value) => setIsBanDetailDialogOpen(value)}
+        />
         {!banList && banListError && (
           <>
             <h1>문제가 발생했어요.</h1>
@@ -59,7 +70,14 @@ export default function DashboardDetailViewIndex() {
           <>
             {auth && auth.role == Role.ADMIN && (
               <div className='flex flex-wrap justify-end gap-3 pb-3'>
-                <Button extraClassName='whitespace-nowrap'>사용자 추가</Button>
+                <Button
+                  extraClassName='whitespace-nowrap'
+                  onClick={() => {
+                    setIsAddBanListDialogOpen(true)
+                  }}
+                >
+                  사용자 추가
+                </Button>
               </div>
             )}
             <input
@@ -73,24 +91,29 @@ export default function DashboardDetailViewIndex() {
               )}
             />
             <Virtuoso
-              style={{ height: undefined }}
+              style={{ height: undefined, willChange: 'transform' }}
               className='h-full shadow rounded-2xl bg-gray-50'
               data={filteredList}
               itemContent={(_, ban) => (
-                <div
-                  className={classNames(
-                    'flex justify-between',
-                    'bg-white p-4 border-b-[1px] cursor-pointer',
-                    'hover:bg-gray-100'
-                  )}
-                >
-                  <div>
+                <div className={classNames('flex justify-between', 'bg-white border-b-[1px]', 'hover:bg-gray-100')}>
+                  <div
+                    className='w-full p-4 cursor-pointer'
+                    onClick={() => {
+                      setClickedId(ban.id)
+                      setIsBanDetailDialogOpen(true)
+                    }}
+                  >
                     <h1 className='text-xl font-bold'>{ban.id}</h1>
                     <p className='select-none'>{dayjs(ban.createdAt).format('YYYY-MM-DD HH:MM')}에 추가됨</p>
                   </div>
 
                   {auth && auth.role == Role.ADMIN && (
-                    <div className='flex items-center justify-center cursor-pointer group' onClick={() => {}}>
+                    <div
+                      className='flex items-center justify-center cursor-pointer group p-4'
+                      onClick={() => {
+                        const answer = confirm(`${ban.id} 유저를 삭제하시겠어요?`)
+                      }}
+                    >
                       <XIcon className='text-red-500 group-hover:text-red-600 w-10 h-10' />
                     </div>
                   )}

@@ -46,7 +46,7 @@ export default function PermissionIndex() {
             className='text-base p-3 w-full transition-all shadow-sm focus:ring-purple-500 focus:border-purple-500 border border-gray-300 rounded-xl'
           />
           <Virtuoso
-            style={{ height: undefined }}
+            style={{ height: undefined, willChange: 'transform' }}
             className='flex-1 mt-3'
             data={filteredUsers}
             itemContent={(_, user) => (

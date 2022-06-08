@@ -161,7 +161,7 @@ export default function DashboardStoryById() {
           />
         </div>
         <TableVirtuoso
-          style={{ height: undefined }}
+          style={{ height: undefined, willChange: 'transform' }}
           className='h-full shadow rounded-2xl bg-gray-50'
           data={filteredStories}
           components={{
